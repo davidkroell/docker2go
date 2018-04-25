@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Docker2go</string>
+    <string name="title_activity_connection">ConnectionActivity</string>
 </resources>
