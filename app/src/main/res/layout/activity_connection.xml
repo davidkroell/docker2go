@@ -7,6 +7,16 @@
     tools:context="at.htl_villach.docker2go.ConnectionActivity">
 
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/listViewConnections"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </android.support.constraint.ConstraintLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addConnection"
         android:layout_width="wrap_content"

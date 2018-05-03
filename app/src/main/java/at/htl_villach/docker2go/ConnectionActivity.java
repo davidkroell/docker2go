@@ -6,14 +6,24 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.List;
 
 public class ConnectionActivity extends AppCompatActivity {
+
+    private ArrayAdapter<Connection> connectionArrayAdapter;
+    private ListView listViewConnections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection);
 
+        // floating action button onClick workaround
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addConnection);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -21,6 +31,28 @@ public class ConnectionActivity extends AppCompatActivity {
                 addConnection(v);
             }
         });
+
+        // listview
+        connectionArrayAdapter = new ArrayAdapter<Connection>(this, R.layout.list_item_connection,
+                R.id.textViewHostString, Connection.listAll(Connection.class)){
+
+            @Override
+            public View getView(int position, View v, ViewGroup parent){
+                View view = super.getView(position, v, parent);
+                TextView textViewHostString = view.findViewById(R.id.textViewHostString);
+                TextView textViewPort = view.findViewById(R.id.textViewSSHPort);
+
+                Connection currConn = Connection.listAll(Connection.class).get(position);
+
+                textViewHostString.setText(currConn.getUsername() + "@" + currConn.getHostname());
+                textViewPort.setText(currConn.getSshPort().toString());
+
+                return view;
+            }
+        };
+        listViewConnections = findViewById(R.id.listViewConnections);
+
+        listViewConnections.setAdapter(connectionArrayAdapter);
     }
 
     private void addConnection(View v) {
@@ -28,4 +60,14 @@ public class ConnectionActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    private void refreshGUI(){
+        connectionArrayAdapter.clear();
+        connectionArrayAdapter.addAll(Connection.listAll(Connection.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshGUI();
+    }
 }

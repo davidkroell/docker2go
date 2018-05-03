@@ -19,7 +19,7 @@ public class ConnectionDetailsActivity extends AppCompatActivity {
     }
 
 
-    private void onClick_buttonSave(View v){
+    public void onClick_buttonSave(View v){
 
         Connection c = new Connection(
                 uiBind.editTextHostname.getText().toString(),
