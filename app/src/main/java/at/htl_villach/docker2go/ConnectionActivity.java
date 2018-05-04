@@ -7,13 +7,18 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class ConnectionActivity extends AppCompatActivity {
+public class ConnectionActivity extends AppCompatActivity
+        implements AdapterView.OnItemLongClickListener {
+
+    // constants
+    public static final String KEY_POSITION = "POSITION";
 
     private ArrayAdapter<Connection> connectionArrayAdapter;
     private ListView listViewConnections;
@@ -53,6 +58,7 @@ public class ConnectionActivity extends AppCompatActivity {
         listViewConnections = findViewById(R.id.listViewConnections);
 
         listViewConnections.setAdapter(connectionArrayAdapter);
+        listViewConnections.setOnItemLongClickListener(this);
     }
 
     private void addConnection(View v) {
@@ -69,5 +75,13 @@ public class ConnectionActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         refreshGUI();
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Intent intent = new Intent(this, ConnectionDetailsActivity.class);
+        intent.putExtra(KEY_POSITION, position);
+        startActivity(intent);
+        return true;
     }
 }
