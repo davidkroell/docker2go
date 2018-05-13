@@ -1,6 +1,8 @@
 package at.htl_villach.docker2go;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
+
 /**
  * Created by kroel on 23.04.2018.
  */
@@ -11,6 +13,12 @@ public class Connection extends SugarRecord {
     private String password;
     private Integer sshPort;
     private Integer timesConnected;
+
+    @Ignore
+    public interface onCommandStatusChangeListener {
+        void onCommandFinished(Object object);
+        void onCommandProgressUpdate(Object object);
+    }
 
     public Connection() {}
 
@@ -56,5 +64,9 @@ public class Connection extends SugarRecord {
 
     public void setSshPort(Integer sshPort) {
         this.sshPort = sshPort;
+    }
+
+    public void executeCommand(Connection.onCommandStatusChangeListener listener, Command command){
+        // start AsyncTaskCommandExecutor
     }
 }
