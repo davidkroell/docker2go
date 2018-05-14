@@ -88,7 +88,6 @@ public class ConnectionActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        // TODO connect to server and show next activity
         Intent i = new Intent(this, OverviewActivity.class);
         i.putExtra(KEY_POSITION, position);
         startActivity(i);

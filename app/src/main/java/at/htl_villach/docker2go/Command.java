@@ -5,5 +5,8 @@ package at.htl_villach.docker2go;
  */
 
 public interface Command {
+    // returns the string to be executed by the remote shell
     String parseString();
+    Integer getExpectedExitCode();
+    Integer getRefreshTimeOut();
 }
