@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="at.htl_villach.docker2go">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
@@ -27,7 +29,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConnectionDetailsActivity"></activity>
+        <activity android:name=".ConnectionDetailsActivity" />
+        <activity
+            android:name=".OverviewActivity"
+            android:label="@string/title_activity_overview"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class ConnectionActivity extends AppCompatActivity
-        implements AdapterView.OnItemLongClickListener {
+        implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
     // constants
     public static final String KEY_POSITION = "POSITION";
@@ -59,6 +59,7 @@ public class ConnectionActivity extends AppCompatActivity
 
         listViewConnections.setAdapter(connectionArrayAdapter);
         listViewConnections.setOnItemLongClickListener(this);
+        listViewConnections.setOnItemClickListener(this);
     }
 
     private void addConnection(View v) {
@@ -83,5 +84,12 @@ public class ConnectionActivity extends AppCompatActivity
         intent.putExtra(KEY_POSITION, position);
         startActivity(intent);
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Intent i = new Intent(this, OverviewActivity.class);
+        i.putExtra(KEY_POSITION, position);
+        startActivity(i);
     }
 }

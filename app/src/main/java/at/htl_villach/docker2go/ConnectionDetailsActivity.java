@@ -2,15 +2,17 @@ package at.htl_villach.docker2go;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import at.htl_villach.docker2go.databinding.ActivityConnectionDetailsBinding;
 
-public class ConnectionDetailsActivity extends AppCompatActivity {
+public class ConnectionDetailsActivity extends AppCompatActivity implements Connection.onCommandStatusChangeListener {
 
     private ActivityConnectionDetailsBinding uiBind;
     private Connection editingConnection = null;
@@ -75,5 +77,31 @@ public class ConnectionDetailsActivity extends AppCompatActivity {
             editingConnection.save(); // store to database
         }
         finish();
+    }
+
+    public void onClick_buttonTest(View v) {
+        DockerCommandBuilder command = new DockerCommandBuilder()
+                .apiEndpoint("/containers/json")
+                .requestMethod("GET");
+
+        Connection testConn = new Connection(
+                uiBind.editTextHostname.getText().toString(),
+                uiBind.editTextUsername.getText().toString(),
+                uiBind.editTextPassword.getText().toString(),
+                Integer.parseInt(uiBind.editTextPort.getText().toString()));
+
+        testConn.executeCommand(this, command);
+    }
+
+    @Override
+    public void onCommandFinished(Object object) {
+        if (object instanceof String)
+            Toast.makeText(this, (String) object, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onAllCommandsFinished(Object object) {
+        if (object instanceof String)
+            Toast.makeText(this, (String) object, Toast.LENGTH_LONG).show();
     }
 }
