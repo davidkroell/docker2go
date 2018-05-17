@@ -6,19 +6,33 @@ package at.htl_villach.docker2go;
 
 public class DockerCommandBuilder implements Command {
 
-    // the fields below should build up in something like:
-    // "curl --unix-socket /var/run/docker.sock http::/containers/json"
+    // booleans
     private boolean useSudo = false;
+
+    // strings
     private String baseCommand = "curl";
+
     private String baseEndpoint = "--unix-socket /var/run/docker.sock";
+
     private String apiEndpointPrefix = "http::";
+
     private String apiEndpoint;
+
     private String requestMethodCommandPrefix = "-X";
+
     private String requestMethod = "GET";
 
+    private String result;
 
+    // integers
     private Integer expectedExitCode = 0;
+
+    private Integer exitCode = null;
+
     private Integer refreshTimeOut = 80; // milliseconds
+
+
+    private Exception exception;
 
     @Override
     public Integer getExpectedExitCode() {
@@ -46,6 +60,8 @@ public class DockerCommandBuilder implements Command {
         return this;
     }
 
+    // outputs the string, which is sent to the docker api
+    // "curl --unix-socket /var/run/docker.sock http::/containers/json"
     @Override
     public String parseString() {
         StringBuilder strBuilder = new StringBuilder();
@@ -60,5 +76,40 @@ public class DockerCommandBuilder implements Command {
                 .append(requestMethod);
 
         return strBuilder.toString();
+    }
+
+    @Override
+    public String getResult() {
+        return this.result;
+    }
+
+    @Override
+    public void setResult(String value) {
+        this.result = value;
+    }
+
+    @Override
+    public void setExitCode(Integer exitCode) {
+        this.exitCode = exitCode;
+    }
+
+    @Override
+    public Integer getExitCode() {
+        return exitCode;
+    }
+
+    @Override
+    public boolean exitedAsExpected() {
+        return getExpectedExitCode().equals(getExitCode());
+    }
+
+    @Override
+    public Exception getException() {
+        return this.exception;
+    }
+
+    @Override
+    public void setException(Exception exception) {
+        this.exception = exception;
     }
 }

@@ -7,4 +7,14 @@
     <string name="tab_text_3">Tab 3</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="connection_test_successful">Test successful</string>
+    <string name="hostname_or_ip">Hostname or IP</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="port">Port</string>
+    <string name="store_password">Store password</string>
+    <string name="save_connection">Save</string>
+    <string name="test_connection">Test</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 import java.io.ByteArrayOutputStream;
@@ -18,10 +19,13 @@ import java.util.Properties;
 // first param type: backgroundParams, the command to be executed
 // second param type: updateValues, with this Object, the listener is called
 // third param type: resultValue, with this Object, the listener is called
-public class AsyncTaskCommandExecutor extends AsyncTask<Command, Object, Object> {
+public class AsyncTaskCommandExecutor extends AsyncTask<Command, Command, CommandExecutionSummary> {
 
     private Connection connection;
     private Connection.onCommandStatusChangeListener listener;
+
+    private Command currCommandHelper = null; // helper variable for accessing in catch block
+    private CommandExecutionSummary ces;
 
     private Session jschSession;
 
@@ -32,6 +36,7 @@ public class AsyncTaskCommandExecutor extends AsyncTask<Command, Object, Object>
 
     @Override
     protected void onPreExecute() {
+        this.ces = new CommandExecutionSummary();
         // connect to server
         try{
             JSch jsch = new JSch();
@@ -61,13 +66,14 @@ public class AsyncTaskCommandExecutor extends AsyncTask<Command, Object, Object>
     // executed every command on remote machine in separated channels
     // still using same channel
     @Override
-    protected String doInBackground(Command... backgroundParams) {
+    protected CommandExecutionSummary doInBackground(Command... backgroundParams) {
         try {
             // connect to remote machine
             this.jschSession.connect(this.connection.getConnectionTimeout());
 
             // Execute single command and use onProgressUpdate for output
             for (Command command : backgroundParams) {
+                this.currCommandHelper = command;
                 ChannelExec channelssh = (ChannelExec) this.jschSession.openChannel("exec");
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 channelssh.setOutputStream(baos);
@@ -78,21 +84,27 @@ public class AsyncTaskCommandExecutor extends AsyncTask<Command, Object, Object>
                 channelssh.connect();
 
                 // wait for the command until it exits with the expected exit code
-                // TODO: what if it exits with another exit code?
                 int refreshTimeout = command.getRefreshTimeOut();
-                while (channelssh.getExitStatus() != command.getExpectedExitCode()) {
+                while (!channelssh.isClosed()) {
                     Thread.sleep(refreshTimeout);
                 }
 
+                // set result fields
+                command.setResult(baos.toString("utf8"));
+                command.setExitCode(channelssh.getExitStatus());
+
+                this.ces.addCommand(command);
+
                 // calls method onProgressUpdate
-                publishProgress(baos.toString("utf8"));
+                publishProgress(command);
                 channelssh.disconnect();
             }
 
-            return "finished";
+            return this.ces;
         }catch (Exception e){
             e.printStackTrace();
-            return e.getMessage();
+            this.ces.addException(e);
+            return this.ces;
         }finally {
             this.jschSession.disconnect();
         }
@@ -101,8 +113,8 @@ public class AsyncTaskCommandExecutor extends AsyncTask<Command, Object, Object>
     // called by doInBackground's publishProgress() method,
     // this will call the listener's method onCommandFinished() with each Object separately
     @Override
-    protected void onProgressUpdate(Object... updateValues) {
-        for (Object updateValue : updateValues) {
+    protected void onProgressUpdate(Command... updateValues) {
+        for (Command updateValue : updateValues) {
             listener.onCommandFinished(updateValue);
         }
     }
@@ -111,7 +123,7 @@ public class AsyncTaskCommandExecutor extends AsyncTask<Command, Object, Object>
     // return value should be "finished" if everything went correct.
     // if something went wrong, the String returned is the message of the Exception
     @Override
-    protected void onPostExecute(Object resultValue) {
-        listener.onAllCommandsFinished(resultValue);
+    protected void onPostExecute(CommandExecutionSummary ces) {
+        listener.onAllCommandsFinished(ces);
     }
 }

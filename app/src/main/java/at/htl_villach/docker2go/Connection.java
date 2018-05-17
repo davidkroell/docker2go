@@ -23,8 +23,8 @@ public class Connection extends SugarRecord {
 
     @Ignore
     public interface onCommandStatusChangeListener {
-        void onCommandFinished(Object object);
-        void onAllCommandsFinished(Object object);
+        void onCommandFinished(Command command);
+        void onAllCommandsFinished(CommandExecutionSummary ces);
     }
 
     public Connection() {}

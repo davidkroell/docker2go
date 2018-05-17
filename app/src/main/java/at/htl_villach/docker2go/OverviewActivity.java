@@ -63,7 +63,7 @@ public class OverviewActivity extends AppCompatActivity {
             Integer position = extras.getInt(ConnectionActivity.KEY_POSITION, 0);
             curConnection = Connection.listAll(Connection.class).get(position);
 
-            setTitle(curConnection.getUsername() + "@" + curConnection.getHostname());
+            getSupportActionBar().setTitle(curConnection.getUsername() + "@" + curConnection.getHostname());
         }else{
             Snackbar.make(findViewById(R.id.constraintLayout), "Something went wrong", Snackbar.LENGTH_LONG);
         }

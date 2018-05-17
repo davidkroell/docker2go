@@ -24,7 +24,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_add_black_24dp"
+        app:srcCompat="@drawable/ic_add_white_24dp"
         tools:onClick="addConnection" />
 
 </android.support.design.widget.CoordinatorLayout>

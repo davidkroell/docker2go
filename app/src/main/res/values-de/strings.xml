@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Docker2go</string>
+    <string name="connection_test_successful">Test erfolgreich</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="title_activity_overview">Übersicht</string>
+    <string name="title_activity_connection">Verbindungen</string>
+    <string name="hostname_or_ip">Hostname oder IP</string>
+    <string name="username">Benutzername</string>
+    <string name="password">Passwort</string>
+    <string name="store_password">Passwort speichern</string>
+    <string name="save_connection">Speichern</string>
+    <string name="test_connection">Testen</string>
+    <string name="port">Port</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="delete">Löschen</string>
+</resources>

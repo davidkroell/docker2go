@@ -17,11 +17,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <EditText
             android:id="@+id/editTextHostname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Hostname or IP"
+            android:hint="@string/hostname_or_ip"
             android:inputType="textPersonName" />
     </android.support.design.widget.TextInputLayout>
 
@@ -35,11 +36,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutHostname">
+
         <EditText
             android:id="@+id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
+            android:hint="@string/username"
             android:inputType="textPersonName" />
     </android.support.design.widget.TextInputLayout>
 
@@ -53,11 +55,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutUsername">
+
         <EditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
@@ -76,7 +79,7 @@
             android:id="@+id/editTextPort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Port"
+            android:hint="@string/port"
             android:inputType="numberSigned"
             android:text="22" />
     </android.support.design.widget.TextInputLayout>
@@ -89,37 +92,42 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:checked="true"
-        android:text="Store Password"
+        android:text="@string/store_password"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutPort" />
 
-    <Button
-        android:id="@+id/buttonSaveConnection"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="onClick_buttonSave"
-        android:text="Save Connection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/savePassword" />
+        app:layout_constraintTop_toBottomOf="@+id/savePassword">
 
-    <Button
-        android:id="@+id/buttonTestConnection"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="onClick_buttonTest"
-        android:text="Test Connection"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSaveConnection" />
+        <Button
+            android:id="@+id/buttonTestConnection"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClick_buttonTest"
+            android:text="@string/test_connection" />
+
+        <Button
+            android:id="@+id/buttonSaveConnection"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:onClick="onClick_buttonSave"
+            android:text="@string/save_connection" />
+
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
 </layout>

@@ -30,6 +30,7 @@ public class ConnectionDetailsActivity extends AppCompatActivity implements Conn
 
             uiBind.editTextHostname.setText(editingConnection.getHostname());
             uiBind.editTextUsername.setText(editingConnection.getUsername());
+            uiBind.editTextPassword.setText(editingConnection.getPassword());
             uiBind.editTextPort.setText(editingConnection.getSshPort().toString());
         }
     }
@@ -81,7 +82,7 @@ public class ConnectionDetailsActivity extends AppCompatActivity implements Conn
 
     public void onClick_buttonTest(View v) {
         DockerCommandBuilder command = new DockerCommandBuilder()
-                .apiEndpoint("/containers/json")
+                .apiEndpoint("/info")
                 .requestMethod("GET");
 
         Connection testConn = new Connection(
@@ -94,14 +95,17 @@ public class ConnectionDetailsActivity extends AppCompatActivity implements Conn
     }
 
     @Override
-    public void onCommandFinished(Object object) {
-        if (object instanceof String)
-            Toast.makeText(this, (String) object, Toast.LENGTH_LONG).show();
+    public void onCommandFinished(Command command) {
+
     }
 
     @Override
-    public void onAllCommandsFinished(Object object) {
-        if (object instanceof String)
-            Toast.makeText(this, (String) object, Toast.LENGTH_LONG).show();
+    public void onAllCommandsFinished(CommandExecutionSummary commandExecutionSummary) {
+        if(!commandExecutionSummary.exececutedWithExceptions())
+            Snackbar.make(uiBind.getRoot(),
+                    R.string.connection_test_successful, Snackbar.LENGTH_LONG).show();
+        else
+            Snackbar.make(uiBind.getRoot(),
+                    commandExecutionSummary.getLatestException().getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
     }
 }
