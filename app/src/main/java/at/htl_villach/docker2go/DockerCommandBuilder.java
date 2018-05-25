@@ -55,6 +55,10 @@ public class DockerCommandBuilder implements Command {
         return this;
     }
 
+    public String getApiEndpoint() {
+        return apiEndpoint;
+    }
+
     public DockerCommandBuilder requestMethod(String requestMethod) {
         this.requestMethod = requestMethod;
         return this;

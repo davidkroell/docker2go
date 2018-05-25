@@ -3,6 +3,8 @@ package at.htl_villach.docker2go;
 import android.os.AsyncTask;
 
 import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.HostKey;
+import com.jcraft.jsch.HostKeyRepository;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
@@ -24,7 +26,6 @@ public class AsyncTaskCommandExecutor extends AsyncTask<Command, Command, Comman
     private Connection connection;
     private Connection.onCommandStatusChangeListener listener;
 
-    private Command currCommandHelper = null; // helper variable for accessing in catch block
     private CommandExecutionSummary ces;
 
     private Session jschSession;
@@ -73,7 +74,6 @@ public class AsyncTaskCommandExecutor extends AsyncTask<Command, Command, Comman
 
             // Execute single command and use onProgressUpdate for output
             for (Command command : backgroundParams) {
-                this.currCommandHelper = command;
                 ChannelExec channelssh = (ChannelExec) this.jschSession.openChannel("exec");
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 channelssh.setOutputStream(baos);

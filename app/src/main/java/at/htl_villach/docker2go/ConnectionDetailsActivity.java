@@ -2,6 +2,7 @@ package at.htl_villach.docker2go;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.ParseException;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import at.htl_villach.docker2go.databinding.ActivityConnectionDetailsBinding;
 
@@ -96,7 +100,11 @@ public class ConnectionDetailsActivity extends AppCompatActivity implements Conn
 
     @Override
     public void onCommandFinished(Command command) {
+        DockerObj dInfo = DockerObjParser.Any((DockerCommandBuilder) command);
 
+        if(dInfo instanceof DockerInfo){
+            ((DockerInfo) dInfo).getArchitecture();
+        }
     }
 
     @Override
