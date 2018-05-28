@@ -6,7 +6,12 @@ package at.htl_villach.docker2go;
 
 public interface Command {
 
-    // returns the string to be executed by the remote shell
+    /**
+     * returns the string to be executed by the remote shell
+     *
+     * @deprecated use {@link #toString()} instead.
+     */
+    @Deprecated
     String parseString();
 
     // returns the expected exit code

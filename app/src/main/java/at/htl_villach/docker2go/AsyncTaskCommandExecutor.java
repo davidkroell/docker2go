@@ -77,7 +77,7 @@ public class AsyncTaskCommandExecutor extends AsyncTask<Command, Command, Comman
 
                 // use Commands parseString method to get the actual command
                 // in String representation e.g.: "curl localhost"
-                channelssh.setCommand(command.parseString());
+                channelssh.setCommand(command.toString());
                 channelssh.connect();
 
                 // wait for the command until it exits with the expected exit code
