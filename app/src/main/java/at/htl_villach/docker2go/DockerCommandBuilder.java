@@ -64,10 +64,16 @@ public class DockerCommandBuilder implements Command {
         return this;
     }
 
+
+    @Override
+    public String parseString() {
+        return this.toString();
+    }
+
     // outputs the string, which is sent to the docker api
     // "curl --unix-socket /var/run/docker.sock http::/containers/json"
     @Override
-    public String parseString() {
+    public String toString(){
         StringBuilder strBuilder = new StringBuilder();
 
         if (useSudo) strBuilder.append("sudo");
