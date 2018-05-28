@@ -54,18 +54,19 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
 
     @Override
     public void onCommandFinished(Command command) {
-        DockerObj dInfo = DockerObjParser.Any((DockerCommandBuilder) command);
+        DockerObj dObj = DockerObjParser.Any((DockerCommandBuilder) command);
 
-        if(dInfo instanceof DockerInfo){
+        if(dObj instanceof DockerInfo){
+            DockerInfo dInfo = (DockerInfo) dObj;
             //System
-            textViewOperatingSystem.setText(((DockerInfo) dInfo).getOperatingSystem());
-            textViewServerVersion.setText(((DockerInfo) dInfo).getServerVersion());
-            textViewMemory.setText(Utilities.formatBytes(((DockerInfo) dInfo).getMemTotal()));
+            textViewOperatingSystem.setText(dInfo.getOperatingSystem());
+            textViewServerVersion.setText(dInfo.getServerVersion());
+            textViewMemory.setText(Utilities.formatBytes(dInfo.getMemTotal()));
             //Containers
-            textViewContainersTotal.setText(Integer.toString(((DockerInfo) dInfo).getContainers()));
-            textViewContainersRunning.setText(Integer.toString(((DockerInfo) dInfo).getContainersRunning()));
-            textViewContainersPaused.setText(Integer.toString(((DockerInfo) dInfo).getContainersPaused()));
-            textViewContainersStopped.setText(Integer.toString(((DockerInfo) dInfo).getContainersStopped()));
+            textViewContainersTotal.setText(Integer.toString(dInfo.getContainers()));
+            textViewContainersRunning.setText(Integer.toString(dInfo.getContainersRunning()));
+            textViewContainersPaused.setText(Integer.toString(dInfo.getContainersPaused()));
+            textViewContainersStopped.setText(Integer.toString(dInfo.getContainersStopped()));
 
         }
     }
