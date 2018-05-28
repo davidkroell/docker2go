@@ -3,10 +3,7 @@ package at.htl_villach.docker2go;
 import android.os.AsyncTask;
 
 import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.HostKey;
-import com.jcraft.jsch.HostKeyRepository;
 import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 import java.io.ByteArrayOutputStream;

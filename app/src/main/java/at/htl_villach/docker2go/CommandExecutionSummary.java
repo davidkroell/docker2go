@@ -1,6 +1,5 @@
 package at.htl_villach.docker2go;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,15 @@ public class CommandExecutionSummary {
 
     public boolean exececutedWithExceptions(){
         return exceptions.size() != 0;
+    }
+
+    public boolean allCommandsSuccessful() {
+        for(Command command : commands) {
+            if(!command.exitedAsExpected())
+                return false;
+        }
+
+        return true;
     }
 
     public void addCommand(Command c){

@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Docker2go</string>
     <string name="connection_test_successful">Test erfolgreich</string>
+    <string name="connection_test_unsuccessful">Test nicht erfolgreich</string>
     <string name="action_settings">Einstellungen</string>
     <string name="title_activity_overview">Übersicht</string>
     <string name="title_activity_connection">Verbindungen</string>

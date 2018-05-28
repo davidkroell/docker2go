@@ -16,8 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
-
 public class OverviewActivity extends AppCompatActivity {
 
     /**
@@ -68,7 +66,6 @@ public class OverviewActivity extends AppCompatActivity {
             Snackbar.make(findViewById(R.id.constraintLayout), "Something went wrong", Snackbar.LENGTH_LONG);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,7 +140,16 @@ public class OverviewActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case 0:
+                    TabInformation tabInfo = new TabInformation();
+                    Bundle arguments = new Bundle();
+                    arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
+                    tabInfo.setArguments(arguments);
+                    return tabInfo;
+                default:
+                    return PlaceholderFragment.newInstance(position + 1);
+            }
         }
 
         @Override

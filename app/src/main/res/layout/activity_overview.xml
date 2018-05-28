@@ -33,6 +33,12 @@
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TabItem
+                android:id="@+id/tabItemInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Information" />
+
+            <android.support.design.widget.TabItem
                 android:id="@+id/tabItemContainers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,12 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Images" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/tabItem3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_text_3" />
 
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>

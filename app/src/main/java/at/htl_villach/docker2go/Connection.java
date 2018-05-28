@@ -3,9 +3,6 @@ package at.htl_villach.docker2go;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * Created by kroel on 23.04.2018.

@@ -1,18 +1,12 @@
 package at.htl_villach.docker2go;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.ParseException;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import at.htl_villach.docker2go.databinding.ActivityConnectionDetailsBinding;
 
@@ -110,8 +104,7 @@ public class ConnectionDetailsActivity extends AppCompatActivity implements Conn
     @Override
     public void onAllCommandsFinished(CommandExecutionSummary commandExecutionSummary) {
         if(!commandExecutionSummary.exececutedWithExceptions())
-            Snackbar.make(uiBind.getRoot(),
-                    R.string.connection_test_successful, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(uiBind.getRoot(), commandExecutionSummary.allCommandsSuccessful() ? R.string.connection_test_successful : R.string.connection_test_unsuccessful, Snackbar.LENGTH_LONG).show();
         else
             Snackbar.make(uiBind.getRoot(),
                     commandExecutionSummary.getLatestException().getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
