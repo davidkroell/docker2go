@@ -3,16 +3,29 @@ package at.htl_villach.docker2go;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class TabInformation extends Fragment implements Connection.onCommandStatusChangeListener {
 
-    static TextView textViewOperatingSystem, textViewServerVersion, textViewMemory, textViewContainersTotal, textViewContainersRunning, textViewContainersPaused, textViewContainersStopped;
+    static TextView textViewOperatingSystem, textViewServerVersion, textViewMemory;
     static Connection activeConnection;
+    PieChart pieChart;
 
     /* TODO:
         * Keep content after page goes inactive
@@ -29,11 +42,8 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
         textViewOperatingSystem = view.findViewById(R.id.textViewOperatingSystem);
         textViewServerVersion = view.findViewById(R.id.textViewServerVersion);
         textViewMemory = view.findViewById(R.id.textViewMemory);
-        // Containers text fields
-        textViewContainersTotal = view.findViewById(R.id.textViewContainersTotal);
-        textViewContainersRunning = view.findViewById(R.id.textViewContainersRunning);
-        textViewContainersPaused = view.findViewById(R.id.textViewContainersPaused);
-        textViewContainersStopped = view.findViewById(R.id.textViewContainersStopped);
+
+        pieChart = view.findViewById(R.id.piechartContainers);
 
         Bundle arguments = getArguments();
         if(arguments != null) {
@@ -44,12 +54,77 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
             Toast.makeText(getContext(), "Fatal issue: No Arguments", Toast.LENGTH_SHORT).show();
     }
 
+    // helper functions
     public void LoadInfo() {
         DockerCommandBuilder infoCommand = new DockerCommandBuilder()
                 .apiEndpoint("/info")
                 .requestMethod("GET");
 
         activeConnection.executeCommand(this, infoCommand);
+    }
+
+    public void loadChart(DockerInfo dInfo){
+        // containers running, paused, stopped
+        List<Entry> yvalues = new ArrayList<>();
+        List<String> labels = new ArrayList<String>();
+
+        yvalues.add(new Entry(dInfo.getContainersRunning(), 0));
+        labels.add(getResources().getString(R.string.info_running));
+
+        if(dInfo.getContainersPaused() != 0) {
+            yvalues.add(new Entry(dInfo.getContainersPaused(), 1));
+            labels.add(getResources().getString(R.string.info_paused));
+        }
+        if(dInfo.getContainersStopped() != 0) {
+            yvalues.add(new Entry(dInfo.getContainersStopped(), 2));
+            labels.add(getResources().getString(R.string.info_stopped));
+        }
+
+        PieDataSet dataSet = new PieDataSet(yvalues, "");
+        dataSet.setValueTextSize(10f);
+
+        // for integer values instead of floats on view
+        dataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                // little hack
+                return ((int) value) + "";
+            }
+        });
+
+        PieData data = new PieData(labels, dataSet);
+
+        pieChart.setData(data);
+
+        // set custom colors
+        int[] colors = new int[]{
+                ContextCompat.getColor(getContext(), R.color.containersRunning),
+                ContextCompat.getColor(getContext(), R.color.containersPaused),
+                ContextCompat.getColor(getContext(), R.color.containersStopped)
+        };
+        dataSet.setColors(colors);
+
+        // text in the middle
+        String middleStr = String.format("%d/%d \n %s",
+                dInfo.getContainersRunning(),
+                dInfo.getContainers(),
+                getResources().getString(R.string.info_running));
+        pieChart.setCenterText(middleStr);
+        pieChart.setCenterTextSize(14f);
+
+        // disable touch
+        pieChart.setTouchEnabled(false);
+        pieChart.setTransparentCircleRadius(0);
+
+        // remove description
+        pieChart.setDescription("");
+
+        // render legend on the right
+        pieChart.getLegend().setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        pieChart.getLegend().setTextSize(12f);
+
+        // make it render instantly
+        pieChart.invalidate();
     }
 
     @Override
@@ -62,11 +137,9 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
             textViewOperatingSystem.setText(dInfo.getOperatingSystem());
             textViewServerVersion.setText(dInfo.getServerVersion());
             textViewMemory.setText(Utilities.formatBytes(dInfo.getMemTotal()));
-            //Containers
-            textViewContainersTotal.setText(Integer.toString(dInfo.getContainers()));
-            textViewContainersRunning.setText(Integer.toString(dInfo.getContainersRunning()));
-            textViewContainersPaused.setText(Integer.toString(dInfo.getContainersPaused()));
-            textViewContainersStopped.setText(Integer.toString(dInfo.getContainersStopped()));
+
+            // render chart with docker info
+            loadChart(dInfo);
 
         }
     }

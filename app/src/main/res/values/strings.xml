@@ -18,4 +18,11 @@
     <string name="test_connection">Test</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="info_system">System</string>
+    <string name="info_os">Operating system</string>
+    <string name="info_server_version">Server version</string>
+    <string name="info_memory">Memory</string>
+    <string name="info_running">running</string>
+    <string name="info_paused">paused</string>
+    <string name="info_stopped">stopped</string>
 </resources>

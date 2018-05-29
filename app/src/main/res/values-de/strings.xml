@@ -15,4 +15,11 @@
     <string name="port">Port</string>
     <string name="cancel">Abbrechen</string>
     <string name="delete">Löschen</string>
+    <string name="info_system">System</string>
+    <string name="info_os">Betriebssystem</string>
+    <string name="info_server_version">Server Version</string>
+    <string name="info_memory">Speicher</string>
+    <string name="info_running">laufend</string>
+    <string name="info_paused">pausiert</string>
+    <string name="info_stopped">gestoppt</string>
 </resources>

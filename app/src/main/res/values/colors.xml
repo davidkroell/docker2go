@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-<!--
-Orange-violett
-    <color name="colorPrimary">#7b1fa2</color>
-    <color name="colorPrimaryDark">#4a0072</color>
-    <color name="colorAccent">#f57c00</color>
-
-türkies-dunkelblau
-    <color name="colorPrimary">#5cdb95</color>
-    <color name="colorPrimaryDark">#1aa867</color>
-    <color name="colorAccent">#05386b</color>
-
--->
-    <!-- rot-blau -->
+    <!-- red-blue theme -->
     <color name="colorPrimary">#c2001d</color>
     <color name="colorPrimaryDark">#890000</color>
     <color name="colorAccent">#55bcc9</color>
 
-    <!--
-dunkelblau-cyan
-<color name="colorPrimary">#1f2833</color>
-<color name="colorPrimaryDark">#00000c</color>
-<color name="colorAccent">#66fcf1</color>
--->
+    <!-- universal colors -->
+    <color name="colorBlack">#000</color>
+
+    <!-- piechart colors -->
+    <color name="containersRunning">@color/colorAccent</color>
+    <color name="containersPaused">@color/colorPrimary</color>
+    <color name="containersStopped">#9e9e9e</color>
+
 </resources>
