@@ -8,7 +8,7 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="connection_test_successful">Test successful</string>
-    <string name="connection_test_unsuccessful">Test unsuccessful</string>
+    <string name="connection_test_unsuccessful">Test failed</string>
     <string name="hostname_or_ip">Hostname or IP</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -25,4 +25,13 @@
     <string name="info_running">running</string>
     <string name="info_paused">paused</string>
     <string name="info_stopped">stopped</string>
+    <string name="info_num_cpus">Processors</string>
+    <string name="info_swarm" translatable="false">Swarm mode</string>
+    <string name="info_swarm_status" translatable="false">Status</string>
+    <string name="info_swarm_nodeid" translatable="false">Node ID</string>
+    <string name="info_control_avail">Node type</string>
+    <string name="info_swarm_nodeaddr">Node Address</string>
+    <string name="info_swarm_worker" translatable="false">Woker</string>
+    <string name="info_swarm_master" translatable="false">Master</string>
+    <string name="info_isactive" translatable="false">active</string>
 </resources>
