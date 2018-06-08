@@ -35,12 +35,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:design:26.1.0'
     // orm
-    compile 'com.github.satyan:sugar:1.4'
+    implementation 'com.github.satyan:sugar:1.4'
     // json library
-    compile 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
     // ssh library
     implementation files('libs/jsch-0.1.54.jar')
     // charts
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     implementation 'com.android.support:cardview-v7:26.1.0'
 }

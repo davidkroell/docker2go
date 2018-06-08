@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -47,7 +48,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 View view = super.getView(position, v, parent);
                 TextView textViewName = view.findViewById(R.id.textViewContainerName);
                 View statusIncicator = view.findViewById(R.id.statusIndicator);
-                DockerContainer currentContainer = containers.get(position);
+                final DockerContainer currentContainer = containers.get(position);
 
                 textViewName.setText(currentContainer.getNames().get(0));
                 if(currentContainer.getState().equals(getString(R.string.info_running))){
@@ -69,6 +70,22 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                     {
                         PopupMenu popup = new PopupMenu(v.getContext(), v);
                         popup.inflate(R.menu.popup_menu_container);
+                        // another anonymous class
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.container_popup_inspect:
+                                        Toast.makeText(getContext(), "pressed inspect on " + currentContainer.getNames().get(0),
+                                                Toast.LENGTH_SHORT).show();
+                                        return true;
+                                    case R.id.container_popup_stop:
+                                        return true;
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
                         popup.show();
                     }
                 });

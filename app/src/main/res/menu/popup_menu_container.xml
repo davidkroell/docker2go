@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/inspect"
+        android:id="@+id/container_popup_inspect"
         android:title="Inspect" />
     <item
-        android:id="@+id/stop"
+        android:id="@+id/container_popup_stop"
         android:title="Stop" />
 </menu>
