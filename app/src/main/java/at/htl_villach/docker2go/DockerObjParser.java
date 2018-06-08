@@ -14,6 +14,16 @@ public class DockerObjParser {
         return gson.fromJson(input, DockerInfo.class);
     }
 
+    public static DockerContainer[] Containers(String input) {
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(input, DockerContainer[].class);
+    }
+
+    public static DockerImage[] Images(String input) {
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(input, DockerImage[].class);
+    }
+
     // another method to create Info object with command supplied
     public static DockerObj Any(DockerCommandBuilder command){
         switch (command.getApiEndpoint()){

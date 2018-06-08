@@ -5,19 +5,11 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <View
-        android:id="@+id/statusIndicator"
-        android:layout_width="8dp"
-        android:layout_height="match_parent"
-        android:background="@color/colorBlack" />
-
     <TextView
-        android:id="@+id/textViewContainerName"
-        android:layout_width="0dp"
-        android:layout_marginStart="8dp"
+        android:id="@+id/textViewImageName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="4"
-        android:text="mariadb-server"
+        android:text="Apache 2.2"
         android:textSize="18sp" />
-
 </LinearLayout>

@@ -29,7 +29,6 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
             textViewSwarmStatus, textViewSwarmNodeType, textViewNodeAddr, textViewNodeId;
     Connection activeConnection;
     SwipeRefreshLayout swipeRefreshLayout;
-
     PieChart pieChart;
 
     /* TODO:

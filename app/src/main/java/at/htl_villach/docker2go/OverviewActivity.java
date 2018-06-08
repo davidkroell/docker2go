@@ -2,6 +2,8 @@ package at.htl_villach.docker2go;
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -35,11 +37,14 @@ public class OverviewActivity extends AppCompatActivity {
 
     private Connection curConnection;
 
+    private static TabInformation infoTab;
+    private static TabContainers containersTab;
+    private static TabImages imagesTab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -47,10 +52,11 @@ public class OverviewActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
+        mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -130,9 +136,87 @@ public class OverviewActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends PagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        FragmentManager fragmentManager;
+        Fragment[] fragments;
+
+        public SectionsPagerAdapter(FragmentManager fm){
+            fragmentManager = fm;
+            fragments = new Fragment[3];
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            assert(0 <= position && position < fragments.length);
+            FragmentTransaction trans = fragmentManager.beginTransaction();
+            trans.remove(fragments[position]);
+            trans.commit();
+            fragments[position] = null;
+        }
+
+        @Override
+        public Fragment instantiateItem(ViewGroup container, int position){
+            Fragment fragment = getItem(position);
+            FragmentTransaction trans = fragmentManager.beginTransaction();
+            trans.add(container.getId(),fragment,"fragment:"+position);
+            trans.commit();
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.length;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object fragment) {
+            return ((Fragment) fragment).getView() == view;
+        }
+
+        public Fragment getItem(int position){
+            assert(0 <= position && position < fragments.length);
+            if(fragments[position] == null){
+                switch (position) {
+                    case 0:
+                        if(infoTab == null) {
+                            infoTab = new TabInformation();
+                            Bundle arguments = new Bundle();
+                            arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
+                            infoTab.setArguments(arguments);
+                            //infoTab.setRetainInstance(true);
+                        }
+
+                        return infoTab;
+                    case 1:
+                        if(containersTab == null) {
+                            containersTab = new TabContainers();
+                            Bundle arguments = new Bundle();
+                            arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
+                            containersTab.setArguments(arguments);
+                            //infoTab.setRetainInstance(true);
+                        }
+
+                        return containersTab;
+                    case 2:
+                        if(imagesTab == null) {
+                            imagesTab = new TabImages();
+                            Bundle arguments = new Bundle();
+                            arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
+                            imagesTab.setArguments(arguments);
+                            //infoTab.setRetainInstance(true);
+                        }
+
+                        return imagesTab;
+                    default:
+                        return PlaceholderFragment.newInstance(position + 1);
+                }
+            }
+            return fragments[position];
+        }
+    }
+
+        /*public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -142,11 +226,35 @@ public class OverviewActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    TabInformation tabInfo = new TabInformation();
-                    Bundle arguments = new Bundle();
-                    arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
-                    tabInfo.setArguments(arguments);
-                    return tabInfo;
+                    if(infoTab == null) {
+                        infoTab = new TabInformation();
+                        Bundle arguments = new Bundle();
+                        arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
+                        infoTab.setArguments(arguments);
+                        infoTab.setRetainInstance(true);
+                    }
+
+                    return infoTab;
+                case 1:
+                    if(containersTab == null) {
+                        containersTab = new TabContainers();
+                        Bundle arguments = new Bundle();
+                        arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
+                        containersTab.setArguments(arguments);
+                        infoTab.setRetainInstance(true);
+                    }
+
+                    return containersTab;
+                case 2:
+                    if(imagesTab == null) {
+                        imagesTab = new TabImages();
+                        Bundle arguments = new Bundle();
+                        arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
+                        imagesTab.setArguments(arguments);
+                        infoTab.setRetainInstance(true);
+                    }
+
+                    return imagesTab;
                 default:
                     return PlaceholderFragment.newInstance(position + 1);
             }
@@ -157,5 +265,5 @@ public class OverviewActivity extends AppCompatActivity {
             // Show 3 total pages.
             return 3;
         }
-    }
+    }*/
 }
