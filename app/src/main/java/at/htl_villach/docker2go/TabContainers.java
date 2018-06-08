@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TabContainers extends Fragment implements Connection.onCommandStatusChangeListener {
 
@@ -57,6 +59,19 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                     statusIncicator.setBackgroundColor(
                             ContextCompat.getColor(getContext(), R.color.containersStopped));
                 }
+
+                // more button
+                ImageButton more = view.findViewById(R.id.buttonMore);
+
+                more.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v)
+                    {
+                        PopupMenu popup = new PopupMenu(v.getContext(), v);
+                        popup.inflate(R.menu.popup_menu_container);
+                        popup.show();
+                    }
+                });
 
                 return view;
             }

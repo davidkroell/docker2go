@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\kroel\Documents\docker2go\d2g.iml" filepath="C:\Users\kroel\Documents\docker2go\d2g.iml" />
       <module fileurl="file://$PROJECT_DIR$/docker2go.iml" filepath="$PROJECT_DIR$/docker2go.iml" />
     </modules>
   </component>
