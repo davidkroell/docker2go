@@ -1,5 +1,6 @@
 package at.htl_villach.docker2go;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -18,8 +20,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class TabContainers extends Fragment implements Connection.onCommandStatusChangeListener {
+import static at.htl_villach.docker2go.ConnectionActivity.KEY_POSITION;
 
+public class TabContainers extends Fragment implements Connection.onCommandStatusChangeListener, AdapterView.OnItemClickListener {
+
+    public static final String KEY_CONTAINER = "ContainerID";
+    int connectionPosition;
     ListView listViewContainers;
     Connection activeConnection;
     ArrayAdapter<DockerContainer> containerArrayAdapter;
@@ -50,7 +56,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 View statusIncicator = view.findViewById(R.id.statusIndicator);
                 final DockerContainer currentContainer = containers.get(position);
 
-                textViewName.setText(currentContainer.getNames().get(0));
+                textViewName.setText(currentContainer.getNames().get(0).substring(1));
                 if(currentContainer.getState().equals(getString(R.string.info_running))){
                     // container running
                     statusIncicator.setBackgroundColor(
@@ -76,8 +82,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.container_popup_inspect:
-                                        Toast.makeText(getContext(), "pressed inspect on " + currentContainer.getNames().get(0),
-                                                Toast.LENGTH_SHORT).show();
+                                        showDetails(currentContainer);
                                         return true;
                                     case R.id.container_popup_stop:
                                         return true;
@@ -96,14 +101,22 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
 
         Bundle arguments = getArguments();
         if(arguments != null) {
-            Integer position = getArguments().getInt(ConnectionActivity.KEY_POSITION, 0);
-            activeConnection = Connection.listAll(Connection.class).get(position);
+            connectionPosition = getArguments().getInt(KEY_POSITION, 0);
+            activeConnection = Connection.listAll(Connection.class).get(connectionPosition);
             LoadContainers();
         } else
             Toast.makeText(getContext(), "Fatal issue: No Arguments", Toast.LENGTH_SHORT).show();
 
         listViewContainers.setAdapter(containerArrayAdapter);
+        listViewContainers.setOnItemClickListener(this);
 
+    }
+
+    public void showDetails(DockerContainer container) {
+        Intent i = new Intent(getActivity(), ContainerDetailActivity.class);
+        i.putExtra(KEY_POSITION, connectionPosition);
+        i.putExtra("ContainerID", container.getId());
+        startActivity(i);
     }
 
     public void LoadContainers() {
@@ -128,5 +141,13 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
     @Override
     public void onAllCommandsFinished(CommandExecutionSummary commandExecutionSummary) {
         //Toast.makeText(getContext(), (!commandExecutionSummary.exececutedWithExceptions()) ? "Command executed successfully!" : "Command couldn't be executed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Intent i = new Intent(getActivity(), ContainerDetailActivity.class);
+        i.putExtra(KEY_POSITION, position);
+        i.putExtra("ContainerID", containerArrayAdapter.getItem(position).getId());
+        startActivity(i);
     }
 }

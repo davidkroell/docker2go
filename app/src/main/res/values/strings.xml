@@ -34,4 +34,5 @@
     <string name="info_swarm_worker" translatable="false">Woker</string>
     <string name="info_swarm_master" translatable="false">Master</string>
     <string name="info_isactive" translatable="false">active</string>
+    <string name="title_activity_container_detail">ContainerDetailActivity</string>
 </resources>

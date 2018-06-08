@@ -19,6 +19,11 @@ public class DockerObjParser {
         return gson.fromJson(input, DockerContainer[].class);
     }
 
+    public static DockerContainerDetail Container(String input) {
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(input, DockerContainerDetail.class);
+    }
+
     public static DockerImage[] Images(String input) {
         Gson gson = new GsonBuilder().create();
         return gson.fromJson(input, DockerImage[].class);
