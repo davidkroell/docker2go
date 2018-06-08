@@ -8,65 +8,6 @@ import java.util.List;
 
 public class DockerInfo implements DockerObj {
 
-    /**
-     * Architecture : x86_64
-     * BridgeNfIp6tables : true
-     * BridgeNfIptables : true
-     * CPUSet : true
-     * CPUShares : true
-     * CgroupDriver : cgroupfs
-     * ClusterAdvertise :
-     * ClusterStore :
-     * ContainerdCommit : {"Expected":"cfd04396dc68220d1cecbe686a6cc3aa5ce3667c","ID":"cfd04396dc68220d1cecbe686a6cc3aa5ce3667c"}
-     * Containers : 4
-     * ContainersPaused : 0
-     * ContainersRunning : 4
-     * ContainersStopped : 0
-     * CpuCfsPeriod : true
-     * CpuCfsQuota : true
-     * Debug : false
-     * DefaultRuntime : runc
-     * DockerRootDir : /var/lib/docker
-     * Driver : overlay2
-     * DriverStatus : [["Backing Filesystem","extfs"],["Supports d_type","true"],["Native Overlay Diff","true"]]
-     * ExperimentalBuild : false
-     * GenericResources : null
-     * HttpProxy :
-     * HttpsProxy :
-     * ID : 7JNV:SKNJ:VKWD:HCSZ:LP45:Y4TM:I7YX:AE7T:IE7X:5B5M:RMA7:UAAP
-     * IPv4Forwarding : true
-     * Images : 6
-     * IndexServerAddress : https://index.docker.io/v1/
-     * InitBinary : docker-init
-     * InitCommit : {"Expected":"949e6fa","ID":"949e6fa"}
-     * Isolation :
-     * KernelMemory : true
-     * KernelVersion : 4.9.0-6-amd64
-     * Labels : []
-     * LiveRestoreEnabled : false
-     * LoggingDriver : json-file
-     * MemTotal : 6261911552
-     * MemoryLimit : true
-     * NCPU : 2
-     * NEventsListener : 0
-     * NFd : 49
-     * NGoroutines : 61
-     * Name : merlin
-     * NoProxy :
-     * OSType : linux
-     * OomKillDisable : true
-     * OperatingSystem : Debian GNU/Linux 9 (stretch)
-     * Plugins : {"Authorization":null,"Log":["awslogs","fluentd","gcplogs","gelf","journald","json-file","logentries","splunk","syslog"],"Network":["bridge","host","macvlan","null","overlay"],"Volume":["local"]}
-     * RuncCommit : {"Expected":"4fc53a81fb7c994640722ac585fa9ca548971871","ID":"4fc53a81fb7c994640722ac585fa9ca548971871"}
-     * Runtimes : {"runc":{"path":"docker-runc"}}
-     * SecurityOptions : ["name=seccomp,profile=default"]
-     * ServerVersion : 18.03.0-ce
-     * SwapLimit : false
-     * Swarm : {"ControlAvailable":false,"Error":"","LocalNodeState":"inactive","NodeAddr":"","NodeID":"","RemoteManagers":null}
-     * SystemStatus : null
-     * SystemTime : 2018-05-18T11:16:10.0101956+02:00
-     */
-
     private String Architecture;
     private boolean BridgeNfIp6tables;
     private boolean BridgeNfIptables;

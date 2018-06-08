@@ -24,12 +24,8 @@ import java.util.List;
 public class TabInformation extends Fragment implements Connection.onCommandStatusChangeListener {
 
     static TextView textViewOperatingSystem, textViewServerVersion, textViewMemory;
-    static Connection activeConnection;
-    PieChart pieChart;
-
-    /* TODO:
-        * Keep content after page goes inactive
-     */
+    Connection activeConnection;
+    static PieChart pieChart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -140,7 +136,6 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
 
             // render chart with docker info
             loadChart(dInfo);
-
         }
     }
 
