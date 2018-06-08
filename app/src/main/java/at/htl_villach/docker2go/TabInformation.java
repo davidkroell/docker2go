@@ -4,9 +4,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +23,24 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabInformation extends Fragment implements Connection.onCommandStatusChangeListener {
+public class TabInformation extends Fragment implements Connection.onCommandStatusChangeListener, SwipeRefreshLayout.OnRefreshListener {
 
+    TextView textViewOperatingSystem, textViewServerVersion, textViewMemory, textViewNumCPUs,
+            textViewSwarmStatus, textViewSwarmNodeType, textViewNodeAddr, textViewNodeId;
+    Connection activeConnection;
+    SwipeRefreshLayout swipeRefreshLayout;
+
+<<<<<<< HEAD
     static TextView textViewOperatingSystem, textViewServerVersion, textViewMemory;
     Connection activeConnection;
     static PieChart pieChart;
+=======
+    PieChart pieChart;
+
+    /* TODO:
+        * Keep content after page goes inactive
+     */
+>>>>>>> dcb2a8c7e00357ee260206ad6184645ea2909204
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +53,19 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
         textViewOperatingSystem = view.findViewById(R.id.textViewOperatingSystem);
         textViewServerVersion = view.findViewById(R.id.textViewServerVersion);
         textViewMemory = view.findViewById(R.id.textViewMemory);
+        textViewNumCPUs = view.findViewById(R.id.textViewNumCPUs);
+
+        // swarm text fields
+        textViewSwarmStatus = view.findViewById(R.id.textViewSwarmStatus);
+        textViewSwarmNodeType = view.findViewById(R.id.textViewSwarmNodeType);
+        textViewNodeAddr = view.findViewById(R.id.textViewSwarmNodeAddr);
+        textViewNodeId = view.findViewById(R.id.textViewSwarmNodeId);
+
+
+        // swipe to refresh
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(true);
 
         pieChart = view.findViewById(R.id.piechartContainers);
 
@@ -133,14 +161,56 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
             textViewOperatingSystem.setText(dInfo.getOperatingSystem());
             textViewServerVersion.setText(dInfo.getServerVersion());
             textViewMemory.setText(Utilities.formatBytes(dInfo.getMemTotal()));
+            textViewNumCPUs.setText(Integer.toString(dInfo.getNCPU()));
 
             // render chart with docker info
             loadChart(dInfo);
+<<<<<<< HEAD
+=======
+
+            // swarm
+            DockerInfo.SwarmBean swarm = dInfo.getSwarm();
+            textViewSwarmStatus.setText(swarm.getLocalNodeState());
+
+            if(swarm.getLocalNodeState().equals(getString(R.string.info_isactive))) {
+                if (swarm.isControlAvailable())
+                    textViewSwarmNodeType.setText(getString(R.string.info_swarm_master));
+                else
+                    textViewSwarmNodeType.setText(getString(R.string.info_swarm_worker));
+                LinearLayout ll = (LinearLayout) textViewSwarmNodeType.getParent();
+                ll.setVisibility(View.VISIBLE);
+
+                textViewNodeAddr.setText(swarm.getNodeAddr());
+                ll = (LinearLayout) textViewNodeAddr.getParent();
+                ll.setVisibility(View.VISIBLE);
+
+                textViewNodeId.setText(swarm.getNodeID());
+                ll = (LinearLayout) textViewNodeId.getParent();
+                ll.setVisibility(View.VISIBLE);
+            }else{
+                // hide views
+                LinearLayout ll = (LinearLayout) textViewSwarmNodeType.getParent();
+                ll.setVisibility(View.GONE);
+
+                ll = (LinearLayout) textViewNodeAddr.getParent();
+                ll.setVisibility(View.GONE);
+
+                ll = (LinearLayout) textViewNodeId.getParent();
+                ll.setVisibility(View.GONE);
+            }
+>>>>>>> dcb2a8c7e00357ee260206ad6184645ea2909204
         }
     }
 
     @Override
     public void onAllCommandsFinished(CommandExecutionSummary commandExecutionSummary) {
         //Toast.makeText(getContext(), (!commandExecutionSummary.exececutedWithExceptions()) ? "Command executed successfully!" : "Command couldn't be executed", Toast.LENGTH_SHORT).show();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        LoadInfo();
     }
 }
