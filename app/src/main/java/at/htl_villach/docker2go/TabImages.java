@@ -76,7 +76,8 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
             images.add(singleImage);
 
         imageArrayAdapter.notifyDataSetChanged();
-        Toast.makeText(getContext(), "Amount of containers: " + dImages.length, Toast.LENGTH_SHORT).show();
+        OverviewActivity oa = (OverviewActivity)getActivity();
+        oa.loadingIndicator.setVisibility(View.GONE);
     }
 
     @Override

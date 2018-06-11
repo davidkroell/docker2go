@@ -33,8 +33,9 @@
         <activity
             android:name=".OverviewActivity"
             android:label="@string/title_activity_overview"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ContainerDetailActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|screenSize" />
+        <activity android:name=".ContainerDetailActivity"/>
     </application>
 
 </manifest>

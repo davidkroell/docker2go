@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 public class OverviewActivity extends AppCompatActivity {
 
@@ -37,6 +38,7 @@ public class OverviewActivity extends AppCompatActivity {
 
     private Connection curConnection;
 
+    public ProgressBar loadingIndicator;
     private static TabInformation infoTab;
     private static TabContainers containersTab;
     private static TabImages imagesTab;
@@ -44,12 +46,15 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_overview);
+        setContentView(R.layout.activity_overview_experiment);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        loadingIndicator = findViewById(R.id.loadingIndicator);
+        loadingIndicator.setVisibility(View.VISIBLE);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
@@ -184,7 +189,7 @@ public class OverviewActivity extends AppCompatActivity {
                             Bundle arguments = new Bundle();
                             arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
                             infoTab.setArguments(arguments);
-                            //infoTab.setRetainInstance(true);
+                            infoTab.setRetainInstance(true);
                         }
 
                         return infoTab;
@@ -194,7 +199,7 @@ public class OverviewActivity extends AppCompatActivity {
                             Bundle arguments = new Bundle();
                             arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
                             containersTab.setArguments(arguments);
-                            //infoTab.setRetainInstance(true);
+                            containersTab.setRetainInstance(true);
                         }
 
                         return containersTab;
@@ -204,7 +209,7 @@ public class OverviewActivity extends AppCompatActivity {
                             Bundle arguments = new Bundle();
                             arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
                             imagesTab.setArguments(arguments);
-                            //infoTab.setRetainInstance(true);
+                            imagesTab.setRetainInstance(true);
                         }
 
                         return imagesTab;

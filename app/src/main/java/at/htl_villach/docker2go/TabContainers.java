@@ -2,7 +2,9 @@ package at.htl_villach.docker2go;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -22,7 +25,7 @@ import java.util.ArrayList;
 
 import static at.htl_villach.docker2go.ConnectionActivity.KEY_POSITION;
 
-public class TabContainers extends Fragment implements Connection.onCommandStatusChangeListener, AdapterView.OnItemClickListener {
+public class TabContainers extends Fragment implements Connection.onCommandStatusChangeListener {
 
     public static final String KEY_CONTAINER = "ContainerID";
     int connectionPosition;
@@ -68,13 +71,13 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 }
 
                 // more button
-                ImageButton more = view.findViewById(R.id.buttonMore);
+                /*ImageButton more = view.findViewById(R.id.buttonMore);
 
                 more.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v)
                     {
-                        PopupMenu popup = new PopupMenu(v.getContext(), v);
+                        /*PopupMenu popup = new PopupMenu(v.getContext(), v);
                         popup.inflate(R.menu.popup_menu_container);
                         // another anonymous class
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -92,8 +95,9 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                             }
                         });
                         popup.show();
+
                     }
-                });
+                })*/
 
                 return view;
             }
@@ -108,8 +112,33 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
             Toast.makeText(getContext(), "Fatal issue: No Arguments", Toast.LENGTH_SHORT).show();
 
         listViewContainers.setAdapter(containerArrayAdapter);
-        listViewContainers.setOnItemClickListener(this);
+        listViewContainers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                ContainerBottomSheetDialog containerDialog = new ContainerBottomSheetDialog();
+                Bundle arguments = new Bundle();
+                arguments.putInt(KEY_POSITION, connectionPosition);
+                containerDialog.setArguments(arguments);
+                containerDialog.setContainer(containers.get(position));
+                containerDialog.setListener(new ContainerBottomSheetDialog.BottomSheetListener(){
+                    @Override
+                    public void onActionSelected(String action, DockerContainer affectedContainer) {
+                        Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
+                        switch(action) {
+                            case "Inspect":
+                                showDetails(affectedContainer);
+                                break;
+                            case "Start":
+                                break;
+                            case "Stop":
+                                break;
+                        }
+                    }
+                });
+                containerDialog.show(getFragmentManager(), "Container Sheet");
+            }
+        });
     }
 
     public void showDetails(DockerContainer container) {
@@ -143,11 +172,17 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
         //Toast.makeText(getContext(), (!commandExecutionSummary.exececutedWithExceptions()) ? "Command executed successfully!" : "Command couldn't be executed", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        Intent i = new Intent(getActivity(), ContainerDetailActivity.class);
-        i.putExtra(KEY_POSITION, position);
-        i.putExtra("ContainerID", containerArrayAdapter.getItem(position).getId());
-        startActivity(i);
-    }
+    /*@Override
+    public void onActionSelected(String action, DockerContainer affectedContainer) {
+        Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
+        switch(action) {
+            case "Inspect":
+                showDetails(affectedContainer);
+                break;
+            case "Start":
+                break;
+            case "Stop":
+                break;
+        }
+    }*/
 }

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.Inet4Address;
+
 public class ContainerDetailActivity extends AppCompatActivity implements Connection.onCommandStatusChangeListener {
 
     Connection activeConnection;
@@ -16,6 +18,10 @@ public class ContainerDetailActivity extends AppCompatActivity implements Connec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container_detail);
 
+        //Set title of this activity
+        getSupportActionBar().setTitle("Container Details");
+
+        //Retrieve current connection and Container ID from extras
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             Integer position = extras.getInt(ConnectionActivity.KEY_POSITION, 0);
@@ -27,30 +33,47 @@ public class ContainerDetailActivity extends AppCompatActivity implements Connec
     }
 
     public void loadContainerData(String containerID) {
-        Toast.makeText(getApplicationContext(), "ContainerID is " + containerID, Toast.LENGTH_SHORT).show();
+        //Create command based on containerID
         DockerCommandBuilder imagesCommand = new DockerCommandBuilder()
                 .apiEndpoint(String.format("/containers/%s/json", containerID))
                 .requestMethod("GET");
 
+        //Execute the previously created command to retrieve data from the server
         activeConnection.executeCommand(this, imagesCommand);
     }
 
     @Override
     public void onCommandFinished(Command command) {
+        //Convert JSON to Object
         DockerContainerDetail dContainer = DockerObjParser.Container(command.getResult());
-            currentContainer = dContainer;
+        //Set resulting object as currentContainer.
+        currentContainer = dContainer;
 
-            TextView textViewContainerName = findViewById(R.id.textViewContainerName);
-            TextView textViewContainerStatus = findViewById(R.id.textViewContainerStatus);
-            TextView textViewContainerPlatform = findViewById(R.id.textViewContainerPlatform);
-            Toast.makeText(getApplicationContext(), "Loaded data for container: " + dContainer.getName(), Toast.LENGTH_SHORT).show();
-            textViewContainerName.setText(dContainer.getName().substring(1));
-            textViewContainerStatus.setText(dContainer.getState().getStatus());
-            textViewContainerPlatform.setText(dContainer.getPlatform());
+        //Create objects to interact with the UI
+        TextView textViewContainerName = findViewById(R.id.textViewContainerName);
+        TextView textViewContainerStatus = findViewById(R.id.textViewContainerStatus);
+        TextView textViewContainerPlatform = findViewById(R.id.textViewContainerPlatform);
+        TextView textViewContainerImage = findViewById(R.id.textViewContainerImage);
+        TextView textViewContainerWorkingDir = findViewById(R.id.textViewContainerWorkingDir);
+        TextView textViewNetworkIPAddress = findViewById(R.id.textViewNetworkIPAddress);
+        TextView textViewNetworkGateway = findViewById(R.id.textViewNetworkGateway);
+        TextView textViewNetworkMACAddress = findViewById(R.id.textViewNetworkMACAddress);
+
+        //Update Overview Card
+        textViewContainerName.setText(dContainer.getName().substring(1));
+        textViewContainerStatus.setText(dContainer.getState().getStatus());
+        textViewContainerPlatform.setText(dContainer.getPlatform());
+        textViewContainerImage.setText(dContainer.getConfig().getImage());
+        textViewContainerWorkingDir.setText(dContainer.getConfig().getWorkingDir());
+
+        //Update Network Card
+        textViewNetworkIPAddress.setText(dContainer.getNetworkSettings().getIPAddress() + "/" + dContainer.getNetworkSettings().getIPPrefixLen());
+        textViewNetworkGateway.setText(dContainer.getNetworkSettings().getGateway());
+        textViewNetworkMACAddress.setText(dContainer.getNetworkSettings().getMacAddress());
     }
 
     @Override
     public void onAllCommandsFinished(CommandExecutionSummary commandExecutionSummary) {
-        //Toast.makeText(getContext(), (!commandExecutionSummary.exececutedWithExceptions()) ? "Command executed successfully!" : "Command couldn't be executed", Toast.LENGTH_SHORT).show();
+
     }
 }
