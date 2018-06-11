@@ -144,7 +144,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
     public void showDetails(DockerContainer container) {
         Intent i = new Intent(getActivity(), ContainerDetailActivity.class);
         i.putExtra(KEY_POSITION, connectionPosition);
-        i.putExtra("ContainerID", container.getId());
+        i.putExtra(KEY_CONTAINER, container.getId());
         startActivity(i);
     }
 
