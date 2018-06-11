@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,11 +39,13 @@ public class ConnectionActivity extends AppCompatActivity {
 
             @Override
             public View getView(final int position, View v, ViewGroup parent){
+                // define fields
                 View view = super.getView(position, v, parent);
                 TextView textViewHost = view.findViewById(R.id.textViewHost);
                 TextView textViewUser = view.findViewById(R.id.textViewUser);
                 TextView textViewOs = view.findViewById(R.id.textViewOperatingSystem);
                 TextView textViewDescription = view.findViewById(R.id.textViewDescription);
+                ImageView imageView = view.findViewById(R.id.connectionThumbnail);
 
                 final Connection currConn = Connection.listAll(Connection.class).get(position);
 
@@ -53,6 +56,17 @@ public class ConnectionActivity extends AppCompatActivity {
                 if(osStr == null || osStr.equals(""))
                     osStr = getString(R.string.connection_unkown_os);
                 textViewOs.setText(osStr);
+
+                // set image view drawable depending on operating system
+                osStr = osStr.toLowerCase();
+                if(osStr.contains("debian"))
+                    imageView.setImageResource(R.drawable.debian);
+                else if(osStr.contains("ubuntu"))
+                    imageView.setImageResource(R.drawable.ubuntu);
+                else if(osStr.contains("fedora"))
+                    imageView.setImageResource(R.drawable.fedora);
+                else if(osStr.contains("centos"))
+                    imageView.setImageResource(R.drawable.centos);
 
                 textViewDescription.setText(
                         String.format(getString(R.string.connection_description),
