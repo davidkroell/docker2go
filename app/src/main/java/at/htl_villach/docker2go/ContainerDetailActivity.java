@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.Inet4Address;
-
 public class ContainerDetailActivity extends AppCompatActivity implements Connection.onCommandStatusChangeListener {
 
     Connection activeConnection;
@@ -24,7 +22,7 @@ public class ContainerDetailActivity extends AppCompatActivity implements Connec
         //Retrieve current connection and Container ID from extras
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
-            Integer position = extras.getInt(ConnectionActivity.KEY_POSITION, 0);
+            Integer position = extras.getInt(ConnectionActivity.KEY_CONN_ID, 0);
             activeConnection = Connection.listAll(Connection.class).get(position);
             containerID = extras.getString(TabContainers.KEY_CONTAINER, null);
             loadContainerData(containerID);

@@ -69,8 +69,8 @@ public class OverviewActivity extends AppCompatActivity {
         // get intent data if item was clicked
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            Integer position = extras.getInt(ConnectionActivity.KEY_POSITION, 0);
-            curConnection = Connection.listAll(Connection.class).get(position);
+            Long position = extras.getLong(ConnectionActivity.KEY_CONN_ID, 0);
+            curConnection = Connection.findById(Connection.class, position);
 
             getSupportActionBar().setTitle(curConnection.getUsername() + "@" + curConnection.getHostname());
         }else{
@@ -187,7 +187,7 @@ public class OverviewActivity extends AppCompatActivity {
                         if(infoTab == null) {
                             infoTab = new TabInformation();
                             Bundle arguments = new Bundle();
-                            arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
+                            arguments.putInt(ConnectionActivity.KEY_CONN_ID, getIntent().getIntExtra(ConnectionActivity.KEY_CONN_ID, 0));
                             infoTab.setArguments(arguments);
                             infoTab.setRetainInstance(true);
                         }
@@ -197,7 +197,7 @@ public class OverviewActivity extends AppCompatActivity {
                         if(containersTab == null) {
                             containersTab = new TabContainers();
                             Bundle arguments = new Bundle();
-                            arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
+                            arguments.putInt(ConnectionActivity.KEY_CONN_ID, getIntent().getIntExtra(ConnectionActivity.KEY_CONN_ID, 0));
                             containersTab.setArguments(arguments);
                             containersTab.setRetainInstance(true);
                         }
@@ -207,7 +207,7 @@ public class OverviewActivity extends AppCompatActivity {
                         if(imagesTab == null) {
                             imagesTab = new TabImages();
                             Bundle arguments = new Bundle();
-                            arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
+                            arguments.putInt(ConnectionActivity.KEY_CONN_ID, getIntent().getIntExtra(ConnectionActivity.KEY_CONN_ID, 0));
                             imagesTab.setArguments(arguments);
                             imagesTab.setRetainInstance(true);
                         }

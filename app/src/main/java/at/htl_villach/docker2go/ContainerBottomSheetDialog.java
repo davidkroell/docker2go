@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static at.htl_villach.docker2go.ConnectionActivity.KEY_POSITION;
+import static at.htl_villach.docker2go.ConnectionActivity.KEY_CONN_ID;
 
 public class ContainerBottomSheetDialog extends BottomSheetDialogFragment {
 
@@ -31,7 +31,7 @@ public class ContainerBottomSheetDialog extends BottomSheetDialogFragment {
         View v = inflater.inflate(R.layout.bottom_sheet_container, container, false);
 
         if(getArguments() != null) {
-            connectionPosition = getArguments().getInt(KEY_POSITION);
+            connectionPosition = getArguments().getInt(KEY_CONN_ID);
         }
 
         ListView listViewSheetNav = v.findViewById(R.id.listViewSheetNav);
@@ -95,7 +95,7 @@ public class ContainerBottomSheetDialog extends BottomSheetDialogFragment {
 
     public void showDetails(DockerContainer container) {
         Intent i = new Intent(getActivity(), ContainerDetailActivity.class);
-        i.putExtra(KEY_POSITION, connectionPosition);
+        i.putExtra(KEY_CONN_ID, connectionPosition);
         i.putExtra("ContainerID", container.getId());
         startActivity(i);
     }

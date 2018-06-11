@@ -35,4 +35,8 @@
     <string name="info_swarm_master" translatable="false">Master</string>
     <string name="info_isactive" translatable="false">active</string>
     <string name="title_activity_container_detail">ContainerDetailActivity</string>
+    <string name="connect">Connect</string>
+    <string name="edit">Edit</string>
+    <string name="connection_description">You were already %d times connected to this destination using port %d</string>
+    <string name="connection_unkown_os">Unknown operating system</string>
 </resources>
