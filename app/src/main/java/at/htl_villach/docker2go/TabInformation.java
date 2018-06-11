@@ -162,9 +162,6 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
             textViewMemory.setText(Utilities.formatBytes(dInfo.getMemTotal()));
             textViewNumCPUs.setText(Integer.toString(dInfo.getNCPU()));
 
-            // render chart with docker info
-            loadChart(dInfo);
-
             // swarm
             DockerInfo.SwarmBean swarm = dInfo.getSwarm();
             textViewSwarmStatus.setText(swarm.getLocalNodeState());
@@ -195,6 +192,9 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
                 ll = (LinearLayout) textViewNodeId.getParent();
                 ll.setVisibility(View.GONE);
             }
+
+            // render chart with docker info
+            loadChart(dInfo);
         }
     }
 

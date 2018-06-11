@@ -49,21 +49,28 @@ public class ContainerBottomSheetDialog extends BottomSheetDialogFragment {
 
                 switch(menuOptions.get(position)) {
                     case "Inspect":
-                        iconView.setBackgroundResource(R.drawable.ic_baseline_search_24px);
+                        iconView.setBackgroundResource(R.drawable.ic_remove_red_eye_black_24dp);
                         break;
                     case "Restart":
                         iconView.setBackgroundResource(R.drawable.ic_baseline_cached_24px);
                         break;
                     case "Stop":
-                        iconView.setBackgroundResource(R.drawable.ic_baseline_toggle_off_24px);
+                        iconView.setBackgroundResource(R.drawable.ic_stop_black_24dp);
                         break;
                     case "Start":
-                        iconView.setBackgroundResource(R.drawable.ic_baseline_toggle_on_24px);
+                        iconView.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
                 }
 
                 return view;
             }
         };
+
+
+        TextView textViewContainerTitle = v.findViewById(R.id.textViewContainerTitle);
+        textViewContainerTitle.setText(mContainer.getNames().get(0).substring(1));
+
+        TextView textViewImageTitle = v.findViewById(R.id.textViewImageTitle);
+        textViewImageTitle.setText(mContainer.getImage());
 
         listViewSheetNav.setAdapter(adapterNavigation);
         listViewSheetNav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
