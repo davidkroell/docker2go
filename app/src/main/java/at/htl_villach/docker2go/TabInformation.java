@@ -194,7 +194,6 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
 
     @Override
     public void onAllCommandsFinished(CommandExecutionSummary commandExecutionSummary) {
-        //Toast.makeText(getContext(), (!commandExecutionSummary.exececutedWithExceptions()) ? "Command executed successfully!" : "Command couldn't be executed", Toast.LENGTH_SHORT).show();
         swipeRefreshLayout.setRefreshing(false);
     }
 

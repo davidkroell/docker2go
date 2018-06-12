@@ -34,6 +34,7 @@ public class DockerObjParser {
         switch (command.getApiEndpoint()){
             case "/info":
                 return Info(command.getResult());
+            case "/containers":
             default:
                 return null;
         }

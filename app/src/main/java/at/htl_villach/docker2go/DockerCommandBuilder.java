@@ -64,7 +64,6 @@ public class DockerCommandBuilder implements Command {
         return this;
     }
 
-
     @Override
     public String parseString() {
         return this.toString();

@@ -4,33 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.PopupMenu;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static at.htl_villach.docker2go.ConnectionActivity.KEY_POSITION;
 
-public class TabContainers extends Fragment implements Connection.onCommandStatusChangeListener {
+public class TabContainers extends Fragment implements Connection.onCommandStatusChangeListener, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String KEY_CONTAINER = "ContainerID";
     int connectionPosition;
+    OverviewActivity parentActivity;
     ListView listViewContainers;
     Connection activeConnection;
+    SwipeRefreshLayout swipeRefreshLayout;
     ArrayAdapter<DockerContainer> containerArrayAdapter;
     ArrayList<DockerContainer> containers;
 
@@ -47,57 +44,35 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         listViewContainers = view.findViewById(R.id.listViewContainers);
-        containers = new ArrayList<DockerContainer>();
+        parentActivity = (OverviewActivity)getActivity();
+        containers = new ArrayList<>();
+
+        // swipe to refresh
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(true);
 
         containerArrayAdapter = new ArrayAdapter<DockerContainer>(this.getContext(),
                 R.layout.list_item_container, R.id.textViewContainerName, containers) {
 
+            @NonNull
             @Override
-            public View getView(int position, View v, ViewGroup parent){
+            public View getView(int position, View v, @NonNull ViewGroup parent){
                 View view = super.getView(position, v, parent);
                 TextView textViewName = view.findViewById(R.id.textViewContainerName);
-                View statusIncicator = view.findViewById(R.id.statusIndicator);
+                View statusIndicator = view.findViewById(R.id.statusIndicator);
                 final DockerContainer currentContainer = containers.get(position);
 
                 textViewName.setText(currentContainer.getNames().get(0).substring(1));
                 if(currentContainer.getState().equals(getString(R.string.info_running))){
                     // container running
-                    statusIncicator.setBackgroundColor(
+                    statusIndicator.setBackgroundColor(
                             ContextCompat.getColor(getContext(), R.color.containersRunning));
                 }else{
                     // container not running
-                    statusIncicator.setBackgroundColor(
+                    statusIndicator.setBackgroundColor(
                             ContextCompat.getColor(getContext(), R.color.containersStopped));
                 }
-
-                // more button
-                /*ImageButton more = view.findViewById(R.id.buttonMore);
-
-                more.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v)
-                    {
-                        /*PopupMenu popup = new PopupMenu(v.getContext(), v);
-                        popup.inflate(R.menu.popup_menu_container);
-                        // another anonymous class
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.container_popup_inspect:
-                                        showDetails(currentContainer);
-                                        return true;
-                                    case R.id.container_popup_stop:
-                                        return true;
-                                    default:
-                                        return false;
-                                }
-                            }
-                        });
-                        popup.show();
-
-                    }
-                })*/
 
                 return view;
             }
@@ -116,7 +91,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                ContainerBottomSheetDialog containerDialog = new ContainerBottomSheetDialog();
+                final ContainerBottomSheetDialog containerDialog = new ContainerBottomSheetDialog();
                 Bundle arguments = new Bundle();
                 arguments.putInt(KEY_POSITION, connectionPosition);
                 containerDialog.setArguments(arguments);
@@ -124,14 +99,21 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 containerDialog.setListener(new ContainerBottomSheetDialog.BottomSheetListener(){
                     @Override
                     public void onActionSelected(String action, DockerContainer affectedContainer) {
-                        Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
                         switch(action) {
                             case "Inspect":
                                 showDetails(affectedContainer);
                                 break;
+                            case "Restart":
+                                parentActivity.loadingIndicator.setVisibility(View.VISIBLE);
+                                restartContainer(containerDialog.getContainer());
+                                break;
                             case "Start":
+                                parentActivity.loadingIndicator.setVisibility(View.VISIBLE);
+                                startContainer(containerDialog.getContainer());
                                 break;
                             case "Stop":
+                                parentActivity.loadingIndicator.setVisibility(View.VISIBLE);
+                                stopContainer(containerDialog.getContainer());
                                 break;
                         }
                     }
@@ -139,6 +121,31 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 containerDialog.show(getFragmentManager(), "Container Sheet");
             }
         });
+    }
+
+    public void startContainer(DockerContainer container) {
+        DockerCommandBuilder containersCommand = new DockerCommandBuilder()
+                .apiEndpoint("/containers/" + container.getNames().get(0).substring(1) + "/start")
+                .requestMethod("POST");
+
+        activeConnection.executeCommand(this, containersCommand);
+    }
+
+    public void restartContainer(DockerContainer container) {
+        DockerCommandBuilder containersCommand = new DockerCommandBuilder()
+                .apiEndpoint("/containers/" + container.getNames().get(0).substring(1) + "/restart")
+                .requestMethod("POST");
+
+        activeConnection.executeCommand(this, containersCommand);
+    }
+
+
+    public void stopContainer(DockerContainer container) {
+        DockerCommandBuilder containersCommand = new DockerCommandBuilder()
+                .apiEndpoint("/containers/" + container.getNames().get(0).substring(1) + "/stop")
+                .requestMethod("POST");
+
+        activeConnection.executeCommand(this, containersCommand);
     }
 
     public void showDetails(DockerContainer container) {
@@ -150,7 +157,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
 
     public void LoadContainers() {
         DockerCommandBuilder containersCommand = new DockerCommandBuilder()
-                .apiEndpoint("/containers/json")
+                .apiEndpoint("/containers/json?all=true")
                 .requestMethod("GET");
 
         activeConnection.executeCommand(this, containersCommand);
@@ -158,31 +165,41 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
 
     @Override
     public void onCommandFinished(Command command) {
-        DockerContainer[] dContainers = DockerObjParser.Containers(command.getResult());
+        String[] parts = command.getApiEndpoint().split("/");
 
-        for(DockerContainer singleContainer : dContainers)
-            containers.add(singleContainer);
+        if(parts[1].equalsIgnoreCase("containers") && parts[2].equalsIgnoreCase("json?all=true")) {
+            DockerContainer[] dContainers = DockerObjParser.Containers(command.getResult());
 
-        containerArrayAdapter.notifyDataSetChanged();
-        Toast.makeText(getContext(), "Amount of containers: " + dContainers.length, Toast.LENGTH_SHORT).show();
+            containers.clear();
+            containers.addAll(Arrays.asList(dContainers));
+
+            containerArrayAdapter.notifyDataSetChanged();
+        }
+        else if(parts[3].equalsIgnoreCase("start")) {
+            LoadContainers();
+            parentActivity.infoTab.LoadInfo();
+            parentActivity.loadingIndicator.setVisibility(View.GONE);
+        }
+        else if(parts[3].equalsIgnoreCase("stop")) {
+            LoadContainers();
+            parentActivity.infoTab.LoadInfo();
+            parentActivity.loadingIndicator.setVisibility(View.GONE);
+        }
+        else if(parts[3].equalsIgnoreCase("restart")) {
+            LoadContainers();
+            parentActivity.infoTab.LoadInfo();
+            parentActivity.loadingIndicator.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onAllCommandsFinished(CommandExecutionSummary commandExecutionSummary) {
-        //Toast.makeText(getContext(), (!commandExecutionSummary.exececutedWithExceptions()) ? "Command executed successfully!" : "Command couldn't be executed", Toast.LENGTH_SHORT).show();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
-    /*@Override
-    public void onActionSelected(String action, DockerContainer affectedContainer) {
-        Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
-        switch(action) {
-            case "Inspect":
-                showDetails(affectedContainer);
-                break;
-            case "Start":
-                break;
-            case "Stop":
-                break;
-        }
-    }*/
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        LoadContainers();
+    }
 }

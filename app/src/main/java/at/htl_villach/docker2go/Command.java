@@ -29,6 +29,8 @@ public interface Command {
     // returns the result of the command, if already set
     String getResult();
 
+    String getApiEndpoint();
+
     // sets the result
     void setResult(String result);
 

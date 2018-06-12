@@ -39,9 +39,9 @@ public class OverviewActivity extends AppCompatActivity {
     private Connection curConnection;
 
     public ProgressBar loadingIndicator;
-    private static TabInformation infoTab;
-    private static TabContainers containersTab;
-    private static TabImages imagesTab;
+    public static TabInformation infoTab;
+    public static TabContainers containersTab;
+    public static TabImages imagesTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
