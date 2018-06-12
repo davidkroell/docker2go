@@ -13,7 +13,8 @@ public class Connection extends SugarRecord {
     private String username;
     private String password;
     private Integer sshPort;
-    private Integer timesConnected;
+    private Integer timesConnected = 0;
+    private String operatingSystem = "";
 
     @Ignore
     private Integer connectionTimeout = 10000;
@@ -27,10 +28,16 @@ public class Connection extends SugarRecord {
     public Connection() {}
 
     public Connection(String hostname, String username, String password, int sshPort) {
+        this(hostname, username, password, sshPort, "");
+    }
+
+    public Connection(String hostname, String username, String password, int sshPort, String operatingSystem) {
         this.hostname = hostname;
         this.username = username;
         this.password = password;
         this.sshPort = sshPort;
+        this.operatingSystem = operatingSystem;
+        this.timesConnected = 0;
     }
 
     @Override
@@ -76,6 +83,22 @@ public class Connection extends SugarRecord {
 
     public void setConnectionTimeout(Integer connectionTimeout) {
         this.connectionTimeout = connectionTimeout;
+    }
+
+    public String getOperatingSystem() {
+        return operatingSystem;
+    }
+
+    public void setOperatingSystem(String operatingSystem) {
+        this.operatingSystem = operatingSystem;
+    }
+
+    public void increaseTimesConnected() {
+        this.timesConnected++;
+    }
+
+    public Integer getTimesConnected() {
+        return timesConnected;
     }
 
     public void executeCommand(Connection.onCommandStatusChangeListener listener, Command... commands){

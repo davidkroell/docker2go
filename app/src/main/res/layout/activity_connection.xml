@@ -14,7 +14,9 @@
         <ListView
             android:id="@+id/listViewConnections"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:dividerHeight="0dp"
+            android:divider="@null"/>
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.FloatingActionButton

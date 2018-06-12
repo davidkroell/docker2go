@@ -61,7 +61,7 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
 
         Bundle arguments = getArguments();
         if(arguments != null) {
-            Integer position = getArguments().getInt(ConnectionActivity.KEY_POSITION, 0);
+            Integer position = getArguments().getInt(ConnectionActivity.KEY_CONN_ID, 0);
             activeConnection = Connection.listAll(Connection.class).get(position);
             LoadImages();
         } else

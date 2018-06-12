@@ -26,4 +26,8 @@
     <string name="info_swarm_status">Status</string>
     <string name="info_control_avail">Knotentyp</string>
     <string name="info_swarm_nodeaddr">Knotenadresse</string>
+    <string name="connect">Verbinden</string>
+    <string name="edit">Editieren</string>
+    <string name="connection_description">Du warst bereits %d mal mit diesem Ziel über den Port %d verbunden</string>
+    <string name="connection_unkown_os">Betriebssystem nicht erkannt</string>
 </resources>

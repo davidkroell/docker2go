@@ -23,8 +23,8 @@ public class ConnectionDetailsActivity extends AppCompatActivity implements Conn
         // get intent data if item was clicked
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            Integer position = extras.getInt(ConnectionActivity.KEY_POSITION, 0);
-            editingConnection = Connection.listAll(Connection.class).get(position);
+            Long connId = extras.getLong(ConnectionActivity.KEY_CONN_ID, 0);
+            editingConnection = Connection.findById(Connection.class, connId);
 
             uiBind.editTextHostname.setText(editingConnection.getHostname());
             uiBind.editTextUsername.setText(editingConnection.getUsername());

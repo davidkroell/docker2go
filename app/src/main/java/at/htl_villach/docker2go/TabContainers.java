@@ -2,7 +2,6 @@ package at.htl_villach.docker2go;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -18,7 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static at.htl_villach.docker2go.ConnectionActivity.KEY_POSITION;
+import static at.htl_villach.docker2go.ConnectionActivity.KEY_CONN_ID;
 
 public class TabContainers extends Fragment implements Connection.onCommandStatusChangeListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -80,7 +79,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
 
         Bundle arguments = getArguments();
         if(arguments != null) {
-            connectionPosition = getArguments().getInt(KEY_POSITION, 0);
+            connectionPosition = getArguments().getInt(KEY_CONN_ID, 0);
             activeConnection = Connection.listAll(Connection.class).get(connectionPosition);
             LoadContainers();
         } else
@@ -93,7 +92,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
 
                 final ContainerBottomSheetDialog containerDialog = new ContainerBottomSheetDialog();
                 Bundle arguments = new Bundle();
-                arguments.putInt(KEY_POSITION, connectionPosition);
+                arguments.putInt(KEY_CONN_ID, connectionPosition);
                 containerDialog.setArguments(arguments);
                 containerDialog.setContainer(containers.get(position));
                 containerDialog.setListener(new ContainerBottomSheetDialog.BottomSheetListener(){
@@ -150,8 +149,8 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
 
     public void showDetails(DockerContainer container) {
         Intent i = new Intent(getActivity(), ContainerDetailActivity.class);
-        i.putExtra(KEY_POSITION, connectionPosition);
-        i.putExtra(KEY_CONTAINER, container.getId());
+        i.putExtra(KEY_CONN_ID, connectionPosition);
+        i.putExtra("ContainerID", container.getId());
         startActivity(i);
     }
 

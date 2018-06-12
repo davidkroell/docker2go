@@ -64,7 +64,7 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
 
         Bundle arguments = getArguments();
         if(arguments != null) {
-            Integer position = getArguments().getInt(ConnectionActivity.KEY_POSITION, 0);
+            Integer position = getArguments().getInt(ConnectionActivity.KEY_CONN_ID, 0);
             activeConnection = Connection.listAll(Connection.class).get(position);
             LoadInfo();
         } else
@@ -150,6 +150,12 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
 
         if(dObj instanceof DockerInfo){
             DockerInfo dInfo = (DockerInfo) dObj;
+
+            // set some Connection fields
+            activeConnection.increaseTimesConnected();
+            activeConnection.setOperatingSystem(dInfo.getOperatingSystem());
+            activeConnection.save();
+
             //System
             textViewOperatingSystem.setText(dInfo.getOperatingSystem());
             textViewServerVersion.setText(dInfo.getServerVersion());

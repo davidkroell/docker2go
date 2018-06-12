@@ -6,16 +6,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ConnectionActivity extends AppCompatActivity
-        implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
+public class ConnectionActivity extends AppCompatActivity {
 
     // constants
-    public static final String KEY_POSITION = "POSITION";
+    public static final String KEY_CONN_ID = "CONNECTION_ID";
 
     private ArrayAdapter<Connection> connectionArrayAdapter;
     private ListView listViewConnections;
@@ -36,18 +35,62 @@ public class ConnectionActivity extends AppCompatActivity
 
         // listview
         connectionArrayAdapter = new ArrayAdapter<Connection>(this, R.layout.list_item_connection,
-                R.id.textViewHostString, Connection.listAll(Connection.class)){
+                R.id.textViewHost, Connection.listAll(Connection.class)){
 
             @Override
-            public View getView(int position, View v, ViewGroup parent){
+            public View getView(final int position, View v, ViewGroup parent){
+                // define fields
                 View view = super.getView(position, v, parent);
-                TextView textViewHostString = view.findViewById(R.id.textViewHostString);
-                TextView textViewPort = view.findViewById(R.id.textViewSSHPort);
+                TextView textViewHost = view.findViewById(R.id.textViewHost);
+                TextView textViewUser = view.findViewById(R.id.textViewUser);
+                TextView textViewOs = view.findViewById(R.id.textViewOperatingSystem);
+                TextView textViewDescription = view.findViewById(R.id.textViewDescription);
+                ImageView imageView = view.findViewById(R.id.connectionThumbnail);
 
-                Connection currConn = Connection.listAll(Connection.class).get(position);
+                final Connection currConn = Connection.listAll(Connection.class).get(position);
 
-                textViewHostString.setText(currConn.getUsername() + "@" + currConn.getHostname());
-                textViewPort.setText(currConn.getSshPort().toString());
+                textViewHost.setText(currConn.getHostname());
+                textViewUser.setText(currConn.getUsername());
+
+                String osStr = currConn.getOperatingSystem();
+                if(osStr == null || osStr.equals(""))
+                    osStr = getString(R.string.connection_unkown_os);
+                textViewOs.setText(osStr);
+
+                // set image view drawable depending on operating system
+                osStr = osStr.toLowerCase();
+                if(osStr.contains("debian"))
+                    imageView.setImageResource(R.drawable.debian);
+                else if(osStr.contains("ubuntu"))
+                    imageView.setImageResource(R.drawable.ubuntu);
+                else if(osStr.contains("fedora"))
+                    imageView.setImageResource(R.drawable.fedora);
+                else if(osStr.contains("centos"))
+                    imageView.setImageResource(R.drawable.centos);
+
+                textViewDescription.setText(
+                        String.format(getString(R.string.connection_description),
+                                currConn.getTimesConnected(), currConn.getSshPort())
+                );
+
+                // listeners for buttons
+                view.findViewById(R.id.buttonEdit).setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), ConnectionDetailsActivity.class);
+                        intent.putExtra(KEY_CONN_ID, currConn.getId());
+                        startActivity(intent);
+                    }
+                });
+
+                view.findViewById(R.id.buttonConnect).setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getContext(), OverviewActivity.class);
+                        i.putExtra(KEY_CONN_ID, currConn.getId());
+                        startActivity(i);
+                    }
+                });
 
                 return view;
             }
@@ -55,8 +98,6 @@ public class ConnectionActivity extends AppCompatActivity
         listViewConnections = findViewById(R.id.listViewConnections);
 
         listViewConnections.setAdapter(connectionArrayAdapter);
-        listViewConnections.setOnItemLongClickListener(this);
-        listViewConnections.setOnItemClickListener(this);
     }
 
     private void addConnection(View v) {
@@ -73,20 +114,5 @@ public class ConnectionActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         refreshGUI();
-    }
-
-    @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-        Intent intent = new Intent(this, ConnectionDetailsActivity.class);
-        intent.putExtra(KEY_POSITION, position);
-        startActivity(intent);
-        return true;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        Intent i = new Intent(this, OverviewActivity.class);
-        i.putExtra(KEY_POSITION, position);
-        startActivity(i);
     }
 }
