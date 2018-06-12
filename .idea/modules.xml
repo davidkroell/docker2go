@@ -3,11 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-<<<<<<< HEAD
-=======
-      <module fileurl="file://$PROJECT_DIR$/d2g.iml" filepath="$PROJECT_DIR$/d2g.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../kroel/Documents/docker2go/d2g.iml" filepath="$PROJECT_DIR$/../../../kroel/Documents/docker2go/d2g.iml" />
->>>>>>> 488900eb17d34db8e37702be4e3656c36aab6d09
       <module fileurl="file://$PROJECT_DIR$/docker2go.iml" filepath="$PROJECT_DIR$/docker2go.iml" />
     </modules>
   </component>

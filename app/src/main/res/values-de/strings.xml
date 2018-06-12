@@ -30,4 +30,6 @@
     <string name="edit">Editieren</string>
     <string name="connection_description">Du warst bereits %d mal mit diesem Ziel über den Port %d verbunden</string>
     <string name="connection_unkown_os">Betriebssystem nicht erkannt</string>
+    <string name="dialog_hk_message">Remote SSH key Fingerabdruck nicht im Cache.\nFingerabdruck (%s) am Server gefunden: %s \nVertrauen Sie Host und wollen fortfahren?</string>
+    <string name="dialog_hk_title">Sicherheitsinformation</string>
 </resources>
