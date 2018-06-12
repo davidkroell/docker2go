@@ -151,11 +151,6 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
         if(dObj instanceof DockerInfo){
             DockerInfo dInfo = (DockerInfo) dObj;
 
-            // set some Connection fields
-            activeConnection.increaseTimesConnected();
-            activeConnection.setOperatingSystem(dInfo.getOperatingSystem());
-            activeConnection.save();
-
             //System
             textViewOperatingSystem.setText(dInfo.getOperatingSystem());
             textViewServerVersion.setText(dInfo.getServerVersion());

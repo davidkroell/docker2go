@@ -39,4 +39,6 @@
     <string name="edit">Edit</string>
     <string name="connection_description">You were already %d times connected to this destination using port %d</string>
     <string name="connection_unkown_os">Unknown operating system</string>
+    <string name="dialog_hk_message">Remote SSH key fingerprint not in cache.\\nKey fingerprint (%s) found on remote server: %s \\nDo trust this host and want to proceed?</string>
+    <string name="dialog_hk_title">Security Information</string>
 </resources>

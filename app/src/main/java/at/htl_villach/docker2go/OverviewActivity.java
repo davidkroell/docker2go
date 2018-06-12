@@ -72,6 +72,10 @@ public class OverviewActivity extends AppCompatActivity {
             Long position = extras.getLong(ConnectionActivity.KEY_CONN_ID, 0);
             curConnection = Connection.findById(Connection.class, position);
 
+            // increase times connected
+            curConnection.increaseTimesConnected();
+            curConnection.save();
+
             getSupportActionBar().setTitle(curConnection.getUsername() + "@" + curConnection.getHostname());
         }else{
             Snackbar.make(findViewById(R.id.constraintLayout), "Something went wrong", Snackbar.LENGTH_LONG);

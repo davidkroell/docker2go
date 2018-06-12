@@ -1,16 +1,20 @@
 package at.htl_villach.docker2go;
 
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.support.design.widget.Snackbar;
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import at.htl_villach.docker2go.databinding.ActivityConnectionDetailsBinding;
 
-public class ConnectionDetailsActivity extends AppCompatActivity implements Connection.onCommandStatusChangeListener {
+public class ConnectionDetailsActivity extends AppCompatActivity implements Connection.onCommandStatusChangeListener,
+        AlertDialog.OnClickListener {
 
     private ActivityConnectionDetailsBinding uiBind;
     private Connection editingConnection = null;
@@ -58,24 +62,63 @@ public class ConnectionDetailsActivity extends AppCompatActivity implements Conn
         finish();
     }
 
+    Connection helperConn; // helper variable for host key check
     public void onClick_buttonSave(View v) {
-
         if (editingConnection == null) {
-            Connection c = new Connection(
+            helperConn = new Connection(
                     uiBind.editTextHostname.getText().toString(),
                     uiBind.editTextUsername.getText().toString(),
                     uiBind.editTextPassword.getText().toString(),
                     Integer.parseInt(uiBind.editTextPort.getText().toString())
             );
-            c.save();
         }else{
+            helperConn = editingConnection;
             editingConnection.setHostname(uiBind.editTextHostname.getText().toString());
             editingConnection.setUsername(uiBind.editTextUsername.getText().toString());
             editingConnection.setPassword(uiBind.editTextPassword.getText().toString());
             editingConnection.setSshPort(Integer.parseInt(uiBind.editTextPort.getText().toString()));
-            editingConnection.save(); // store to database
         }
-        finish();
+        // check host key
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", this);
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No", this);
+
+        helperConn.checkHostKey(dialog, getResources());
+    }
+
+    @Override
+    public void onClick(DialogInterface dialogInterface, int i) {
+        if(i == AlertDialog.BUTTON_POSITIVE){
+            helperConn.storeServerHostKey();
+
+            // get operating system from server
+            Command command = new DockerCommandBuilder()
+                    .apiEndpoint("/info")
+                    .requestMethod("GET");
+
+            helperConn.executeCommand(new Connection.onCommandStatusChangeListener(){
+                // set operating system
+                @Override
+                public void onCommandFinished(Command command) {
+                    DockerObj dockerObj = DockerObjParser.Any((DockerCommandBuilder) command);
+
+                    if(dockerObj instanceof DockerInfo){
+                        String os = ((DockerInfo) dockerObj).getOperatingSystem();
+                        helperConn.setOperatingSystem(os);
+                        helperConn.save();
+                    }
+                }
+
+                // close activity after successful adding hostkey and operating system
+                @Override
+                public void onAllCommandsFinished(CommandExecutionSummary ces) {
+                    if(ces.allCommandsSuccessful())
+                        finish();
+                }
+            }, command);
+        } else{
+            Snackbar.make(uiBind.getRoot(), "You cannot save a connection without accepting the host key", Snackbar.LENGTH_LONG).show();
+        }
     }
 
     public void onClick_buttonTest(View v) {
@@ -104,9 +147,13 @@ public class ConnectionDetailsActivity extends AppCompatActivity implements Conn
     @Override
     public void onAllCommandsFinished(CommandExecutionSummary commandExecutionSummary) {
         if(!commandExecutionSummary.exececutedWithExceptions())
-                Snackbar.make(uiBind.getRoot(), commandExecutionSummary.allCommandsSuccessful() ? R.string.connection_test_successful : R.string.connection_test_unsuccessful, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(uiBind.getRoot(),
+                        commandExecutionSummary.allCommandsSuccessful()
+                                ? R.string.connection_test_successful : R.string.connection_test_unsuccessful,
+                        Snackbar.LENGTH_LONG).show();
         else
             Snackbar.make(uiBind.getRoot(),
-                    commandExecutionSummary.getLatestException().getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+                    commandExecutionSummary.getLatestException().getLocalizedMessage(),
+                    Snackbar.LENGTH_LONG).show();
     }
 }

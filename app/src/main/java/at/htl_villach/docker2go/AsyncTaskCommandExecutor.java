@@ -3,11 +3,12 @@ package at.htl_villach.docker2go;
 import android.os.AsyncTask;
 
 import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.HostKey;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Properties;
+import android.util.Base64;
 
 /**
  * Created by kroel on 07.05.2018.
@@ -46,16 +47,10 @@ public class AsyncTaskCommandExecutor extends AsyncTask<Command, Command, Comman
 
             this.jschSession.setPassword(this.connection.getPassword());
 
-            // Avoid asking for key confirmation
-            // TODO: add host key checking with users intervention
-            Properties prop = new Properties();
-            prop.put("StrictHostKeyChecking", "no");
-            this.jschSession.setConfig(prop);
-
-            //Properties config = new Properties();
-            //config.put("StrictHostKeyChecking", "no");
-            //config.put("PreferredAuthentications", "password");
-            //this.session.setConfig(config);
+            // static host key checking
+            byte[] key = Base64.decode(this.connection.getHostKey(), Base64.DEFAULT);
+            HostKey hostKey = new HostKey(this.connection.getHostname(), key);
+            jsch.getHostKeyRepository().add(hostKey, null);
         }catch (Exception e){
             e.printStackTrace();
         }
