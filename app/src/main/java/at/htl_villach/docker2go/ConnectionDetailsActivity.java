@@ -29,7 +29,7 @@ public class ConnectionDetailsActivity extends AppCompatActivity implements Conn
             uiBind.editTextHostname.setText(editingConnection.getHostname());
             uiBind.editTextUsername.setText(editingConnection.getUsername());
             uiBind.editTextPassword.setText(editingConnection.getPassword());
-            uiBind.editTextPort.setText(editingConnection.getSshPort());
+            uiBind.editTextPort.setText(editingConnection.getSshPort().toString());
         }
     }
 
