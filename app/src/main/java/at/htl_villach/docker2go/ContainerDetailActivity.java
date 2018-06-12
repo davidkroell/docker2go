@@ -90,9 +90,18 @@ public class ContainerDetailActivity extends AppCompatActivity implements Connec
         textViewContainerWorkingDir.setText(dContainer.getConfig().getWorkingDir());
 
         //Update Network Card
-        textViewNetworkIPAddress.setText(dContainer.getNetworkSettings().getIPAddress() + "/" + dContainer.getNetworkSettings().getIPPrefixLen());
-        textViewNetworkGateway.setText(dContainer.getNetworkSettings().getGateway());
-        textViewNetworkMACAddress.setText(dContainer.getNetworkSettings().getMacAddress());
+        String IPAddress = dContainer.getNetworkSettings().getIPAddress();
+        if(IPAddress == null || IPAddress.isEmpty()) {
+            textViewNetworkIPAddress.setText("None");
+            textViewNetworkGateway.setText("None");
+            textViewNetworkMACAddress.setText("None");
+        }
+        else {
+            textViewNetworkIPAddress.setText(dContainer.getNetworkSettings().getIPAddress() + "/" + dContainer.getNetworkSettings().getIPPrefixLen());
+            textViewNetworkGateway.setText(dContainer.getNetworkSettings().getGateway());
+            textViewNetworkMACAddress.setText(dContainer.getNetworkSettings().getMacAddress());
+        }
+
     }
 
     @Override

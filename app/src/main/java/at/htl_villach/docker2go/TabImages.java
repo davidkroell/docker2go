@@ -3,6 +3,7 @@ package at.htl_villach.docker2go;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class TabImages extends Fragment implements Connection.onCommandStatusChangeListener {
+public class TabImages extends Fragment implements Connection.onCommandStatusChangeListener, SwipeRefreshLayout.OnRefreshListener {
 
     ListView listViewImages;
     Connection activeConnection;
+    SwipeRefreshLayout swipeRefreshLayout;
     ArrayAdapter<DockerImage> imageArrayAdapter;
     ArrayList<DockerImage> images;
 
@@ -27,9 +29,18 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        //setup controls
         listViewImages = view.findViewById(R.id.listViewImages);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+
+        //setup list
         images = new ArrayList<DockerImage>();
 
+        // swipe to refresh
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(true);
+
+        //setup arrayadapter
         imageArrayAdapter = new ArrayAdapter<DockerImage>(this.getContext(), R.layout.list_item_image, R.id.textViewImageName, images) {
 
             @Override
@@ -72,6 +83,8 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
     public void onCommandFinished(Command command) {
         DockerImage[] dImages = DockerObjParser.Images(command.getResult());
 
+        images.clear();
+
         for(DockerImage singleImage : dImages)
             images.add(singleImage);
 
@@ -82,6 +95,12 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
 
     @Override
     public void onAllCommandsFinished(CommandExecutionSummary commandExecutionSummary) {
-        //Toast.makeText(getContext(), (!commandExecutionSummary.exececutedWithExceptions()) ? "Command executed successfully!" : "Command couldn't be executed", Toast.LENGTH_SHORT).show();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        LoadImages();
     }
 }

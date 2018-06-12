@@ -10,6 +10,8 @@ import com.jcraft.jsch.Session;
 import java.io.ByteArrayOutputStream;
 import android.util.Base64;
 
+import at.htl_villach.docker2go.Connection.onCommandStatusChangeListener;
+
 /**
  * Created by kroel on 07.05.2018.
  */
@@ -22,13 +24,13 @@ import android.util.Base64;
 public class AsyncTaskCommandExecutor extends AsyncTask<Command, Command, CommandExecutionSummary> {
 
     private Connection connection;
-    private Connection.onCommandStatusChangeListener listener;
+    private onCommandStatusChangeListener listener;
 
     private CommandExecutionSummary ces;
 
     private Session jschSession;
 
-    public AsyncTaskCommandExecutor(Connection.onCommandStatusChangeListener listener, Connection connection) {
+    AsyncTaskCommandExecutor(onCommandStatusChangeListener listener, Connection connection) {
         this.listener = listener;
         this.connection = connection;
     }
