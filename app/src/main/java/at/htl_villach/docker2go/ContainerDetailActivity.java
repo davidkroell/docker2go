@@ -1,7 +1,7 @@
 package at.htl_villach.docker2go;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -23,7 +23,7 @@ public class ContainerDetailActivity extends AppCompatActivity implements Connec
 
         //Retrieve current connection and Container ID from extras
         Bundle extras = getIntent().getExtras();
-        if(extras != null) {
+        if (extras != null) {
             Integer position = extras.getInt(ConnectionActivity.KEY_CONN_ID, 0);
             activeConnection = Connection.listAll(Connection.class).get(position);
             containerID = extras.getString(TabContainers.KEY_CONTAINER, null);
@@ -91,12 +91,11 @@ public class ContainerDetailActivity extends AppCompatActivity implements Connec
 
         //Update Network Card
         String IPAddress = dContainer.getNetworkSettings().getIPAddress();
-        if(IPAddress == null || IPAddress.isEmpty()) {
+        if (IPAddress == null || IPAddress.isEmpty()) {
             textViewNetworkIPAddress.setText("None");
             textViewNetworkGateway.setText("None");
             textViewNetworkMACAddress.setText("None");
-        }
-        else {
+        } else {
             textViewNetworkIPAddress.setText(dContainer.getNetworkSettings().getIPAddress() + "/" + dContainer.getNetworkSettings().getIPPrefixLen());
             textViewNetworkGateway.setText(dContainer.getNetworkSettings().getGateway());
             textViewNetworkMACAddress.setText(dContainer.getNetworkSettings().getMacAddress());

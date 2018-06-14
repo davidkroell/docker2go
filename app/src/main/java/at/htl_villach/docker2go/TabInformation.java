@@ -1,8 +1,8 @@
 package at.htl_villach.docker2go;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -63,7 +63,7 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
         pieChart = view.findViewById(R.id.piechartContainers);
 
         Bundle arguments = getArguments();
-        if(arguments != null) {
+        if (arguments != null) {
             Integer position = getArguments().getInt(ConnectionActivity.KEY_CONN_ID, 0);
             activeConnection = Connection.listAll(Connection.class).get(position);
             LoadInfo();
@@ -80,7 +80,7 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
         activeConnection.executeCommand(this, infoCommand);
     }
 
-    public void loadChart(DockerInfo dInfo){
+    public void loadChart(DockerInfo dInfo) {
         // containers running, paused, stopped
         List<Entry> yvalues = new ArrayList<>();
         List<String> labels = new ArrayList<String>();
@@ -88,11 +88,11 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
         yvalues.add(new Entry(dInfo.getContainersRunning(), 0));
         labels.add(getResources().getString(R.string.info_running));
 
-        if(dInfo.getContainersPaused() != 0) {
+        if (dInfo.getContainersPaused() != 0) {
             yvalues.add(new Entry(dInfo.getContainersPaused(), 1));
             labels.add(getResources().getString(R.string.info_paused));
         }
-        if(dInfo.getContainersStopped() != 0) {
+        if (dInfo.getContainersStopped() != 0) {
             yvalues.add(new Entry(dInfo.getContainersStopped(), 2));
             labels.add(getResources().getString(R.string.info_stopped));
         }
@@ -148,7 +148,7 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
     public void onCommandFinished(Command command) {
         DockerObj dObj = DockerObjParser.Any((DockerCommandBuilder) command);
 
-        if(dObj instanceof DockerInfo){
+        if (dObj instanceof DockerInfo) {
             DockerInfo dInfo = (DockerInfo) dObj;
 
             //System
@@ -161,7 +161,7 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
             DockerInfo.SwarmBean swarm = dInfo.getSwarm();
             textViewSwarmStatus.setText(swarm.getLocalNodeState());
 
-            if(swarm.getLocalNodeState().equals(getString(R.string.info_isactive))) {
+            if (swarm.getLocalNodeState().equals(getString(R.string.info_isactive))) {
                 if (swarm.isControlAvailable())
                     textViewSwarmNodeType.setText(getString(R.string.info_swarm_master));
                 else
@@ -176,7 +176,7 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
                 textViewNodeId.setText(swarm.getNodeID());
                 ll = (LinearLayout) textViewNodeId.getParent();
                 ll.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 // hide views
                 LinearLayout ll = (LinearLayout) textViewSwarmNodeType.getParent();
                 ll.setVisibility(View.GONE);

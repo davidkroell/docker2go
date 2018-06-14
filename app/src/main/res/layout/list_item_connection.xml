@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
@@ -35,8 +34,8 @@
                         android:id="@+id/connectionThumbnail"
                         android:layout_width="56dp"
                         android:layout_height="match_parent"
-                        android:src="@drawable/os"
-                        android:scaleType="fitCenter" />
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/os" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

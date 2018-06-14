@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
 public class ContainerBottomSheetDialog extends BottomSheetDialogFragment {
@@ -33,14 +34,14 @@ public class ContainerBottomSheetDialog extends BottomSheetDialogFragment {
 
             @NonNull
             @Override
-            public View getView(int position, View v, @NonNull ViewGroup parent){
+            public View getView(int position, View v, @NonNull ViewGroup parent) {
                 View view = super.getView(position, v, parent);
                 TextView textViewItemName = view.findViewById(R.id.textViewItemName);
                 ImageView iconView = view.findViewById(R.id.imageIcon);
 
                 textViewItemName.setText(menuOptions.get(position));
 
-                switch(menuOptions.get(position)) {
+                switch (menuOptions.get(position)) {
                     case "Inspect":
                         iconView.setBackgroundResource(R.drawable.ic_remove_red_eye_black_24dp);
                         break;
@@ -77,20 +78,20 @@ public class ContainerBottomSheetDialog extends BottomSheetDialogFragment {
         return v;
     }
 
+    public DockerContainer getContainer() {
+        return this.mContainer;
+    }
+
     public void setContainer(DockerContainer container) {
         this.mContainer = container;
         menuOptions = new ArrayList<>();
         menuOptions.add("Inspect");
-        if(mContainer.getState().contains("running")) {
+        if (mContainer.getState().contains("running")) {
             menuOptions.add("Restart");
             menuOptions.add("Stop");
         } else {
             menuOptions.add("Start");
         }
-    }
-
-    public DockerContainer getContainer() {
-        return this.mContainer;
     }
 
     public void setListener(BottomSheetListener listener) {

@@ -1,8 +1,6 @@
 package at.htl_villach.docker2go;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 

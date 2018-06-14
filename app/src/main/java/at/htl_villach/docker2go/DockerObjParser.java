@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder;
 
 public class DockerObjParser {
     // able to generate docker object without command
-    public static DockerInfo Info(String input){
+    public static DockerInfo Info(String input) {
         Gson gson = new GsonBuilder().create();
         return gson.fromJson(input, DockerInfo.class);
     }
@@ -30,8 +30,8 @@ public class DockerObjParser {
     }
 
     // another method to create Info object with command supplied
-    public static DockerObj Any(DockerCommandBuilder command){
-        switch (command.getApiEndpoint()){
+    public static DockerObj Any(DockerCommandBuilder command) {
+        switch (command.getApiEndpoint()) {
             case "/info":
                 return Info(command.getResult());
             case "/containers":

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="at.htl_villach.docker2go">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.orm.SugarApp"
@@ -32,10 +32,10 @@
         <activity android:name=".ConnectionDetailsActivity" />
         <activity
             android:name=".OverviewActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_overview"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize" />
-        <activity android:name=".ContainerDetailActivity"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ContainerDetailActivity" />
     </application>
 
 </manifest>

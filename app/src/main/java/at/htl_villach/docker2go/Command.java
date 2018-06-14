@@ -29,10 +29,10 @@ public interface Command {
     // returns the result of the command, if already set
     String getResult();
 
-    String getApiEndpoint();
-
     // sets the result
     void setResult(String result);
+
+    String getApiEndpoint();
 
     // returns true, if the command exited as expect, otherwise false
     // should be a alias for

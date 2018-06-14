@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -44,7 +45,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         listViewContainers = view.findViewById(R.id.listViewContainers);
-        parentActivity = (OverviewActivity)getActivity();
+        parentActivity = (OverviewActivity) getActivity();
         containers = new ArrayList<>();
 
         // swipe to refresh
@@ -57,18 +58,18 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
 
             @NonNull
             @Override
-            public View getView(int position, View v, @NonNull ViewGroup parent){
+            public View getView(int position, View v, @NonNull ViewGroup parent) {
                 View view = super.getView(position, v, parent);
                 TextView textViewName = view.findViewById(R.id.textViewContainerName);
                 View statusIndicator = view.findViewById(R.id.statusIndicator);
                 final DockerContainer currentContainer = containers.get(position);
 
                 textViewName.setText(currentContainer.getNames().get(0).substring(1));
-                if(currentContainer.getState().equals(getString(R.string.info_running))){
+                if (currentContainer.getState().equals(getString(R.string.info_running))) {
                     // container running
                     statusIndicator.setBackgroundColor(
                             ContextCompat.getColor(getContext(), R.color.containersRunning));
-                }else{
+                } else {
                     // container not running
                     statusIndicator.setBackgroundColor(
                             ContextCompat.getColor(getContext(), R.color.containersStopped));
@@ -79,7 +80,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
         };
 
         Bundle arguments = getArguments();
-        if(arguments != null) {
+        if (arguments != null) {
             connectionPosition = getArguments().getInt(KEY_CONN_ID, 0);
             activeConnection = Connection.listAll(Connection.class).get(connectionPosition);
             LoadContainers();
@@ -96,10 +97,10 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 arguments.putInt(KEY_CONN_ID, connectionPosition);
                 containerDialog.setArguments(arguments);
                 containerDialog.setContainer(containers.get(position));
-                containerDialog.setListener(new ContainerBottomSheetDialog.BottomSheetListener(){
+                containerDialog.setListener(new ContainerBottomSheetDialog.BottomSheetListener() {
                     @Override
                     public void onActionSelected(String action, DockerContainer affectedContainer) {
-                        switch(action) {
+                        switch (action) {
                             case "Inspect":
                                 showDetails(affectedContainer);
                                 break;
@@ -157,7 +158,8 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
 
     public void LoadContainers() {
         DockerCommandBuilder containersCommand = new DockerCommandBuilder()
-                .apiEndpoint("/containers/json?all=true")
+                .apiEndpoint("/containers/json")
+                .queryParam("all", "true")
                 .requestMethod("GET");
 
         activeConnection.executeCommand(this, containersCommand);
@@ -165,27 +167,24 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
 
     @Override
     public void onCommandFinished(Command command) {
-        String[] parts = command.getApiEndpoint().split("/");
+        String[] parts = ((DockerCommandBuilder) command).getQueryString().split("/");
 
-        if(parts[1].equalsIgnoreCase("containers") && parts[2].equalsIgnoreCase("json?all=true")) {
+        if (parts[1].equalsIgnoreCase("containers") && parts[2].equalsIgnoreCase("json?all=true")) {
             DockerContainer[] dContainers = DockerObjParser.Containers(command.getResult());
 
             containers.clear();
             containers.addAll(Arrays.asList(dContainers));
 
             containerArrayAdapter.notifyDataSetChanged();
-        }
-        else if(parts[3].equalsIgnoreCase("start")) {
+        } else if (parts[3].equalsIgnoreCase("start")) {
             LoadContainers();
             parentActivity.infoTab.LoadInfo();
             parentActivity.loadingIndicator.setVisibility(View.GONE);
-        }
-        else if(parts[3].equalsIgnoreCase("stop")) {
+        } else if (parts[3].equalsIgnoreCase("stop")) {
             LoadContainers();
             parentActivity.infoTab.LoadInfo();
             parentActivity.loadingIndicator.setVisibility(View.GONE);
-        }
-        else if(parts[3].equalsIgnoreCase("restart")) {
+        } else if (parts[3].equalsIgnoreCase("restart")) {
             LoadContainers();
             parentActivity.infoTab.LoadInfo();
             parentActivity.loadingIndicator.setVisibility(View.GONE);

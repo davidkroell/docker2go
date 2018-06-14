@@ -1,17 +1,16 @@
 package at.htl_villach.docker2go;
 
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +20,10 @@ import android.widget.ProgressBar;
 
 public class OverviewActivity extends AppCompatActivity {
 
+    public TabInformation infoTab;
+    public TabContainers containersTab;
+    public TabImages imagesTab;
+    public ProgressBar loadingIndicator;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -30,18 +33,11 @@ public class OverviewActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
     private Connection curConnection;
-
-    public ProgressBar loadingIndicator;
-    public static TabInformation infoTab;
-    public static TabContainers containersTab;
-    public static TabImages imagesTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +73,7 @@ public class OverviewActivity extends AppCompatActivity {
             curConnection.save();
 
             getSupportActionBar().setTitle(curConnection.getUsername() + "@" + curConnection.getHostname());
-        }else{
+        } else {
             Snackbar.make(findViewById(R.id.constraintLayout), "Something went wrong", Snackbar.LENGTH_LONG);
         }
     }
@@ -98,7 +94,6 @@ public class OverviewActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.actionDisconnect) {
-            // TODO close connection
             finish();
             return true;
         }
@@ -150,14 +145,14 @@ public class OverviewActivity extends AppCompatActivity {
         FragmentManager fragmentManager;
         Fragment[] fragments;
 
-        public SectionsPagerAdapter(FragmentManager fm){
+        public SectionsPagerAdapter(FragmentManager fm) {
             fragmentManager = fm;
             fragments = new Fragment[3];
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            assert(0 <= position && position < fragments.length);
+            assert (0 <= position && position < fragments.length);
             FragmentTransaction trans = fragmentManager.beginTransaction();
             trans.remove(fragments[position]);
             trans.commit();
@@ -165,10 +160,10 @@ public class OverviewActivity extends AppCompatActivity {
         }
 
         @Override
-        public Fragment instantiateItem(ViewGroup container, int position){
+        public Fragment instantiateItem(ViewGroup container, int position) {
             Fragment fragment = getItem(position);
             FragmentTransaction trans = fragmentManager.beginTransaction();
-            trans.add(container.getId(),fragment,"fragment:"+position);
+            trans.add(container.getId(), fragment, "fragment:" + position);
             trans.commit();
             return fragment;
         }
@@ -183,12 +178,12 @@ public class OverviewActivity extends AppCompatActivity {
             return ((Fragment) fragment).getView() == view;
         }
 
-        public Fragment getItem(int position){
-            assert(0 <= position && position < fragments.length);
-            if(fragments[position] == null){
+        public Fragment getItem(int position) {
+            assert (0 <= position && position < fragments.length);
+            if (fragments[position] == null) {
                 switch (position) {
                     case 0:
-                        if(infoTab == null) {
+                        if (infoTab == null) {
                             infoTab = new TabInformation();
                             Bundle arguments = new Bundle();
                             arguments.putInt(ConnectionActivity.KEY_CONN_ID, getIntent().getIntExtra(ConnectionActivity.KEY_CONN_ID, 0));
@@ -198,7 +193,7 @@ public class OverviewActivity extends AppCompatActivity {
 
                         return infoTab;
                     case 1:
-                        if(containersTab == null) {
+                        if (containersTab == null) {
                             containersTab = new TabContainers();
                             Bundle arguments = new Bundle();
                             arguments.putInt(ConnectionActivity.KEY_CONN_ID, getIntent().getIntExtra(ConnectionActivity.KEY_CONN_ID, 0));
@@ -208,7 +203,7 @@ public class OverviewActivity extends AppCompatActivity {
 
                         return containersTab;
                     case 2:
-                        if(imagesTab == null) {
+                        if (imagesTab == null) {
                             imagesTab = new TabImages();
                             Bundle arguments = new Bundle();
                             arguments.putInt(ConnectionActivity.KEY_CONN_ID, getIntent().getIntExtra(ConnectionActivity.KEY_CONN_ID, 0));
@@ -224,55 +219,4 @@ public class OverviewActivity extends AppCompatActivity {
             return fragments[position];
         }
     }
-
-        /*public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            switch (position) {
-                case 0:
-                    if(infoTab == null) {
-                        infoTab = new TabInformation();
-                        Bundle arguments = new Bundle();
-                        arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
-                        infoTab.setArguments(arguments);
-                        infoTab.setRetainInstance(true);
-                    }
-
-                    return infoTab;
-                case 1:
-                    if(containersTab == null) {
-                        containersTab = new TabContainers();
-                        Bundle arguments = new Bundle();
-                        arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
-                        containersTab.setArguments(arguments);
-                        infoTab.setRetainInstance(true);
-                    }
-
-                    return containersTab;
-                case 2:
-                    if(imagesTab == null) {
-                        imagesTab = new TabImages();
-                        Bundle arguments = new Bundle();
-                        arguments.putInt(ConnectionActivity.KEY_POSITION, getIntent().getIntExtra(ConnectionActivity.KEY_POSITION, 0));
-                        imagesTab.setArguments(arguments);
-                        infoTab.setRetainInstance(true);
-                    }
-
-                    return imagesTab;
-                default:
-                    return PlaceholderFragment.newInstance(position + 1);
-            }
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-    }*/
 }

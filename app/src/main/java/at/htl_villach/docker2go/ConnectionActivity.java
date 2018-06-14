@@ -35,10 +35,10 @@ public class ConnectionActivity extends AppCompatActivity {
 
         // listview
         connectionArrayAdapter = new ArrayAdapter<Connection>(this, R.layout.list_item_connection,
-                R.id.textViewHost, Connection.listAll(Connection.class)){
+                R.id.textViewHost, Connection.listAll(Connection.class)) {
 
             @Override
-            public View getView(final int position, View v, ViewGroup parent){
+            public View getView(final int position, View v, ViewGroup parent) {
                 // define fields
                 View view = super.getView(position, v, parent);
                 TextView textViewHost = view.findViewById(R.id.textViewHost);
@@ -53,19 +53,19 @@ public class ConnectionActivity extends AppCompatActivity {
                 textViewUser.setText(currConn.getUsername());
 
                 String osStr = currConn.getOperatingSystem();
-                if(osStr == null || osStr.equals(""))
+                if (osStr == null || osStr.equals(""))
                     osStr = getString(R.string.connection_unkown_os);
                 textViewOs.setText(osStr);
 
                 // set image view drawable depending on operating system
                 osStr = osStr.toLowerCase();
-                if(osStr.contains("debian"))
+                if (osStr.contains("debian"))
                     imageView.setImageResource(R.drawable.debian);
-                else if(osStr.contains("ubuntu"))
+                else if (osStr.contains("ubuntu"))
                     imageView.setImageResource(R.drawable.ubuntu);
-                else if(osStr.contains("fedora"))
+                else if (osStr.contains("fedora"))
                     imageView.setImageResource(R.drawable.fedora);
-                else if(osStr.contains("centos"))
+                else if (osStr.contains("centos"))
                     imageView.setImageResource(R.drawable.centos);
 
                 textViewDescription.setText(
@@ -74,7 +74,7 @@ public class ConnectionActivity extends AppCompatActivity {
                 );
 
                 // listeners for buttons
-                view.findViewById(R.id.buttonEdit).setOnClickListener(new View.OnClickListener(){
+                view.findViewById(R.id.buttonEdit).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getContext(), ConnectionDetailsActivity.class);
@@ -83,7 +83,7 @@ public class ConnectionActivity extends AppCompatActivity {
                     }
                 });
 
-                view.findViewById(R.id.buttonConnect).setOnClickListener(new View.OnClickListener(){
+                view.findViewById(R.id.buttonConnect).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent i = new Intent(getContext(), OverviewActivity.class);
@@ -105,7 +105,7 @@ public class ConnectionActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void refreshGUI(){
+    private void refreshGUI() {
         connectionArrayAdapter.clear();
         connectionArrayAdapter.addAll(Connection.listAll(Connection.class));
     }

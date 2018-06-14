@@ -1,42 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="13dp">
+        android:layout_margin="13dp"
+        android:orientation="horizontal">
 
-        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_apps_black_24dp"/>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_apps_black_24dp" />
 
         <TextView
             android:id="@+id/textViewContainerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
             android:text="Container Name"
-            android:textSize="18sp"
-            android:layout_marginStart="13dp"/>
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="13dp">
+        android:layout_margin="13dp"
+        android:orientation="horizontal">
 
-        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_layers_black_24dp"/>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_layers_black_24dp" />
 
         <TextView
             android:id="@+id/textViewImageTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
             android:text="Image Name"
-            android:textSize="18sp"
-            android:layout_marginStart="13dp"/>
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -44,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginVertical="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <ListView
         android:id="@+id/listViewSheetNav"

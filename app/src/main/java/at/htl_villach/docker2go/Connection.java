@@ -1,7 +1,6 @@
 package at.htl_villach.docker2go;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.res.Resources;
 
 import com.orm.SugarRecord;
@@ -26,13 +25,8 @@ public class Connection extends SugarRecord {
     @Ignore
     private Integer connectionTimeout = 10000;
 
-    @Ignore
-    public interface onCommandStatusChangeListener {
-        void onCommandFinished(Command command);
-        void onAllCommandsFinished(CommandExecutionSummary ces);
+    public Connection() {
     }
-
-    public Connection() {}
 
     public Connection(String hostname, String username, String password, int sshPort) {
         this(hostname, username, password, sshPort, "");
@@ -116,18 +110,25 @@ public class Connection extends SugarRecord {
         this.serverHostKey = hostKey;
     }
 
-    public void storeServerHostKey(){
+    public void storeServerHostKey() {
         this.hostKey = this.serverHostKey;
         this.save();
     }
 
-    public void executeCommand(Connection.onCommandStatusChangeListener listener, Command... commands){
+    public void executeCommand(Connection.onCommandStatusChangeListener listener, Command... commands) {
         AsyncTaskCommandExecutor commandExecutor = new AsyncTaskCommandExecutor(listener, this);
         commandExecutor.execute(commands);
     }
 
-    public void checkHostKey(AlertDialog dialog, Resources resources){
+    public void checkHostKey(AlertDialog dialog, Resources resources) {
         AsyncTaskCheckHostKey task = new AsyncTaskCheckHostKey(this, dialog, resources);
         task.execute();
+    }
+
+    @Ignore
+    public interface onCommandStatusChangeListener {
+        void onCommandFinished(Command command);
+
+        void onAllCommandsFinished(CommandExecutionSummary ces);
     }
 }

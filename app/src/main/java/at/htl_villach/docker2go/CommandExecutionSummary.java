@@ -12,7 +12,7 @@ public class CommandExecutionSummary {
     private List<Command> commands;
     private List<Exception> exceptions;
 
-    public CommandExecutionSummary(){
+    public CommandExecutionSummary() {
         this.commands = new ArrayList<>();
         this.exceptions = new ArrayList<>();
     }
@@ -21,28 +21,28 @@ public class CommandExecutionSummary {
         return exceptions;
     }
 
-    public boolean exececutedWithExceptions(){
+    public boolean exececutedWithExceptions() {
         return exceptions.size() != 0;
     }
 
     public boolean allCommandsSuccessful() {
-        for(Command command : commands) {
-            if(!command.exitedAsExpected())
+        for (Command command : commands) {
+            if (!command.exitedAsExpected())
                 return false;
         }
 
         return true;
     }
 
-    public void addCommand(Command c){
+    public void addCommand(Command c) {
         this.commands.add(c);
     }
 
-    public void addException(Exception e){
+    public void addException(Exception e) {
         this.exceptions.add(e);
     }
 
-    public Exception getLatestException(){
+    public Exception getLatestException() {
         return this.exceptions.get(this.exceptions.size() - 1);
     }
 }

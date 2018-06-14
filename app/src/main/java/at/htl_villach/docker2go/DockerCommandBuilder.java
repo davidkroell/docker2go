@@ -1,5 +1,8 @@
 package at.htl_villach.docker2go;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by kroel on 14.05.2018.
  */
@@ -24,6 +27,8 @@ public class DockerCommandBuilder implements Command {
 
     private String result;
 
+    private Map<Object, Object> queryParams;
+
     // integers
     private Integer expectedExitCode = 0;
 
@@ -33,6 +38,10 @@ public class DockerCommandBuilder implements Command {
 
 
     private Exception exception;
+
+    public DockerCommandBuilder() {
+        this.queryParams = new HashMap<>();
+    }
 
     @Override
     public Integer getExpectedExitCode() {
@@ -64,6 +73,39 @@ public class DockerCommandBuilder implements Command {
         return this;
     }
 
+    public DockerCommandBuilder queryParam(Object key, Object value) {
+        this.queryParams.put(key, value);
+        return this;
+    }
+
+    private String getQueryParams() {
+        StringBuilder strBuilder = new StringBuilder();
+
+        boolean isFirst = true;
+        for (Map.Entry<Object, Object> entry : queryParams.entrySet()) {
+            Object key = entry.getKey();
+            Object value = entry.getValue();
+
+            // add questionmark on first parameter,
+            // and ampersand on every future object
+            if (isFirst) {
+                strBuilder.append("?");
+                isFirst = false;
+            } else
+                strBuilder.append("&");
+
+            strBuilder.append(key)
+                    .append("=")
+                    .append(value);
+        }
+
+        return strBuilder.toString();
+    }
+
+    public String getQueryString() {
+        return apiEndpoint + getQueryParams();
+    }
+
     @Override
     public String parseString() {
         return this.toString();
@@ -72,7 +114,7 @@ public class DockerCommandBuilder implements Command {
     // outputs the string, which is sent to the docker api
     // "curl --unix-socket /var/run/docker.sock http::/containers/json"
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder strBuilder = new StringBuilder();
 
         if (useSudo) strBuilder.append("sudo");
@@ -80,7 +122,8 @@ public class DockerCommandBuilder implements Command {
         strBuilder.append(baseCommand).append(" ")
                 .append(baseEndpoint).append(" ")
                 .append(apiEndpointPrefix)
-                .append(apiEndpoint).append(" ")
+                .append(apiEndpoint)
+                .append(getQueryParams()).append(" ")
                 .append(requestMethodCommandPrefix).append(" ")
                 .append(requestMethod);
 
@@ -98,13 +141,13 @@ public class DockerCommandBuilder implements Command {
     }
 
     @Override
-    public void setExitCode(Integer exitCode) {
-        this.exitCode = exitCode;
+    public Integer getExitCode() {
+        return exitCode;
     }
 
     @Override
-    public Integer getExitCode() {
-        return exitCode;
+    public void setExitCode(Integer exitCode) {
+        this.exitCode = exitCode;
     }
 
     @Override

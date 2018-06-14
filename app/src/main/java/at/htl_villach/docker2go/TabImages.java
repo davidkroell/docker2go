@@ -44,13 +44,13 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
         imageArrayAdapter = new ArrayAdapter<DockerImage>(this.getContext(), R.layout.list_item_image, R.id.textViewImageName, images) {
 
             @Override
-            public View getView(int position, View v, ViewGroup parent){
+            public View getView(int position, View v, ViewGroup parent) {
                 View view = super.getView(position, v, parent);
                 TextView textViewName = view.findViewById(R.id.textViewImageName);
 
                 DockerImage currentImage = images.get(position);
 
-                if(currentImage.getRepoTags() != null)
+                if (currentImage.getRepoTags() != null)
                     textViewName.setText(currentImage.getRepoTags().get(0));
                 else
                     textViewName.setText(currentImage.getId());
@@ -60,7 +60,7 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
         };
 
         Bundle arguments = getArguments();
-        if(arguments != null) {
+        if (arguments != null) {
             Integer position = getArguments().getInt(ConnectionActivity.KEY_CONN_ID, 0);
             activeConnection = Connection.listAll(Connection.class).get(position);
             LoadImages();
@@ -85,11 +85,11 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
 
         images.clear();
 
-        for(DockerImage singleImage : dImages)
+        for (DockerImage singleImage : dImages)
             images.add(singleImage);
 
         imageArrayAdapter.notifyDataSetChanged();
-        OverviewActivity oa = (OverviewActivity)getActivity();
+        OverviewActivity oa = (OverviewActivity) getActivity();
         oa.loadingIndicator.setVisibility(View.GONE);
     }
 
