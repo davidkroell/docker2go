@@ -32,4 +32,6 @@
     <string name="connection_unkown_os">Betriebssystem nicht erkannt</string>
     <string name="dialog_hk_message">Remote SSH key Fingerabdruck nicht im Cache.\nFingerabdruck (%s) am Server gefunden: %s \nVertrauen Sie Host und wollen fortfahren?</string>
     <string name="dialog_hk_title">Sicherheitsinformation</string>
+    <string name="title_activity_container_detail">Lade Details…</string>
+    <string name="date_type_past_wrapper">vor %s erstellt</string>
 </resources>

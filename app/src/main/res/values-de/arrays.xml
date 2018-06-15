@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="date_types">
+        <item>%s Sekunden</item>
+        <item>%s Minuten</item>
+        <item>%s Stunden</item>
+        <item>%s Tage</item>
+        <item>%s Woche</item>
+        <item>%s Jahre</item>
+    </string-array>
+</resources>

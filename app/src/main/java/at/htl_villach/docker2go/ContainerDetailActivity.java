@@ -19,7 +19,7 @@ public class ContainerDetailActivity extends AppCompatActivity implements Connec
         setContentView(R.layout.activity_container_detail);
 
         //Set title of this activity
-        getSupportActionBar().setTitle("Container Details");
+        getSupportActionBar().setTitle(getString(R.string.title_activity_container_detail));
 
         //Retrieve current connection and Container ID from extras
         Bundle extras = getIntent().getExtras();
@@ -72,6 +72,10 @@ public class ContainerDetailActivity extends AppCompatActivity implements Connec
         //Set resulting object as currentContainer.
         currentContainer = dContainer;
 
+        // show container name in action bar
+        getSupportActionBar().setTitle(String.format("Details - %s", dContainer.getName().substring(1)));
+
+        // TODO implement databinding
         //Create objects to interact with the UI
         TextView textViewContainerName = findViewById(R.id.textViewContainerName);
         TextView textViewContainerStatus = findViewById(R.id.textViewContainerStatus);
@@ -100,7 +104,7 @@ public class ContainerDetailActivity extends AppCompatActivity implements Connec
             textViewNetworkGateway.setText(dContainer.getNetworkSettings().getGateway());
             textViewNetworkMACAddress.setText(dContainer.getNetworkSettings().getMacAddress());
         }
-
+        // TODO print ports on ui
     }
 
     @Override

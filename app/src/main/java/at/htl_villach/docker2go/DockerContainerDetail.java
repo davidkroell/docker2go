@@ -1,6 +1,8 @@
 package at.htl_villach.docker2go;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
+import java.util.Map;
 
 public class DockerContainerDetail {
 
@@ -965,6 +967,43 @@ public class DockerContainerDetail {
             }
 
             public static class ConfigBean {
+            }
+        }
+
+
+        public Map<String, List<PortBindingsBean>> getPortBindings() {
+            return PortBindings;
+        }
+
+        public void setPortBindings(Map<String, List<PortBindingsBean>> portBindings) {
+            PortBindings = portBindings;
+        }
+
+        private Map<String, List<PortBindingsBean>> PortBindings;
+
+        public static class PortBindingsBean {
+            /**
+             * HostIp : 127.0.0.1
+             * HostPort : 6379
+             */
+
+            private String HostIp;
+            private String HostPort;
+
+            public String getHostIp() {
+                return HostIp;
+            }
+
+            public void setHostIp(String HostIp) {
+                this.HostIp = HostIp;
+            }
+
+            public String getHostPort() {
+                return HostPort;
+            }
+
+            public void setHostPort(String HostPort) {
+                this.HostPort = HostPort;
             }
         }
 

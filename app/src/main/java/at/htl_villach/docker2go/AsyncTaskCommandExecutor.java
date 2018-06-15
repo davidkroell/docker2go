@@ -97,7 +97,7 @@ public class AsyncTaskCommandExecutor extends AsyncTask<Command, Command, Comman
 
             // execute commands "numExecute" times
             // TODO execute command endless
-            for (int i = 0; i <= numExecute; i++) {
+            for (int i = 1; i <= numExecute; i++) {
                 // Execute single command and use onProgressUpdate for output
                 for (Command command : commands) {
 

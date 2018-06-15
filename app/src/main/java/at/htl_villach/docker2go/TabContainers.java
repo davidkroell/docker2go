@@ -1,6 +1,10 @@
 package at.htl_villach.docker2go;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +22,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 import static at.htl_villach.docker2go.ConnectionActivity.KEY_CONN_ID;
 
@@ -61,19 +66,35 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
             public View getView(int position, View v, @NonNull ViewGroup parent) {
                 View view = super.getView(position, v, parent);
                 TextView textViewName = view.findViewById(R.id.textViewContainerName);
+                TextView textViewStatus = view.findViewById(R.id.textViewStatus);
+                TextView textViewCreated = view.findViewById(R.id.textViewCreatedAt);
                 View statusIndicator = view.findViewById(R.id.statusIndicator);
-                final DockerContainer currentContainer = containers.get(position);
+                DockerContainer currentContainer = containers.get(position);
 
+                // set textfields
                 textViewName.setText(currentContainer.getNames().get(0).substring(1));
+                textViewStatus.setText(currentContainer.getStatus());
+                String age = Utilities.timeElapsedString(
+                        new Date((long) currentContainer.getCreated() * 1000),
+                        getResources().getStringArray(R.array.date_types),
+                        getString(R.string.date_type_past_wrapper));
+
+                textViewCreated.setText(age);
+
+                int statusColor;
                 if (currentContainer.getState().equals(getString(R.string.info_running))) {
                     // container running
-                    statusIndicator.setBackgroundColor(
-                            ContextCompat.getColor(getContext(), R.color.containersRunning));
+                    statusColor = ContextCompat.getColor(getContext(), R.color.containersRunning);
                 } else {
                     // container not running
-                    statusIndicator.setBackgroundColor(
-                            ContextCompat.getColor(getContext(), R.color.containersStopped));
+                    statusColor = ContextCompat.getColor(getContext(), R.color.containersStopped);
                 }
+
+                // change color of round status indicator
+                Drawable mDrawable = ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners);
+                mDrawable.setColorFilter(new
+                        PorterDuffColorFilter(statusColor, PorterDuff.Mode.SRC));
+                statusIndicator.setBackground(mDrawable);
 
                 return view;
             }
