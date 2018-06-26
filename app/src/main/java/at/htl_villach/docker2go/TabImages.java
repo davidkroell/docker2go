@@ -2,6 +2,7 @@ package at.htl_villach.docker2go;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -13,14 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TabImages extends Fragment implements Connection.onCommandStatusChangeListener, SwipeRefreshLayout.OnRefreshListener {
 
     ListView listViewImages;
-    Connection activeConnection;
     SwipeRefreshLayout swipeRefreshLayout;
     ArrayAdapter<DockerImage> imageArrayAdapter;
     ArrayList<DockerImage> images;
+    OverviewActivity parentActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,39 +60,38 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
                 return view;
             }
         };
+        parentActivity = (OverviewActivity) getActivity();
 
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            Integer position = getArguments().getInt(ConnectionActivity.KEY_CONN_ID, 0);
-            activeConnection = Connection.listAll(Connection.class).get(position);
-            LoadImages();
-        } else
-            Toast.makeText(getContext(), "Fatal issue: No Arguments", Toast.LENGTH_SHORT).show();
-
+        loadImages();
         listViewImages.setAdapter(imageArrayAdapter);
-
     }
 
-    public void LoadImages() {
+    public void loadImages() {
         DockerCommandBuilder imagesCommand = new DockerCommandBuilder()
                 .apiEndpoint("/images/json")
                 .requestMethod("GET");
 
-        activeConnection.executeCommand(this, imagesCommand);
+        parentActivity.activeConnection.executeCommand(this, imagesCommand);
     }
 
     @Override
     public void onCommandFinished(Command command) {
-        DockerImage[] dImages = DockerObjParser.Images(command.getResult());
+        if(command.exitedAsExpected()) {
 
-        images.clear();
+            DockerImage[] dImages = DockerObjParser.Images(command.getResult());
 
-        for (DockerImage singleImage : dImages)
-            images.add(singleImage);
+            images.clear();
 
-        imageArrayAdapter.notifyDataSetChanged();
-        OverviewActivity oa = (OverviewActivity) getActivity();
-        oa.loadingIndicator.setVisibility(View.GONE);
+            images.addAll(Arrays.asList(dImages));
+
+            imageArrayAdapter.notifyDataSetChanged();
+            OverviewActivity oa = (OverviewActivity) getActivity();
+            oa.loadingIndicator.setVisibility(View.GONE);
+        }else{
+            Snackbar.make(swipeRefreshLayout,
+                    "something went wrong",
+                    Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -101,6 +102,6 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        LoadImages();
+        loadImages();
     }
 }

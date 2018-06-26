@@ -17,7 +17,7 @@ public class DockerCommandBuilder implements Command {
 
     private String baseEndpoint = "--unix-socket /var/run/docker.sock";
 
-    private String apiEndpointPrefix = "http::";
+    private String apiEndpointPrefix = "http:80";
 
     private String apiEndpoint;
 

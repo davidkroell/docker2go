@@ -28,9 +28,9 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
 
     TextView textViewOperatingSystem, textViewServerVersion, textViewMemory, textViewNumCPUs,
             textViewSwarmStatus, textViewSwarmNodeType, textViewNodeAddr, textViewNodeId;
-    Connection activeConnection;
     SwipeRefreshLayout swipeRefreshLayout;
     PieChart pieChart;
+    OverviewActivity parentActivity;
 
     /* TODO:
         * Keep content after page goes inactive
@@ -63,22 +63,18 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
 
         pieChart = view.findViewById(R.id.piechartContainers);
 
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            Integer position = getArguments().getInt(ConnectionActivity.KEY_CONN_ID, 0);
-            activeConnection = Connection.listAll(Connection.class).get(position);
-            LoadInfo();
-        } else
-            Toast.makeText(getContext(), "Fatal issue: No Arguments", Toast.LENGTH_SHORT).show();
+        // get parent activity
+        parentActivity = (OverviewActivity) getActivity();
+        loadInfo();
     }
 
     // helper functions
-    public void LoadInfo() {
+    public void loadInfo() {
         DockerCommandBuilder infoCommand = new DockerCommandBuilder()
                 .apiEndpoint("/info")
                 .requestMethod("GET");
 
-        activeConnection.executeCommand(this, infoCommand);
+        parentActivity.activeConnection.executeCommand(this, infoCommand);
     }
 
     public void loadChart(DockerInfo dInfo) {
@@ -207,6 +203,6 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        LoadInfo();
+        loadInfo();
     }
 }

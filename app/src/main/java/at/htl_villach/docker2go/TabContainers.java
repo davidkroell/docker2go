@@ -1,13 +1,13 @@
 package at.htl_villach.docker2go;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +31,6 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
     int connectionPosition;
     OverviewActivity parentActivity;
     ListView listViewContainers;
-    Connection activeConnection;
     SwipeRefreshLayout swipeRefreshLayout;
     ArrayAdapter<DockerContainer> containerArrayAdapter;
     ArrayList<DockerContainer> containers;
@@ -100,13 +98,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
             }
         };
 
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            connectionPosition = getArguments().getInt(KEY_CONN_ID, 0);
-            activeConnection = Connection.listAll(Connection.class).get(connectionPosition);
-            LoadContainers();
-        } else
-            Toast.makeText(getContext(), "Fatal issue: No Arguments", Toast.LENGTH_SHORT).show();
+        loadContainers();
 
         listViewContainers.setAdapter(containerArrayAdapter);
         listViewContainers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -150,7 +142,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 .apiEndpoint("/containers/" + container.getNames().get(0).substring(1) + "/start")
                 .requestMethod("POST");
 
-        activeConnection.executeCommand(this, containersCommand);
+        parentActivity.activeConnection.executeCommand(this, containersCommand);
     }
 
     public void restartContainer(DockerContainer container) {
@@ -158,7 +150,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 .apiEndpoint("/containers/" + container.getNames().get(0).substring(1) + "/restart")
                 .requestMethod("POST");
 
-        activeConnection.executeCommand(this, containersCommand);
+        parentActivity.activeConnection.executeCommand(this, containersCommand);
     }
 
 
@@ -167,7 +159,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 .apiEndpoint("/containers/" + container.getNames().get(0).substring(1) + "/stop")
                 .requestMethod("POST");
 
-        activeConnection.executeCommand(this, containersCommand);
+        parentActivity.activeConnection.executeCommand(this, containersCommand);
     }
 
     public void showDetails(DockerContainer container) {
@@ -177,38 +169,44 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
         startActivity(i);
     }
 
-    public void LoadContainers() {
+    public void loadContainers() {
         DockerCommandBuilder containersCommand = new DockerCommandBuilder()
                 .apiEndpoint("/containers/json")
                 .queryParam("all", "true")
                 .requestMethod("GET");
 
-        activeConnection.executeCommand(this, containersCommand);
+        parentActivity.activeConnection.executeCommand(this, containersCommand);
     }
 
     @Override
     public void onCommandFinished(Command command) {
-        String[] parts = ((DockerCommandBuilder) command).getQueryString().split("/");
+        if(command.exitedAsExpected()) {
+            String[] parts = ((DockerCommandBuilder) command).getQueryString().split("/");
 
-        if (parts[1].equalsIgnoreCase("containers") && parts[2].equalsIgnoreCase("json?all=true")) {
-            DockerContainer[] dContainers = DockerObjParser.Containers(command.getResult());
+            if (parts[1].equalsIgnoreCase("containers") && parts[2].equalsIgnoreCase("json?all=true")) {
+                DockerContainer[] dContainers = DockerObjParser.Containers(command.getResult());
 
-            containers.clear();
-            containers.addAll(Arrays.asList(dContainers));
+                containers.clear();
+                containers.addAll(Arrays.asList(dContainers));
 
-            containerArrayAdapter.notifyDataSetChanged();
-        } else if (parts[3].equalsIgnoreCase("start")) {
-            LoadContainers();
-            parentActivity.infoTab.LoadInfo();
-            parentActivity.loadingIndicator.setVisibility(View.GONE);
-        } else if (parts[3].equalsIgnoreCase("stop")) {
-            LoadContainers();
-            parentActivity.infoTab.LoadInfo();
-            parentActivity.loadingIndicator.setVisibility(View.GONE);
-        } else if (parts[3].equalsIgnoreCase("restart")) {
-            LoadContainers();
-            parentActivity.infoTab.LoadInfo();
-            parentActivity.loadingIndicator.setVisibility(View.GONE);
+                containerArrayAdapter.notifyDataSetChanged();
+            } else if (parts[3].equalsIgnoreCase("start")) {
+                loadContainers();
+                parentActivity.infoTab.loadInfo();
+                parentActivity.loadingIndicator.setVisibility(View.GONE);
+            } else if (parts[3].equalsIgnoreCase("stop")) {
+                loadContainers();
+                parentActivity.infoTab.loadInfo();
+                parentActivity.loadingIndicator.setVisibility(View.GONE);
+            } else if (parts[3].equalsIgnoreCase("restart")) {
+                loadContainers();
+                parentActivity.infoTab.loadInfo();
+                parentActivity.loadingIndicator.setVisibility(View.GONE);
+            }
+        }else{
+            Snackbar.make(swipeRefreshLayout,
+                    "something went wrong",
+                    Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -220,6 +218,6 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        LoadContainers();
+        loadContainers();
     }
 }

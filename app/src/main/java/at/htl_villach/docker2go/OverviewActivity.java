@@ -37,7 +37,7 @@ public class OverviewActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private Connection curConnection;
+    public Connection activeConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +66,13 @@ public class OverviewActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             Long position = extras.getLong(ConnectionActivity.KEY_CONN_ID, 0);
-            curConnection = Connection.findById(Connection.class, position);
+            activeConnection = Connection.findById(Connection.class, position);
 
             // increase times connected
-            curConnection.increaseTimesConnected();
-            curConnection.save();
+            activeConnection.increaseTimesConnected();
+            activeConnection.save();
 
-            getSupportActionBar().setTitle(curConnection.getUsername() + "@" + curConnection.getHostname());
+            getSupportActionBar().setTitle(activeConnection.getUsername() + "@" + activeConnection.getHostname());
         } else {
             Snackbar.make(findViewById(R.id.constraintLayout), "Something went wrong", Snackbar.LENGTH_LONG);
         }
