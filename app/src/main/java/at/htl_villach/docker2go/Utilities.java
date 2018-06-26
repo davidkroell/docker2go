@@ -26,7 +26,7 @@ public class Utilities {
         int[] factors = new int[]{1000, 60, 60, 24, 7, 52};
         // counter
         int i = 0;
-        while (factors.length > (i - 1) && diff > factors[i]) {
+        while (factors.length > i && diff > factors[i]) {
             diff /= factors[i];
             i++;
         }
