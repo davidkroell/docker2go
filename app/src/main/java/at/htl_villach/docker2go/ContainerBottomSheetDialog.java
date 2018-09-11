@@ -53,6 +53,9 @@ public class ContainerBottomSheetDialog extends BottomSheetDialogFragment {
                         break;
                     case "Start":
                         iconView.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
+                        break;
+                    case "Remove":
+                        iconView.setBackgroundResource(R.drawable.ic_delete_black_24dp);
                 }
 
                 return view;
@@ -91,6 +94,7 @@ public class ContainerBottomSheetDialog extends BottomSheetDialogFragment {
             menuOptions.add("Stop");
         } else {
             menuOptions.add("Start");
+            menuOptions.add("Remove");
         }
     }
 

@@ -134,8 +134,8 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
         pieChart.setDescription("");
 
         // render legend on the right
-        pieChart.getLegend().setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-        pieChart.getLegend().setTextSize(12f);
+        pieChart.getLegend().setPosition(Legend.LegendPosition.BELOW_CHART_RIGHT);
+        //pieChart.getLegend().setTextSize(12f);
 
         // make it render instantly
         pieChart.invalidate();

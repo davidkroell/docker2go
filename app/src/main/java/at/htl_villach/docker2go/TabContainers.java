@@ -129,6 +129,10 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                                 parentActivity.loadingIndicator.setVisibility(View.VISIBLE);
                                 stopContainer(containerDialog.getContainer());
                                 break;
+                            case "Remove":
+                                parentActivity.loadingIndicator.setVisibility(View.VISIBLE);
+                                removeContainer(containerDialog.getContainer());
+                                break;
                         }
                     }
                 });
@@ -162,6 +166,14 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
         parentActivity.activeConnection.executeCommand(this, containersCommand);
     }
 
+    public void removeContainer(DockerContainer container) {
+        DockerCommandBuilder containersCommand = new DockerCommandBuilder()
+                .apiEndpoint("/containers/" + container.getId())
+                .requestMethod("DELETE");
+
+        parentActivity.activeConnection.executeCommand(this, containersCommand);
+    }
+
     public void showDetails(DockerContainer container) {
         Intent i = new Intent(getActivity(), ContainerDetailActivity.class);
         i.putExtra(KEY_CONN_ID, connectionPosition);
@@ -180,30 +192,22 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
 
     @Override
     public void onCommandFinished(Command command) {
-        if(command.exitedAsExpected()) {
+        if (command.exitedAsExpected()) {
             String[] parts = ((DockerCommandBuilder) command).getQueryString().split("/");
 
-            if (parts[1].equalsIgnoreCase("containers") && parts[2].equalsIgnoreCase("json?all=true")) {
-                DockerContainer[] dContainers = DockerObjParser.Containers(command.getResult());
+                if (parts[1].equalsIgnoreCase("containers") && parts[2].equalsIgnoreCase("json?all=true")) {
+                    DockerContainer[] dContainers = DockerObjParser.Containers(command.getResult());
 
-                containers.clear();
-                containers.addAll(Arrays.asList(dContainers));
+                    containers.clear();
+                    containers.addAll(Arrays.asList(dContainers));
 
-                containerArrayAdapter.notifyDataSetChanged();
-            } else if (parts[3].equalsIgnoreCase("start")) {
-                loadContainers();
-                parentActivity.infoTab.loadInfo();
-                parentActivity.loadingIndicator.setVisibility(View.GONE);
-            } else if (parts[3].equalsIgnoreCase("stop")) {
-                loadContainers();
-                parentActivity.infoTab.loadInfo();
-                parentActivity.loadingIndicator.setVisibility(View.GONE);
-            } else if (parts[3].equalsIgnoreCase("restart")) {
-                loadContainers();
-                parentActivity.infoTab.loadInfo();
-                parentActivity.loadingIndicator.setVisibility(View.GONE);
-            }
-        }else{
+                    containerArrayAdapter.notifyDataSetChanged();
+                } else {
+                    loadContainers();
+                    parentActivity.infoTab.loadInfo();
+                    parentActivity.loadingIndicator.setVisibility(View.GONE);
+                }
+        } else {
             Snackbar.make(swipeRefreshLayout,
                     "something went wrong",
                     Snackbar.LENGTH_LONG).show();
