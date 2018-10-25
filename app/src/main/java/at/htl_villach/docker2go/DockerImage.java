@@ -12,9 +12,9 @@ public class DockerImage implements DockerObj {
     private LabelsBean Labels;
     private String ParentId;
     private List<String> RepoDigests;
-    private int SharedSize;
-    private int Size;
-    private int VirtualSize;
+    private long SharedSize;
+    private long Size;
+    private long VirtualSize;
     private List<String> RepoTags;
 
     public int getContainers() {
@@ -65,15 +65,15 @@ public class DockerImage implements DockerObj {
         this.RepoDigests = RepoDigests;
     }
 
-    public int getSharedSize() {
+    public long getSharedSize() {
         return SharedSize;
     }
 
-    public void setSharedSize(int SharedSize) {
+    public void setSharedSize(long SharedSize) {
         this.SharedSize = SharedSize;
     }
 
-    public int getSize() {
+    public long getSize() {
         return Size;
     }
 
@@ -81,7 +81,7 @@ public class DockerImage implements DockerObj {
         this.Size = Size;
     }
 
-    public int getVirtualSize() {
+    public long getVirtualSize() {
         return VirtualSize;
     }
 
