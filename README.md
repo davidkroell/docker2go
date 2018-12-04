@@ -18,5 +18,5 @@ This software is licenced under the terms of Apache-2.0
 ### Authors
 This application was once developed as a school project (HTL Villach) for Software Engineering class. The original project team consists of
 
-- David Kröll &
-- Christopher Hummel
+- David Kröll [@davidkroell](https://github.com/davidkroell) &
+- Christopher Hummel [@evilpro](https://github.com/evilpro)
