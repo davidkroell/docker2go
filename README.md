@@ -3,7 +3,7 @@ Docker2go is an Android Application to manage Docker Hosts on the go.
 The app allows sysadmins to check the status of their loved Docker instances using an simple Android app.
 The application is completely written in Java.
 
-> This is not an enterprise solution Docker manger
+> This is not an enterprise solution Docker manager
 
 ## Installation
 By now, the app is only available as prebuilt APK or source code (build the APK by your own). The APK can be found in [release](https://github.com/davidkroell/docker2go) section.
