@@ -1,0 +1,43 @@
+# Project information
+site_name: 'docker2go'
+site_description: 'Manage your Docker Host on the go'
+site_author: 'David Kröll, Christopher Hummel'
+site_url: 'https://davidkroell.github.io/docker2go/'
+
+# Repository
+repo_name: 'davidkroell/docker2go'
+repo_url: 'https://github.com/davidkroell/docker2go'
+edit_uri: 'https://github.com/davidkroell/docker2go/tree/master/docs'
+
+# Copyright
+copyright: 'Copyright &copy; 2018 David Kröll, Christopher Hummel'
+
+# Configuration
+theme:
+  name: 'material'
+  language: 'en'
+  palette:
+    primary: 'red'
+    accent: 'red'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  feature:
+    tabs: true
+
+# Customization
+extra:
+  manifest: 'manifest.webmanifest'
+  social:
+    - type: 'github'
+      link: 'https://github.com/davidkroell'
+    - type: 'github'
+      link: 'https://github.com/evilpro'
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
