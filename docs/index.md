@@ -5,10 +5,29 @@ The application (of course) does not cover the full functionality of Docker.
 Feel free to contribute. More in section [Contributing](#contributing)
 
 ## Concept
+Docker2go leverages Dockers unix socket to talk to it's JSON API. The application connects through a SSH tunnel to the remote Host. 
+
+> The SSH tunnel is created with the third party library JSch. 
+
+Then, the app does execute a `curl` command over the CLI. 
+Docker2go uses Dockers HTTP API which is based on JSON. 
+The output of the API (JSON formatted) is then parsed using Googles `gson` Library to use it as Java objects.
+
+![Concept Diagram](img/concept.png)
+This concept diagram gives an idea how the application works. 
 
 ## Features
 
 ## Third party libraries
+Docker2go uses several third party libraries.
+Every used library is listed below with notes about the specific use case.
+
+| Library Name                                                | Version | License    | Use case                                                     |
+| ----------------------------------------------------------- | ------- | ---------- | ------------------------------------------------------------ |
+| [JSch](http://www.jcraft.com/jsch/)                         | 0.1.54  | BSD-style  | Used to create secure tunnel to the remote Docker host.      |
+| [SugarORM](https://github.com/chennaione/sugar)             | 1.4     | MIT        | Used to store connection data (Hostname, User, Port, ...)    |
+| [Gson](https://github.com/google/gson)                      | 2.8.0   | Apache-2.0 | Used to parse JSON calls to Java Objects                     |
+| [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) | 2.2.4   | Apache-2.0 | Used to draw charts (running/stopped container chart) |
 
 ## Contributing
 If you find a bug, have a question want a feature, etc. drop an issue in the project [issue tracker](https://github.com/davidkroell/docker2go/issues).
