@@ -1,5 +1,5 @@
 # Project information
-site_name: 'docker2go'
+site_name: 'Docker2go'
 site_description: 'Manage your Docker Host on the go'
 site_author: 'David Kröll, Christopher Hummel'
 site_url: 'https://davidkroell.github.io/docker2go/'
