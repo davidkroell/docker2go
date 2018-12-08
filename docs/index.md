@@ -4,6 +4,15 @@ The application (of course) does not cover the full functionality of Docker.
 
 Feel free to contribute. More in section [Contributing](#contributing)
 
+## Screenshots
+
+<img src="img/connection-view.png" width=220 alt="Connection view">
+<img src="img/info-view.png" width=220 alt="Information view">
+<img src="img/images-view.png" width=220 alt="Images view">
+<img src="img/containers-view.png" width=220 alt="Container view">
+<img src="img/container-bottom-sheet.png" width=220 alt="Container bottom sheet">
+<img src="img/container-details.png" width=220 alt="Container details">
+
 ## Concept
 Docker2go leverages Dockers unix socket to talk to it's JSON API. The application connects through a SSH tunnel to the remote Host. 
 
