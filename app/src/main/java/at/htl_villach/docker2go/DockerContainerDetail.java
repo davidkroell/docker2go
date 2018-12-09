@@ -1,35 +1,9 @@
 package at.htl_villach.docker2go;
 
-import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Map;
 
 public class DockerContainerDetail {
-
-    /**
-     * Id : 97d7298d3004fcada1df72c6c91326de8084bde0a644fef7f25bc372d9da981c
-     * Created : 2018-05-16T17:23:56.78076987Z
-     * Path : /usr/bin/env
-     * Args : ["node","/usr/src/app/bin/www"]
-     * State : {"Status":"running","Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":22453,"ExitCode":0,"Error":"","StartedAt":"2018-05-16T17:41:08.644289589Z","FinishedAt":"2018-05-16T17:41:04.428559341Z"}
-     * Image : sha256:a4cf9fdbb3ced6716ca6c943f4b53077209775ec888fd9247a7b2535e070a739
-     * ResolvConfPath : /var/lib/docker/containers/97d7298d3004fcada1df72c6c91326de8084bde0a644fef7f25bc372d9da981c/resolv.conf
-     * HostnamePath : /var/lib/docker/containers/97d7298d3004fcada1df72c6c91326de8084bde0a644fef7f25bc372d9da981c/hostname
-     * HostsPath : /var/lib/docker/containers/97d7298d3004fcada1df72c6c91326de8084bde0a644fef7f25bc372d9da981c/hosts
-     * LogPath : /var/lib/docker/containers/97d7298d3004fcada1df72c6c91326de8084bde0a644fef7f25bc372d9da981c/97d7298d3004fcada1df72c6c91326de8084bde0a644fef7f25bc372d9da981c-json.log
-     * Name : /keylog.rest-api
-     * RestartCount : 0
-     * Driver : overlay2
-     * Platform : linux
-     * MountLabel :
-     * ProcessLabel :
-     * AppArmorProfile :
-     * ExecIDs : null
-     * HostConfig : {"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"bridge","RestartPolicy":{"Name":"always","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":[],"CapAdd":null,"CapDrop":null,"Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"shareable","Cgroup":"","Links":null,"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"","CpuShares":0,"Memory":0,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DiskQuota":0,"KernelMemory":0,"MemoryReservation":0,"MemorySwap":0,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":0,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0}
-     * Mounts : [{"Type":"bind","Source":"/home/kroelld/keylog.conf.js","Destination":"/usr/src/app/config.js","Mode":"ro","RW":false,"Propagation":"rprivate"}]
-     * Config : {"Hostname":"97d7298d3004","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["NODE_ENV=production","PROXY_HEADER_REAL_IP_KEY=X-Forwarded-For","PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","NODE_VERSION=6.13.1","YARN_VERSION=1.5.1"],"Cmd":null,"ArgsEscaped":true,"Image":"davidkroell/keylog.rest","WorkingDir":"/usr/src/app","Entrypoint":["/usr/bin/env","node","/usr/src/app/bin/www"],"OnBuild":null}
-     * NetworkSettings : {"Bridge":"","SandboxID":"1e70915ecc1de33caa3f37b63bc2ac84a3330a3ecc04910100f5b6baeb6103aa","HairpinMode":false,"LinkLocalIPv6Address":"","LinkLocalIPv6PrefixLen":0,"SandboxKey":"/var/run/docker/netns/1e70915ecc1d","SecondaryIPAddresses":null,"SecondaryIPv6Addresses":null,"EndpointID":"62d58b7728dc4b0e4037d7eac682934544c71b9e9e2dd2a62fed94badb630df2","Gateway":"172.17.0.1","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"IPAddress":"172.17.0.2","IPPrefixLen":16,"IPv6Gateway":"","MacAddress":"02:42:ac:11:00:02","Networks":{"bridge":{"IPAMConfig":null,"Links":null,"Aliases":null,"NetworkID":"a025278a9c83a40b7bd8a18b2267b8e07913b8b37f5946c9bd0b4ef3fc27ca85","EndpointID":"62d58b7728dc4b0e4037d7eac682934544c71b9e9e2dd2a62fed94badb630df2","Gateway":"172.17.0.1","IPAddress":"172.17.0.2","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"MacAddress":"02:42:ac:11:00:02","DriverOpts":null}}}
-     */
 
     private String Id;
     private String Created;
@@ -468,6 +442,7 @@ public class DockerContainerDetail {
         private int IOMaximumBandwidth;
         private List<?> VolumesFrom;
         private List<Integer> ConsoleSize;
+        private Map<String, List<PortBindingsBean>> PortBindings;
 
         public String getContainerIDFile() {
             return ContainerIDFile;
@@ -941,6 +916,14 @@ public class DockerContainerDetail {
             this.ConsoleSize = ConsoleSize;
         }
 
+        public Map<String, List<PortBindingsBean>> getPortBindings() {
+            return PortBindings;
+        }
+
+        public void setPortBindings(Map<String, List<PortBindingsBean>> portBindings) {
+            PortBindings = portBindings;
+        }
+
         public static class LogConfigBean {
             /**
              * Type : json-file
@@ -969,17 +952,6 @@ public class DockerContainerDetail {
             public static class ConfigBean {
             }
         }
-
-
-        public Map<String, List<PortBindingsBean>> getPortBindings() {
-            return PortBindings;
-        }
-
-        public void setPortBindings(Map<String, List<PortBindingsBean>> portBindings) {
-            PortBindings = portBindings;
-        }
-
-        private Map<String, List<PortBindingsBean>> PortBindings;
 
         public static class PortBindingsBean {
             /**

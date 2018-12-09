@@ -15,11 +15,6 @@ import java.util.Properties;
 
 import at.htl_villach.docker2go.Connection.onCommandStatusChangeListener;
 
-/**
- * Created by kroel on 07.05.2018.
- */
-
-
 // this is the class which runs the long lasting operation
 // first param type: backgroundParams, the command to be executed
 // second param type: updateValues, with this Object, the listener is called

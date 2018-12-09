@@ -6,11 +6,6 @@ import android.content.res.Resources;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-
-/**
- * Created by kroel on 23.04.2018.
- */
-
 public class Connection extends SugarRecord {
     private String hostname;
     private String username;

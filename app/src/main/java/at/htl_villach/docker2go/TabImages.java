@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,7 +75,7 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
 
     @Override
     public void onCommandFinished(Command command) {
-        if(command.exitedAsExpected()) {
+        if (command.exitedAsExpected()) {
 
             DockerImage[] dImages = DockerObjParser.Images(command.getResult());
 
@@ -87,7 +86,7 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
             imageArrayAdapter.notifyDataSetChanged();
             OverviewActivity oa = (OverviewActivity) getActivity();
             oa.loadingIndicator.setVisibility(View.GONE);
-        }else{
+        } else {
             Snackbar.make(swipeRefreshLayout,
                     "something went wrong",
                     Snackbar.LENGTH_LONG).show();

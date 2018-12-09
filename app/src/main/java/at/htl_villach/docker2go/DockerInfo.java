@@ -2,10 +2,6 @@ package at.htl_villach.docker2go;
 
 import java.util.List;
 
-/**
- * Created by kroel on 18.05.2018.
- */
-
 public class DockerInfo implements DockerObj {
 
     private String Architecture;

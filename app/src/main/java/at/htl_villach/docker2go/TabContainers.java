@@ -195,18 +195,18 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
         if (command.exitedAsExpected()) {
             String[] parts = ((DockerCommandBuilder) command).getQueryString().split("/");
 
-                if (parts[1].equalsIgnoreCase("containers") && parts[2].equalsIgnoreCase("json?all=true")) {
-                    DockerContainer[] dContainers = DockerObjParser.Containers(command.getResult());
+            if (parts[1].equalsIgnoreCase("containers") && parts[2].equalsIgnoreCase("json?all=true")) {
+                DockerContainer[] dContainers = DockerObjParser.Containers(command.getResult());
 
-                    containers.clear();
-                    containers.addAll(Arrays.asList(dContainers));
+                containers.clear();
+                containers.addAll(Arrays.asList(dContainers));
 
-                    containerArrayAdapter.notifyDataSetChanged();
-                } else {
-                    loadContainers();
-                    parentActivity.infoTab.loadInfo();
-                    parentActivity.loadingIndicator.setVisibility(View.GONE);
-                }
+                containerArrayAdapter.notifyDataSetChanged();
+            } else {
+                loadContainers();
+                parentActivity.infoTab.loadInfo();
+                parentActivity.loadingIndicator.setVisibility(View.GONE);
+            }
         } else {
             Snackbar.make(swipeRefreshLayout,
                     "something went wrong",

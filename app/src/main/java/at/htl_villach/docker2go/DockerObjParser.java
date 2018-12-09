@@ -3,10 +3,6 @@ package at.htl_villach.docker2go;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-/**
- * Created by kroel on 18.05.2018.
- */
-
 public class DockerObjParser {
     // able to generate docker object without command
     public static DockerInfo Info(String input) {

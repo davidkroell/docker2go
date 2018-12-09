@@ -31,7 +31,7 @@ public class Utilities {
             i++;
         }
 
-        String helper =  String.format(dateTypeStrings[i - 1], diff);
+        String helper = String.format(dateTypeStrings[i - 1], diff);
         return String.format(wrapper, helper);
     }
 

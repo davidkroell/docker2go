@@ -3,10 +3,6 @@ package at.htl_villach.docker2go;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kroel on 17.05.2018.
- */
-
 public class CommandExecutionSummary {
 
     private List<Command> commands;

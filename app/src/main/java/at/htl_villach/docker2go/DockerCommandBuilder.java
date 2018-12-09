@@ -3,10 +3,6 @@ package at.htl_villach.docker2go;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by kroel on 14.05.2018.
- */
-
 public class DockerCommandBuilder implements Command {
 
     // booleans
