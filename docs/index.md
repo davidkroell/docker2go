@@ -5,7 +5,6 @@ The application (of course) does not cover the full functionality of Docker.
 Feel free to contribute. More in section [Contributing](#contributing)
 
 ## Screenshots
-
 <img src="img/connection-view.png" width=220 alt="Connection view">
 <img src="img/info-view.png" width=220 alt="Information view">
 <img src="img/images-view.png" width=220 alt="Images view">
@@ -26,6 +25,42 @@ The output of the API (JSON formatted) is then parsed using Googles `gson` Libra
 This concept diagram gives an idea how the application works. 
 
 ## Features
+The app currently provides the following funcionalities:
+
+**Connections** are displayed when Docker2go is started.
+It diplays all saved connection as Cards which includes operating system's logo as profile picture
+
+- Add connection to a remote host
+- Edit a connection
+- Delete a connection
+
+**Basic information** is showed when a connection to a remote host is initiated
+Connecting to a remote host does perform a static host key check.
+
+- Operating System
+- Server version (Docker daemon version)
+- Memory and CPU
+- Overview of running and stopped containers (pie chart)
+- Swarm mode (if enabled)
+
+**Containers** are printed out in a list
+
+- Name
+- Status (running/stopped/exit code)
+- Created time
+- Image (gets showed on click)
+
+By clicking on a container actions depending on container state may be taken
+
+- Inspect
+- Restart (if running)
+- Start (if stopped/paused)
+- Stop (if running)
+- Remove
+
+Inspecting a container gives more detailed information about the desired container.
+
+**Images** are shown in a basic list where the tag (or SHA) is printed.
 
 ## Third party libraries
 Docker2go uses several third party libraries.
