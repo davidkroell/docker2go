@@ -2,6 +2,8 @@
 If you want to just use the app you may be better of by just installing by APK.
 If you want to debug or develop the app you have to install it via Source code.
 
+**TL;DR: Latest version availalbe for [download](https://github.com/davidkroell/docker2go/releases/latest)**
+
 ## Prerequisites
 - Device with Android 5.1 Lollipop or newer (API level 22)
 - Host with Docker daemon installed
@@ -12,7 +14,7 @@ Right now, the app is only available by downloading the APK from the GitHub rele
 It is unclear if the app is ever published in Google's Playstore.
 Make sure you permit the installation of non-official Android application by enabling `Unknown sources` in the security settings.
 
-The latest stable release is found on [GitHub](https://github.com/davidkroell/docker2go/releases/latest).
+The latest stable release is found on [GitHub](https://github.com/davidkroell/docker2go/releases).
 
 ## From Source
 The app may also be installed from source. For this you have to install Android Studio on your laptop or PC.
