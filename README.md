@@ -10,7 +10,7 @@ By now, the app is only available as prebuilt APK or source code (build the APK 
 
 
 ## Documentation
-The Documentation is hosted on https://davidkroell.github.com/docker2go
+The Documentation is hosted on https://davidkroell.github.io/docker2go
 
 ## License
 This software is licenced under the terms of Apache-2.0
