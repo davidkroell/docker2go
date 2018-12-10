@@ -2,22 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://davidkroell.github.io/docker2go/</loc>
-     <lastmod>2018-12-05</lastmod>
+     <lastmod>2018-12-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://davidkroell.github.io/docker2go/features/</loc>
-     <lastmod>2018-12-05</lastmod>
+     <loc>https://davidkroell.github.io/docker2go/installation/</loc>
+     <lastmod>2018-12-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://davidkroell.github.io/docker2go/installation/apk/</loc>
-     <lastmod>2018-12-05</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://davidkroell.github.io/docker2go/installation/source/</loc>
-     <lastmod>2018-12-05</lastmod>
+     <loc>https://davidkroell.github.io/docker2go/under-the-hood/</loc>
+     <lastmod>2018-12-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

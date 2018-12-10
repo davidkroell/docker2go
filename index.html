@@ -42,7 +42,7 @@
     
     
       
-        <title>docker2go</title>
+        <title>Docker2go</title>
       
     
     
@@ -107,12 +107,16 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
+      <a href="#overview" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://davidkroell.github.io/docker2go/" title="docker2go" class="md-header-nav__button md-logo">
+        <a href="https://davidkroell.github.io/docker2go/" title="Docker2go" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -126,10 +130,10 @@
           
             
               <span class="md-header-nav__topic">
-                docker2go
+                Docker2go
               </span>
               <span class="md-header-nav__topic">
-                Home
+                Overview
               </span>
             
           
@@ -208,8 +212,8 @@
         
   <li class="md-tabs__item">
     
-      <a href="." title="Home" class="md-tabs__link md-tabs__link--active">
-        Home
+      <a href="." title="Overview" class="md-tabs__link md-tabs__link--active">
+        Overview
       </a>
     
   </li>
@@ -218,17 +222,6 @@
         
       
         
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="installation/apk/" title="Installation" class="md-tabs__link">
-          Installation
-        </a>
-      
-    </li>
-  
-
       
     </ul>
   </div>
@@ -243,12 +236,12 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="https://davidkroell.github.io/docker2go/" title="docker2go" class="md-nav__button md-logo">
+    <a href="https://davidkroell.github.io/docker2go/" title="Docker2go" class="md-nav__button md-logo">
       
         <i class="md-icon"></i>
       
     </a>
-    docker2go
+    Docker2go
   </label>
   
     <div class="md-nav__source">
@@ -286,71 +279,94 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
-    
-    <a href="." title="Home" class="md-nav__link md-nav__link--active">
-      Home
-    </a>
-    
-  </li>
-
-    
       
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="features/" title="Features" class="md-nav__link">
-      Features
-    </a>
-  </li>
-
     
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
-    
-    <label class="md-nav__link" for="nav-3">
-      Installation
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
-        Installation
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Overview
       </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
+    
+    <a href="." title="Overview" class="md-nav__link md-nav__link--active">
+      Overview
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#screenshots" title="Screenshots" class="md-nav__link">
+    Screenshots
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concept" title="Concept" class="md-nav__link">
+    Concept
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" title="Features" class="md-nav__link">
+    Features
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#third-party-libraries" title="Third party libraries" class="md-nav__link">
+    Third party libraries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" title="Contributing" class="md-nav__link">
+    Contributing
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
-    <a href="installation/apk/" title="From APK" class="md-nav__link">
-      From APK
+    <a href="installation/" title="Installation" class="md-nav__link">
+      Installation
     </a>
   </li>
 
-        
-          
-          
-          
+    
+      
+      
+      
 
 
   <li class="md-nav__item">
-    <a href="installation/source/" title="Source" class="md-nav__link">
-      Source
+    <a href="under-the-hood/" title="Under the hood" class="md-nav__link">
+      Under the hood
     </a>
-  </li>
-
-        
-      </ul>
-    </nav>
   </li>
 
     
@@ -361,6 +377,65 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#screenshots" title="Screenshots" class="md-nav__link">
+    Screenshots
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concept" title="Concept" class="md-nav__link">
+    Concept
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" title="Features" class="md-nav__link">
+    Features
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#third-party-libraries" title="Third party libraries" class="md-nav__link">
+    Third party libraries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" title="Contributing" class="md-nav__link">
+    Contributing
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -369,9 +444,106 @@
                   <a href="https://github.com/davidkroell/docker2go/tree/master/docs/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                  <h1>Home</h1>
-                
-                
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>Docker2go is an app for Android devices which allows you to manage your Docker Host on the go.
+The application (of course) does not cover the full functionality of Docker.</p>
+<p>Feel free to contribute. More in section <a href="#contributing">Contributing</a></p>
+<h2 id="screenshots">Screenshots<a class="headerlink" href="#screenshots" title="Permanent link">&para;</a></h2>
+<p><img src="img/connection-view.png" width=220 alt="Connection view">
+<img src="img/info-view.png" width=220 alt="Information view">
+<img src="img/images-view.png" width=220 alt="Images view">
+<img src="img/containers-view.png" width=220 alt="Container view">
+<img src="img/container-bottom-sheet.png" width=220 alt="Container bottom sheet">
+<img src="img/container-details.png" width=220 alt="Container details"></p>
+<h2 id="concept">Concept<a class="headerlink" href="#concept" title="Permanent link">&para;</a></h2>
+<p>Docker2go leverages Dockers unix socket to talk to it's JSON API. The application connects through a SSH tunnel to the remote Host. </p>
+<blockquote>
+<p>The SSH tunnel is created with the third party library JSch. </p>
+</blockquote>
+<p>Then, the app does execute a <code>curl</code> command over the CLI. 
+Docker2go uses Dockers HTTP API which is based on JSON. 
+The output of the API (JSON formatted) is then parsed using Googles <code>gson</code> Library to use it as Java objects.</p>
+<p><img alt="Concept Diagram" src="img/concept.png" />
+This concept diagram gives an idea how the application works. </p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<p>The app currently provides the following funcionalities:</p>
+<p><strong>Connections</strong> are displayed when Docker2go is started.
+It diplays all saved connection as Cards which includes operating system's logo as profile picture</p>
+<ul>
+<li>Add connection to a remote host</li>
+<li>Edit a connection</li>
+<li>Delete a connection</li>
+</ul>
+<p><strong>Basic information</strong> is showed when a connection to a remote host is initiated
+Connecting to a remote host does perform a static host key check.</p>
+<ul>
+<li>Operating System</li>
+<li>Server version (Docker daemon version)</li>
+<li>Memory and CPU</li>
+<li>Overview of running and stopped containers (pie chart)</li>
+<li>Swarm mode (if enabled)</li>
+</ul>
+<p><strong>Containers</strong> are printed out in a list</p>
+<ul>
+<li>Name</li>
+<li>Status (running/stopped/exit code)</li>
+<li>Created time</li>
+<li>Image (gets showed on click)</li>
+</ul>
+<p>By clicking on a container actions depending on container state may be taken</p>
+<ul>
+<li>Inspect</li>
+<li>Restart (if running)</li>
+<li>Start (if stopped/paused)</li>
+<li>Stop (if running)</li>
+<li>Remove</li>
+</ul>
+<p>Inspecting a container gives more detailed information about the desired container.</p>
+<p><strong>Images</strong> are shown in a basic list where the tag (or SHA) is printed.</p>
+<h2 id="third-party-libraries">Third party libraries<a class="headerlink" href="#third-party-libraries" title="Permanent link">&para;</a></h2>
+<p>Docker2go uses several third party libraries.
+Every used library is listed below with notes about the specific use case.</p>
+<table>
+<thead>
+<tr>
+<th>Library Name</th>
+<th>Version</th>
+<th>License</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.jcraft.com/jsch/">JSch</a></td>
+<td>0.1.54</td>
+<td>BSD-style</td>
+<td>Used to create secure tunnel to the remote Docker host.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/chennaione/sugar">SugarORM</a></td>
+<td>1.4</td>
+<td>MIT</td>
+<td>Used to store connection data (Hostname, User, Port, ...)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/google/gson">Gson</a></td>
+<td>2.8.0</td>
+<td>Apache-2.0</td>
+<td>Used to parse JSON calls to Java Objects</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PhilJay/MPAndroidChart">MPAndroidChart</a></td>
+<td>2.2.4</td>
+<td>Apache-2.0</td>
+<td>Used to draw charts (running/stopped container chart)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
+<p>If you find a bug, have a question want a feature, etc. drop an issue in the project <a href="https://github.com/davidkroell/docker2go/issues">issue tracker</a>.</p>
+<p>Of course you may also submit a pull request which already fixes a bug or adds a feature.
+Just make sure it is well tested and maybe also documented.</p>
+<p>For this, use GitHubs fork mechanism.</p>
                 
                   
                 
@@ -393,13 +565,13 @@
       <nav class="md-footer-nav__inner md-grid">
         
         
-          <a href="features/" title="Features" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="installation/" title="Installation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Features
+                Installation
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
