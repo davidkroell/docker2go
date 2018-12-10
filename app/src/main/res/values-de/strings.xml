@@ -23,7 +23,6 @@
     <string name="info_paused">pausiert</string>
     <string name="info_stopped">gestoppt</string>
     <string name="info_num_cpus">Anzahl Prozessoren</string>
-    <string name="info_swarm_status">Status</string>
     <string name="info_control_avail">Knotentyp</string>
     <string name="info_swarm_nodeaddr">Knotenadresse</string>
     <string name="connect">Verbinden</string>
