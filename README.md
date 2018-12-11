@@ -6,11 +6,11 @@ The application is completely written in Java.
 > This is not an enterprise solution Docker manager
 
 ## Installation
-By now, the app is only available as prebuilt APK or source code (build the APK by your own). The APK can be found in [release](https://github.com/davidkroell/docker2go) section.
+By now, the app is only available as prebuilt APK or source code (build the APK by your own). The APK can be downloaded in [release](https://github.com/davidkroell/docker2go/releases) section.
 
 
 ## Documentation
-The Documentation is hosted on https://davidkroell.github.com/docker2go
+The Documentation is hosted on https://davidkroell.github.io/docker2go
 
 ## License
 This software is licenced under the terms of Apache-2.0
