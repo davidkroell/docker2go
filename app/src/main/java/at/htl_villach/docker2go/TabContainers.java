@@ -22,6 +22,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static at.htl_villach.docker2go.ConnectionActivity.KEY_CONN_ID;
 
@@ -66,6 +67,7 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 TextView textViewName = view.findViewById(R.id.textViewContainerName);
                 TextView textViewStatus = view.findViewById(R.id.textViewStatus);
                 TextView textViewCreated = view.findViewById(R.id.textViewCreatedAt);
+                TextView textViewPorts = view.findViewById(R.id.textViewPorts);
                 View statusIndicator = view.findViewById(R.id.statusIndicator);
                 DockerContainer currentContainer = containers.get(position);
 
@@ -78,6 +80,25 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                         getString(R.string.date_type_past_wrapper));
 
                 textViewCreated.setText(age);
+
+                StringBuilder portMapping = new StringBuilder();
+
+                for (DockerContainer.PortsBean portsBean: currentContainer.getPorts()) {
+                    portMapping.append(portsBean.getPublicPort())
+                            .append("->")
+                            .append(portsBean.getPrivatePort())
+                            .append("/")
+                            .append(portsBean.getType());
+
+                    portMapping.append("\n");
+                }
+
+                if(portMapping.length() != 0){
+                    // remove last character (last line break)
+                    portMapping.setLength(portMapping.length() -1);
+                    textViewPorts.setText(portMapping);
+                    textViewPorts.setVisibility(View.VISIBLE);
+                }
 
                 int statusColor;
                 if (currentContainer.getState().equals(getString(R.string.info_running))) {
