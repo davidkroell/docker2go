@@ -33,4 +33,5 @@
     <string name="dialog_hk_title">Sicherheitsinformation</string>
     <string name="title_activity_container_detail">Lade Details…</string>
     <string name="date_type_past_wrapper">vor %s erstellt</string>
+    <string name="no_connections">Bis jetzt hast du keine Verbindungen angelegt.</string>
 </resources>

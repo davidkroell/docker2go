@@ -2,6 +2,7 @@ package at.htl_villach.docker2go;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,6 +19,7 @@ public class ConnectionActivity extends AppCompatActivity {
 
     private ArrayAdapter<Connection> connectionArrayAdapter;
     private ListView listViewConnections;
+    private TextView textViewInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,7 @@ public class ConnectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connection);
 
         // floating action button onClick workaround
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addConnection);
+        FloatingActionButton fab = findViewById(R.id.addConnection);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +39,7 @@ public class ConnectionActivity extends AppCompatActivity {
         connectionArrayAdapter = new ArrayAdapter<Connection>(this, R.layout.list_item_connection,
                 R.id.textViewHost, Connection.listAll(Connection.class)) {
 
+            @NonNull
             @Override
             public View getView(final int position, View v, ViewGroup parent) {
                 // define fields
@@ -96,6 +99,7 @@ public class ConnectionActivity extends AppCompatActivity {
             }
         };
         listViewConnections = findViewById(R.id.listViewConnections);
+        textViewInfo = findViewById(R.id.textViewInfo);
 
         listViewConnections.setAdapter(connectionArrayAdapter);
     }
@@ -108,6 +112,9 @@ public class ConnectionActivity extends AppCompatActivity {
     private void refreshGUI() {
         connectionArrayAdapter.clear();
         connectionArrayAdapter.addAll(Connection.listAll(Connection.class));
+        if (Connection.count(Connection.class) == 0) {
+            textViewInfo.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
