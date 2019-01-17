@@ -41,7 +41,7 @@ public class ConnectionActivity extends AppCompatActivity {
 
             @NonNull
             @Override
-            public View getView(final int position, View v, ViewGroup parent) {
+            public View getView(final int position, View v, @NonNull ViewGroup parent) {
                 // define fields
                 View view = super.getView(position, v, parent);
                 TextView textViewHost = view.findViewById(R.id.textViewHost);
