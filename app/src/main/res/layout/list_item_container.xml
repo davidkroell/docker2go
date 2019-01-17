@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="14dp">
@@ -18,10 +17,12 @@
 
     <TextView
         android:id="@+id/textViewContainerName"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="mariadb-server"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="mailcowdockerized_rspamd-mailcow_1"
         android:textColor="@color/colorBlack"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/statusIndicator"
