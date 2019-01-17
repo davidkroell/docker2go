@@ -97,6 +97,14 @@ public class DockerImage implements DockerObj {
         this.RepoTags = RepoTags;
     }
 
+    public String getId(int n) {
+        String[] parts = Id.split(":");
+
+        // return only the n first characters of the I
+        return parts[1].substring(0, n);
+    }
+
+
     public static class LabelsBean {
         @SerializedName("com.docker.compose.config-hash")
         private String _$ComDockerComposeConfighash228; // FIXME check this code

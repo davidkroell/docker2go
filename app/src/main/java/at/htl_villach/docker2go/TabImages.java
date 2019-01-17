@@ -1,6 +1,7 @@
 package at.htl_villach.docker2go;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class TabImages extends Fragment implements Connection.onCommandStatusChangeListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -35,26 +37,47 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         //setup list
-        images = new ArrayList<DockerImage>();
+        images = new ArrayList<>();
 
         // swipe to refresh
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setRefreshing(true);
 
         //setup arrayadapter
-        imageArrayAdapter = new ArrayAdapter<DockerImage>(this.getContext(), R.layout.list_item_image, R.id.textViewImageName, images) {
+        imageArrayAdapter = new ArrayAdapter<DockerImage>(this.getContext(), R.layout.list_item_image, R.id.textViewRepository, images) {
 
+            @NonNull
             @Override
-            public View getView(int position, View v, ViewGroup parent) {
+            public View getView(int position, View v, @NonNull ViewGroup parent) {
                 View view = super.getView(position, v, parent);
-                TextView textViewName = view.findViewById(R.id.textViewImageName);
+                TextView textViewName = view.findViewById(R.id.textViewRepository);
+                TextView textViewTag = view.findViewById(R.id.textViewTag);
+                TextView textViewCreated = view.findViewById(R.id.textViewCreated);
+                TextView textViewSize = view.findViewById(R.id.textViewSize);
 
                 DockerImage currentImage = images.get(position);
 
-                if (currentImage.getRepoTags() != null)
-                    textViewName.setText(currentImage.getRepoTags().get(0));
-                else
+                // tags may be empty
+                if (currentImage.getRepoTags() != null) {
+                    String firstTag = currentImage.getRepoTags().get(0);
+
+                    String[] parts = firstTag.split(":");
+                    textViewName.setText(parts[0]);
+
+                    // show short id in braces
+                    textViewTag.setText(parts[1] + " (" + currentImage.getId(12) + ")");
+                } else {
                     textViewName.setText(currentImage.getId());
+                }
+
+                textViewCreated.setText(
+                        Utilities.timeElapsedString(
+                                new Date((long) currentImage.getCreated() * 1000),
+                                getResources().getStringArray(R.array.date_types),
+                                getString(R.string.date_type_past_wrapper)));
+
+
+                textViewSize.setText(Utilities.formatBytes(currentImage.getSize()));
 
                 return view;
             }
