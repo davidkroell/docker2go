@@ -39,4 +39,7 @@
     <string name="dialog_hk_title">Security Information</string>
     <string name="date_type_past_wrapper">created %s ago</string>
     <string name="no_connections">There are no connections yet.</string>
+    <string name="restart_dockerd">Restart Docker Daemon</string>
+    <string name="prune_containers">Prune Containers</string>
+    <string name="prune_images">Prune Images</string>
 </resources>

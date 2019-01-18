@@ -34,4 +34,7 @@
     <string name="title_activity_container_detail">Lade Details…</string>
     <string name="date_type_past_wrapper">vor %s erstellt</string>
     <string name="no_connections">Bis jetzt hast du keine Verbindungen angelegt.</string>
+    <string name="restart_dockerd">Docker Daemon neustarten</string>
+    <string name="prune_containers">Gestoppte Container löschen</string>
+    <string name="prune_images">Nicht verwendete Images löschen</string>
 </resources>

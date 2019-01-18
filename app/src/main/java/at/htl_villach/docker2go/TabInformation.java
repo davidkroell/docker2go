@@ -31,9 +31,6 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
     PieChart pieChart;
     OverviewActivity parentActivity;
 
-    /* TODO:
-        * Keep content after page goes inactive
-     */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

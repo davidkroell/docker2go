@@ -13,10 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
 
 public class OverviewActivity extends AppCompatActivity {
 
@@ -79,10 +81,28 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_overview, menu);
-        return true;
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+
+        int currentTab = mViewPager.getCurrentItem();
+
+        menu.clear();
+
+        // inflate base menu
+        inflater.inflate(R.menu.menu_overview, menu);
+        switch (currentTab) {
+            case 0:
+                // TODO change
+                inflater.inflate(R.menu.menu_tab_info, menu);
+                break;
+            case 1:
+                inflater.inflate(R.menu.menu_tab_containers, menu);
+                break;
+            case 2:
+                inflater.inflate(R.menu.menu_tab_images, menu);
+                break;
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
