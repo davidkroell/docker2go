@@ -2,16 +2,16 @@
 
 <resources>
     <!-- red-blue theme -->
-    <color name="colorPrimary">#c2001d</color>
-    <color name="colorPrimaryDark">#890000</color>
-    <color name="colorAccent">#55bcc9</color>
+    <color name="colorPrimary">#212A31</color>
+    <color name="colorPrimaryDark">#171d22</color>
+    <color name="colorAccent">#ef4956</color>
 
     <!-- universal colors -->
     <color name="colorBlack">#000</color>
 
     <!-- piechart colors -->
     <color name="containersRunning">@color/colorAccent</color>
-    <color name="containersPaused">@color/colorPrimary</color>
+    <color name="containersPaused">#d8d8d8</color>
     <color name="containersStopped">#9e9e9e</color>
 
 </resources>
