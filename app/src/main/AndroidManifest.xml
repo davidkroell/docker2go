@@ -17,7 +17,7 @@
             android:value="database.sqlite" />
         <meta-data
             android:name="VERSION"
-            android:value="3" />
+            android:value="2" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="at.htl_villach" />
