@@ -1,5 +1,7 @@
 package at.htl_villach.docker2go;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -20,13 +22,14 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 
-public class OverviewActivity extends AppCompatActivity {
+public class OverviewActivity extends AppCompatActivity implements Connection.onCommandStatusChangeListener {
 
     public TabInformation infoTab;
     public TabContainers containersTab;
     public TabImages imagesTab;
     public ProgressBar loadingIndicator;
     public Connection activeConnection;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -92,7 +95,6 @@ public class OverviewActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_overview, menu);
         switch (currentTab) {
             case 0:
-                // TODO change
                 inflater.inflate(R.menu.menu_tab_info, menu);
                 break;
             case 1:
@@ -112,13 +114,52 @@ public class OverviewActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.actionDisconnect) {
-            finish();
-            return true;
+        switch (id) {
+            case R.id.actionDisconnect:
+                finish();
+                break;
+            case R.id.actionPruneImages:
+                pruneImages();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void pruneImages() {
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
+
+        AlertDialog.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DockerCommandBuilder command = new DockerCommandBuilder()
+                        .requestMethod("POST")
+                        .apiEndpoint("/images/prune");
+
+                activeConnection.executeCommand(OverviewActivity.this, command);
+                loadingIndicator.setVisibility(View.VISIBLE);
+            }
+        };
+
+        dialog.setTitle("Warning!");
+        dialog.setMessage("By proceeding, every untagged image will be removed.\nAre you sure?");
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", listener);
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", listener);
+
+        dialog.show();
+    }
+
+    @Override
+    public void onCommandFinished(Command command) {
+        loadingIndicator.setVisibility(View.GONE);
+        if (command.exitedAsExpected())
+            Snackbar.make(imagesTab.swipeRefreshLayout,
+                    "Successfully removed untagged images",
+                    Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onAllCommandsFinished(CommandExecutionSummary ces) {
     }
 
     /**
