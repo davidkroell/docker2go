@@ -105,10 +105,6 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
             }
         });
 
-        PieData data = new PieData(labels, dataSet);
-
-        pieChart.setData(data);
-
         // set custom colors
         int[] colors = new int[]{
                 ContextCompat.getColor(getContext(), R.color.containersRunning),
@@ -116,6 +112,10 @@ public class TabInformation extends Fragment implements Connection.onCommandStat
                 ContextCompat.getColor(getContext(), R.color.containersStopped)
         };
         dataSet.setColors(colors);
+
+        PieData data = new PieData(labels, dataSet);
+
+        pieChart.setData(data);
 
         // text in the middle
         String middleStr = String.format("%d/%d \n %s",
