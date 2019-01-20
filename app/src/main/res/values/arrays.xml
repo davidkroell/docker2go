@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="date_types">
+    <string-array name="date_types_plural">
         <item>%s seconds</item>
         <item>%s minutes</item>
         <item>%s hours</item>
         <item>%s days</item>
         <item>%s weeks</item>
         <item>%s years</item>
+    </string-array>
+    <string-array name="date_types_singular">
+        <item>%s second</item>
+        <item>%s minute</item>
+        <item>%s hour</item>
+        <item>%s day</item>
+        <item>%s week</item>
+        <item>%s year</item>
     </string-array>
 </resources>

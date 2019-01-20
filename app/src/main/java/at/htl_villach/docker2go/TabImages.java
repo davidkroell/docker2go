@@ -73,7 +73,8 @@ public class TabImages extends Fragment implements Connection.onCommandStatusCha
                 textViewCreated.setText(
                         Utilities.timeElapsedString(
                                 new Date((long) currentImage.getCreated() * 1000),
-                                getResources().getStringArray(R.array.date_types),
+                                getResources().getStringArray(R.array.date_types_singular),
+                                getResources().getStringArray(R.array.date_types_plural),
                                 getString(R.string.date_type_past_wrapper)));
 
 

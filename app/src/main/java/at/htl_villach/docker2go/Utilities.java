@@ -19,7 +19,7 @@ public class Utilities {
     }
 
     // some inaccurate, because it always uses divisions without floating point
-    public static String timeElapsedString(Date start, Date end, String[] dateTypeStrings, String wrapper) {
+    public static String timeElapsedString(Date start, Date end, String[] dateTypeStringsSingular, String[] dateTypeStringsPlural, String wrapper) {
         long diff = end.getTime() - start.getTime();
 
         // seconds, minutes, hours, days, weeks years
@@ -31,14 +31,22 @@ public class Utilities {
             i++;
         }
 
-        String helper = String.format(dateTypeStrings[i - 1], diff);
+        // use singular or plural
+        String dateTypeString;
+        if (diff == 1)
+            dateTypeString = dateTypeStringsSingular[i - 1];
+        else
+            dateTypeString = dateTypeStringsPlural[i - 1];
+
+        String helper = String.format(dateTypeString, diff);
         return String.format(wrapper, helper);
     }
 
-    public static String timeElapsedString(Date start, String[] dateTypeStrings, String wrapper) {
+    public static String timeElapsedString(Date start, String[] dateTypeStringsSingular, String[] dateTypeStringsPlural, String wrapper) {
         return timeElapsedString(start,
                 new Date(System.currentTimeMillis()),
-                dateTypeStrings,
+                dateTypeStringsSingular,
+                dateTypeStringsPlural,
                 wrapper);
     }
 }

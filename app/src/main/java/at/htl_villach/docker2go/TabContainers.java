@@ -22,7 +22,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import static at.htl_villach.docker2go.ConnectionActivity.KEY_CONN_ID;
 
@@ -76,7 +75,8 @@ public class TabContainers extends Fragment implements Connection.onCommandStatu
                 textViewStatus.setText(currentContainer.getStatus());
                 String age = Utilities.timeElapsedString(
                         new Date((long) currentContainer.getCreated() * 1000),
-                        getResources().getStringArray(R.array.date_types),
+                        getResources().getStringArray(R.array.date_types_singular),
+                        getResources().getStringArray(R.array.date_types_plural),
                         getString(R.string.date_type_past_wrapper));
 
                 textViewCreated.setText(age);

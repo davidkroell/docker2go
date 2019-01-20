@@ -37,7 +37,7 @@
     <string name="connection_unkown_os">Unknown operating system</string>
     <string name="dialog_hk_message">Remote SSH key fingerprint not in cache.\nKey fingerprint (%s) found on remote server: %s \nDo you trust this host and want to proceed?</string>
     <string name="dialog_hk_title">Security Information</string>
-    <string name="date_type_past_wrapper">created %s ago</string>
+    <string name="date_type_past_wrapper">%s ago</string>
     <string name="no_connections">There are no connections yet.</string>
     <string name="restart_dockerd">Restart Docker Daemon</string>
     <string name="prune_containers">Prune Containers</string>
