@@ -112,8 +112,12 @@ public class ConnectionActivity extends AppCompatActivity {
     private void refreshGUI() {
         connectionArrayAdapter.clear();
         connectionArrayAdapter.addAll(Connection.listAll(Connection.class));
+
+        // show or hide info text
         if (Connection.count(Connection.class) == 0) {
             textViewInfo.setVisibility(View.VISIBLE);
+        } else {
+            textViewInfo.setVisibility(View.GONE);
         }
     }
 
