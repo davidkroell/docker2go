@@ -147,7 +147,7 @@ public class OverviewActivity extends AppCompatActivity implements Connection.on
                 String imgAndTag = ((EditText) dialogView.findViewById(R.id.editTextPullImage)).getText().toString();
 
                 imgAndTag = "fromImage=" + imgAndTag;
-                
+
                 if (!imgAndTag.contains(":"))
                     imgAndTag += ":latest";
 
