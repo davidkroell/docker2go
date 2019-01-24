@@ -25,6 +25,8 @@ public class DockerCommandBuilder implements Command {
 
     private Map<Object, Object> queryParams;
 
+    private String requestBody = "";
+
     // integers
     private Integer expectedExitCode = 0;
 
@@ -71,6 +73,13 @@ public class DockerCommandBuilder implements Command {
 
     public DockerCommandBuilder queryParam(Object key, Object value) {
         this.queryParams.put(key, value);
+        return this;
+    }
+
+    public DockerCommandBuilder requestBody(String s) throws Exception {
+        if (s.contains("'"))
+            throw new Exception("Request body may not contain single quote");
+        this.requestBody = s;
         return this;
     }
 
@@ -121,7 +130,10 @@ public class DockerCommandBuilder implements Command {
                 .append(apiEndpoint)
                 .append(getQueryParams()).append(" ")
                 .append(requestMethodCommandPrefix).append(" ")
-                .append(requestMethod);
+                .append(requestMethod).append(" ");
+
+        if (!requestBody.equals(""))
+            strBuilder.append("-d '").append(requestBody).append("'");
 
         return strBuilder.toString();
     }

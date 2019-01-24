@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 
 
@@ -121,9 +122,61 @@ public class OverviewActivity extends AppCompatActivity implements Connection.on
             case R.id.actionPruneImages:
                 pruneImages();
                 break;
+            case R.id.actionPullImage:
+                pullImage();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void pullImage() {
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
+
+        dialog.setTitle("Pull Image");
+        dialog.setMessage(getResources().getString(R.string.pull_image_info));
+
+        // inflate custom view in alertDialog
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_pull_image, null);
+        dialog.setView(dialogView);
+
+        AlertDialog.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String imgAndTag = ((EditText) dialogView.findViewById(R.id.editTextPullImage)).getText().toString();
+
+                imgAndTag = "fromImage=" + imgAndTag;
+                
+                if (!imgAndTag.contains(":"))
+                    imgAndTag += ":latest";
+
+                try {
+                    DockerCommandBuilder command = new DockerCommandBuilder()
+                            .requestMethod("POST")
+                            .apiEndpoint("/images/create")
+                            .requestBody(imgAndTag);
+
+                    activeConnection.executeCommand(OverviewActivity.this, command);
+                    loadingIndicator.setVisibility(View.VISIBLE);
+                } catch (Exception e) {
+                    Snackbar.make(imagesTab.swipeRefreshLayout, e.getMessage(), Snackbar.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Pull", listener);
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new AlertDialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Snackbar.make(imagesTab.swipeRefreshLayout,
+
+                        "Image pull cancelled",
+                        Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        dialog.show();
     }
 
     private void pruneImages() {
@@ -144,8 +197,14 @@ public class OverviewActivity extends AppCompatActivity implements Connection.on
         dialog.setTitle("Warning!");
         dialog.setMessage("By proceeding, every untagged image will be removed.\nAre you sure?");
         dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", listener);
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", listener);
-
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new AlertDialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Snackbar.make(imagesTab.swipeRefreshLayout,
+                        "Image prune cancelled",
+                        Snackbar.LENGTH_LONG).show();
+            }
+        });
         dialog.show();
     }
 
@@ -153,9 +212,14 @@ public class OverviewActivity extends AppCompatActivity implements Connection.on
     public void onCommandFinished(Command command) {
         loadingIndicator.setVisibility(View.GONE);
         if (command.exitedAsExpected())
-            Snackbar.make(imagesTab.swipeRefreshLayout,
-                    "Successfully removed untagged images",
-                    Snackbar.LENGTH_LONG).show();
+            if (command.getApiEndpoint().equals("/images/prune"))
+                Snackbar.make(imagesTab.swipeRefreshLayout,
+                        "Successfully removed untagged images",
+                        Snackbar.LENGTH_LONG).show();
+            else if (command.getApiEndpoint().equals("/images/create"))
+                Snackbar.make(imagesTab.swipeRefreshLayout,
+                        "Successfully pulled image",
+                        Snackbar.LENGTH_LONG).show();
     }
 
     @Override

@@ -6,4 +6,8 @@
         android:id="@+id/actionPruneImages"
         android:title="@string/prune_images"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/actionPullImage"
+        android:title="@string/pull_image"
+        app:showAsAction="never" />
 </menu>

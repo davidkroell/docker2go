@@ -42,4 +42,7 @@
     <string name="restart_dockerd">Restart Docker Daemon</string>
     <string name="prune_containers">Prune Containers</string>
     <string name="prune_images">Prune Images</string>
+    <string name="pull_image">Pull Image</string>
+    <string name="image_name">Image name</string>
+    <string name="pull_image_info">Enter the full Image name below</string>
 </resources>

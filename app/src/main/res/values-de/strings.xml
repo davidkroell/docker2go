@@ -37,4 +37,5 @@
     <string name="restart_dockerd">Docker Daemon neustarten</string>
     <string name="prune_containers">Gestoppte Container löschen</string>
     <string name="prune_images">Nicht verwendete Images löschen</string>
+    <string name="pull_image">Pull Image</string>
 </resources>
