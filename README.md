@@ -20,3 +20,6 @@ This application was once developed as a school project (HTL Villach) for Softwa
 
 - David Kröll [@davidkroell](https://github.com/davidkroell) &
 - Christopher Hummel [@evilpro](https://github.com/evilpro)
+
+#### Icon and Color Scheme
+The icons and the color scheme were created by Dominik Aschbacher [@aschbacd](https://github.com/aschbacd/) and contributet to Docker2go in [#12](https://github.com/davidkroell/docker2go/pull/12). The whole design is under his copyright under the terms of the projects' license.
