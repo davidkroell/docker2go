@@ -483,12 +483,13 @@ Connecting to a remote host does perform a static host key check.</p>
 <li>Overview of running and stopped containers (pie chart)</li>
 <li>Swarm mode (if enabled)</li>
 </ul>
-<p><strong>Containers</strong> are printed out in a list</p>
+<p><strong>Containers</strong> are printed out in a list where the following information gets displayed</p>
 <ul>
 <li>Name</li>
 <li>Status (running/stopped/exit code)</li>
 <li>Created time</li>
 <li>Image (gets showed on click)</li>
+<li>Port mappings</li>
 </ul>
 <p>By clicking on a container actions depending on container state may be taken</p>
 <ul>
@@ -499,7 +500,18 @@ Connecting to a remote host does perform a static host key check.</p>
 <li>Remove</li>
 </ul>
 <p>Inspecting a container gives more detailed information about the desired container.</p>
-<p><strong>Images</strong> are shown in a basic list where the tag (or SHA) is printed.</p>
+<p><strong>Images</strong> are printed out in a list where the following information gets displayed</p>
+<ul>
+<li>Name</li>
+<li>Tag with shortened SHA</li>
+<li>Created time</li>
+<li>Size</li>
+</ul>
+<p><strong>Actions</strong></p>
+<ul>
+<li>Pull Image</li>
+<li>Prune Images</li>
+</ul>
 <h2 id="third-party-libraries">Third party libraries<a class="headerlink" href="#third-party-libraries" title="Permanent link">&para;</a></h2>
 <p>Docker2go uses several third party libraries.
 Every used library is listed below with notes about the specific use case.</p>
