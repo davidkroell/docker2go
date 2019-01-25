@@ -43,12 +43,13 @@ Connecting to a remote host does perform a static host key check.
 - Overview of running and stopped containers (pie chart)
 - Swarm mode (if enabled)
 
-**Containers** are printed out in a list
+**Containers** are printed out in a list where the following information gets displayed
 
 - Name
 - Status (running/stopped/exit code)
 - Created time
 - Image (gets showed on click)
+- Port mappings
 
 By clicking on a container actions depending on container state may be taken
 
@@ -60,7 +61,17 @@ By clicking on a container actions depending on container state may be taken
 
 Inspecting a container gives more detailed information about the desired container.
 
-**Images** are shown in a basic list where the tag (or SHA) is printed.
+**Images** are printed out in a list where the following information gets displayed
+
+- Name
+- Tag with shortened SHA
+- Created time
+- Size
+
+**Actions**
+
+- Pull Image
+- Prune Images
 
 ## Third party libraries
 Docker2go uses several third party libraries.
