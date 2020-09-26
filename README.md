@@ -1,6 +1,8 @@
 <p align="center">
 
 ![Android CI with Gradle](https://github.com/davidkroell/docker2go/workflows/Android%20CI%20with%20Gradle/badge.svg)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/davidkroell/docker2go)
+![GitHub contributors](https://img.shields.io/github/contributors/davidkroell/docker2go?color=orange)
 
 </p>
 
