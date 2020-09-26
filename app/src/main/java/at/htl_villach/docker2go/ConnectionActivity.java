@@ -104,7 +104,7 @@ public class ConnectionActivity extends AppCompatActivity {
         listViewConnections.setAdapter(connectionArrayAdapter);
     }
 
-    private void addConnection(View v) {
+    public void addConnection(View v) {
         Intent i = new Intent(this, ConnectionDetailsActivity.class);
         startActivity(i);
     }

@@ -38,4 +38,6 @@
     <string name="prune_containers">Gestoppte Container löschen</string>
     <string name="prune_images">Nicht verwendete Images löschen</string>
     <string name="pull_image">Pull Image</string>
+    <string name="image_name">Image Name</string>
+    <string name="pull_image_info">Verwende den vollen Image Namen</string>
 </resources>
