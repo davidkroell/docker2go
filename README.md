@@ -1,3 +1,9 @@
+<p align="center">
+
+![Android CI with Gradle](https://github.com/davidkroell/docker2go/workflows/Android%20CI%20with%20Gradle/badge.svg)
+
+</p>
+
 # docker2go
 Docker2go is an Android Application to manage Docker Hosts on the go.
 The app allows sysadmins to check the status of their loved Docker instances using an simple Android app.
