@@ -33,8 +33,8 @@ jobs:
           java-version: 1.8
       - name: Build debug APK
         run: bash ./gradlew assemble --stacktrace
-      - name: Upload APK
+      - name: Docker2go.apk
         uses: actions/upload-artifact@v2
         with:
           name: app
-          path: app/build/outputs/apk/release/Docker2go.apk
+          path: app/build/outputs/apk/release/app-release.apk
